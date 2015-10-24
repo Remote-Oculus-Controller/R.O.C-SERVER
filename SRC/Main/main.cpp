@@ -23,7 +23,7 @@ int main(int argc, char**argv)
 
   std::cout << "Waiting client ping..." << std::endl;
 
-  //  server.Read(&a, 1);
+  server.Read(&a, 1);
 
   cv::namedWindow("frame");
 
@@ -35,17 +35,12 @@ int main(int argc, char**argv)
 
       camera.captureNewFrame();
       camera.compressFrame();
-      //server.bundleUpData(camera.getCompressedFrame(), 1);
-      //packets = server.getBundledUpData();
-      cv::imshow("frame", camera.getFrame());
-      //for (int i = 0; i < packets->size() ; i++)
-      // server.Send((char *) &((*packets)[i]), sizeof(UdpPacket));
-      clock_t done = clock();
-
-        std::cout << "Sending frame !" << std::endl;
-      double diff = (double) (done - launch) / CLOCKS_PER_SEC;
-      std::cout << "In : " << diff << " seconds" << std::endl;
-      cv::waitKey(1);
+      server.bundleUpData(camera.getCompressedFrame(), 1);
+      packets = server.getBundledUpData();
+      for (int i = 0; i < packets->size() ; i++)
+        server.Send((char *) &((*packets)[i]), sizeof(UdpPacket));
+      
+      std::cout << "Sending frame !" << std::endl;
       }
   
   return (0);

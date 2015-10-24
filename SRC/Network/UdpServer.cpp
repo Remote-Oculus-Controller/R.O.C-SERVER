@@ -31,7 +31,7 @@ bool UdpServer::initServer()
 	CLEAR(&(this->_serverAdress));
 	this->_serverAdress.sin_family 		= AF_INET;
 	this->_serverAdress.sin_port 		= htons(this->_port);
-	this->_serverAdress.sin_addr.s_addr     = this->_clientIp;
+	this->_serverAdress.sin_addr.s_addr = this->_clientIp;
 
 	if (bind(this->_socket, (struct sockaddr *) &(this->_serverAdress),
 		 this->_serverAdressLenght) < 0)
@@ -103,14 +103,10 @@ void UdpServer::fillPacketArray(UdpHeader header, std::vector<unsigned char> * d
 		else
 		  toCopy   = (DATA_LENGHT - sizeof(UdpHeader)) % (data->size() - position);
 
-		//std::cout << "Building packet N°" << header.packetID << std::endl;
-		//std::cout << "Data Size : " << toCopy << std::endl;
-		//	std::cout << "Nb of packets : " << packetCount <<  std::endl;
 		header.packetSize = toCopy;
 		packet.header = header;
 		memcpy(packet.data, &((*data)[position]), toCopy);
 		(*bundledUpData)[header.packetID] = packet;		
-		//	std::cout << "Done." << std::endl << std::endl;
 		header.packetID++;
 	}
 }
@@ -141,8 +137,6 @@ void UdpServer::bundleUpData(std::vector<unsigned char> * data, int threadCount)
 	if (data->size() % (DATA_LENGHT - sizeof(UdpHeader)))
 	  vectorSize++;
 	this->bundledUpData->resize(vectorSize);
-	//std::cout << "Data size : " << DATA_LENGHT - sizeof(UdpHeader) << std::endl;
-	//std::cout << "Vector de taille : " << this->bundledUpData->size() << std::endl;
 	header.maxPacketID = vectorSize - 1;
 	header.packetID = packetCount;
 	packetCount = vectorSize / threadCount;
@@ -151,14 +145,10 @@ void UdpServer::bundleUpData(std::vector<unsigned char> * data, int threadCount)
 	for (int i = 1; i < threadCount ; i++)
 	{
 	  header.packetID += packetCount;
-	  //  std::cout << "Starting thread " << i << std::endl;
-	 
-	  //  std::cout << "for : " << packetCount << " Packets." << std::endl;
 	  if (i + 1 == threadCount)
 	    threads.push_back(std::thread(&UdpServer::fillPacketArray, this, header, data, lastPacketCount));
 	  else
-	    threads.push_back(std::thread(&UdpServer::fillPacketArray, this, header, data, packetCount));
-	 
+	    threads.push_back(std::thread(&UdpServer::fillPacketArray, this, header, data, packetCount)); 
 	}
 
 	header.packetID = 0;
@@ -166,7 +156,6 @@ void UdpServer::bundleUpData(std::vector<unsigned char> * data, int threadCount)
 	  this->fillPacketArray(header, data, lastPacketCount);
 	else
 	  this->fillPacketArray(header, data, packetCount);
-	//std::cout << "waiting..." << std::endl;
 	for (auto& th : threads) th.join();
 
 }
