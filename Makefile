@@ -21,8 +21,6 @@ SRCS	= 	$(SRCSDIR)Main/main.cpp \
 		$(SRCSDIR)Network/UdpServer.cpp \
 		$(SRCSDIR)Network/TcpServer.cpp \
 		$(SRCSDIR)Video/Camera.cpp \
-		$(SRCSDIR)Video/CameraV4l2.cpp \
-		$(SRCSDIR)Video/v4l2uvc.cpp \
 
 
 NAME = Server

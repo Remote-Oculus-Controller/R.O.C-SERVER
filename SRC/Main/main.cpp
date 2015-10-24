@@ -25,8 +25,6 @@ int main(int argc, char**argv)
 
   server.Read(&a, 1);
 
-  cv::namedWindow("frame");
-
   std::cout << "Streaming..." << std::endl;
 
   while (1)
