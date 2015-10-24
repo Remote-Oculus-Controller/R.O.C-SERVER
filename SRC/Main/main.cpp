@@ -29,16 +29,14 @@ int main(int argc, char**argv)
 
   while (1)
      {
-       clock_t launch = clock();
-
+     
       camera.captureNewFrame();
       camera.compressFrame();
       server.bundleUpData(camera.getCompressedFrame(), 1);
       packets = server.getBundledUpData();
       for (int i = 0; i < packets->size() ; i++)
         server.Send((char *) &((*packets)[i]), sizeof(UdpPacket));
-      
-      std::cout << "Sending frame !" << std::endl;
+      std::cout << "Sended frame of : " << packets->size() << " packets" << std::endl;
       }
   
   return (0);
