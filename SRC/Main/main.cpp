@@ -14,7 +14,10 @@ int main(int argc, char**argv)
 		exit(0);
 	}
 
-	sleep(20);
+	sleep(30);
+	
+	std::cout << "Attempting to kill server " << serverId << std::endl;
+	factory->deleteServer(serverId);
 
 	return (0);
 }

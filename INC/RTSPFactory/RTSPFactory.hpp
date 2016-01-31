@@ -16,7 +16,7 @@ typedef struct
 {
 	int cameraId;
 	int port;
-	char volatile * watcher;
+	char volatile watcher;
 } threadArguments;
 
 class RTSPFactory

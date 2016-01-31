@@ -22,9 +22,9 @@ int RTSPFactory::createServer(int cameraId, int port)
 
 	args->cameraId = cameraId;
 	args->port = port;
-	args->watcher = new char(0); 
+	args->watcher = 0; 
 
-	watcher_pool.push_back(args->watcher);
+	watcher_pool.push_back(&(args->watcher));
 
 	pthread_t thread;
 
@@ -48,7 +48,7 @@ bool RTSPFactory::deleteServer(int serverId)
 void * RTSPFactory::createRTSPServer(void * args_void)
 {
 	threadArguments * args = static_cast<threadArguments *>(args_void);
-	
+
 	TaskScheduler* taskSchedular = BasicTaskScheduler::createNew();
     BasicUsageEnvironment* usageEnvironment = BasicUsageEnvironment::createNew(*taskSchedular);
     RTSPServer* rtspServer = RTSPServer::createNew(*usageEnvironment, args->port, NULL);
@@ -67,6 +67,6 @@ void * RTSPFactory::createRTSPServer(void * args_void)
     char* url = rtspServer->rtspURL(sms);
     *usageEnvironment << "Play the stream using url "<<url << "\n";
     delete[] url;
-    taskSchedular->doEventLoop();
+    taskSchedular->doEventLoop(&args->watcher);
     return 0;
 }
