@@ -5,10 +5,9 @@
 // CONSTRUCTEUR / DESTRUCTEUR
 //====================================================
 
-Camera::Camera(int id, int compression)
+Camera::Camera(int id)
 {
 	this->_id = id;
-	this->_compression = compression;
 	this->_camera = new cv::VideoCapture(this->_id);
 }
 
@@ -28,29 +27,16 @@ int Camera::getId() const
 	return (this->_id);
 }
 
-int Camera::getCompression() const 
-{
-	return (this->_compression);
-}
 
 Mat & Camera::getFrame()
 {
 	return (this->_frame);
 }
 
-std::vector<unsigned char> * Camera::getCompressedFrame()
-{
-  return (&(this->_compressedFrame));
-}
-
 //====================================================
 // SETTERS
 //====================================================
 
-void Camera::setCompression(int ratio)
-{
-	this->_compression = ratio;
-}
 
 //====================================================
 // FONCTIONS GENERALES POUR LA CAMERA
@@ -62,7 +48,6 @@ bool Camera::initCamera()
 	if (this->_camera->isOpened() == false)
 		return (false);
 	this->_camera->set(cv::CAP_PROP_FOURCC, VideoWriter::fourcc('M', 'J', 'P', 'G'));
-	this->initCompressionParams();
 	this->initResolutions();
 	
 }
@@ -71,14 +56,6 @@ bool Camera::captureNewFrame()
 {
   this->_camera->read(this->_frame);
   return (true);
-}
-
-bool Camera::compressFrame()
-{
-	cv::imencode(	".jpg",
-					this->_frame,
-					this->_compressedFrame,
-					this->_compressionParams);
 }
 
 bool Camera::upgradeQuality(int resolution, int compression)
@@ -118,12 +95,6 @@ bool Camera::reOpenCamera()
 //===================================================
 // FONCTIONS MASQUEES D'INITIALISATION
 //===================================================
-
-void Camera::initCompressionParams()
-{
-	this->_compressionParams.push_back(cv::IMWRITE_JPEG_QUALITY);
-	this->_compressionParams.push_back(this->_compression);
-}
 
 void Camera::initResolutions()
 {

@@ -18,18 +18,23 @@ OBJSDIR = ./OBJ/
 
 SRCS	= 	$(SRCSDIR)Main/main.cpp \
 		$(SRCSDIR)Network/Server.cpp \
-		$(SRCSDIR)Network/UdpServer.cpp \
 		$(SRCSDIR)Network/TcpServer.cpp \
+		$(SRCSDIR)Network/H264LiveServerMediaSession.cpp \
+		$(SRCSDIR)Network/LiveSourceWithx264.cpp \
 		$(SRCSDIR)Video/Camera.cpp \
+		$(SRCSDIR)Processing/ImgProcessing.cpp \
+		$(SRCSDIR)Processing/ImgProcessingParams.cpp \
+		$(SRCSDIR)Encoder/x264Encoder.cpp \
+		$(SRCSDIR)RTSPFactory/RTSPFactory.cpp \
 
 
 NAME = Server
 
 OBJS = $(SRCS:$(SRCSDIR)%.cpp=$(OBJSDIR)%.o)
 
-CPPFLAGS	=--std=c++0x  -O3  -I$(INCSDIR) -I/usr/locale/include/opencv -I/usr/locale/include/opencv2
+CPPFLAGS	=--std=c++0x  -O3  -I$(INCSDIR) -I/usr/locale/include/opencv -I/usr/locale/include/opencv2 -I /usr/local/include -I /usr/local/include/liveMedia -I /usr/local/include/BasicUsageEnvironment -I /usr/local/include/groupsock -I /usr/local/include/UsageEnvironment
 
-LDLIBS		=-L/usr/local/lib/ -lpthread -lopencv_objdetect -lopencv_features2d -lopencv_imgproc -lopencv_imgcodecs -lopencv_highgui -lopencv_videoio -lopencv_core
+LDLIBS		= -L/usr/local/lib/ -lm -lpthread -lx264 -lswscale -lavutil -lopencv_objdetect -lopencv_features2d -lopencv_imgproc -lopencv_imgcodecs -lopencv_highgui -lopencv_videoio -lopencv_core -lliveMedia -lgroupsock -lBasicUsageEnvironment -lUsageEnvironment
 
 CXX = g++
 

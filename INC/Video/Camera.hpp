@@ -24,7 +24,7 @@ class Camera
 	// CONSTRUCTEUR / DESTRUCTEUR
 	//====================================================
 
-	Camera(int id = 0,  int compression = 50);
+	Camera(int id = 0);
 	~Camera();
 
 	//====================================================
@@ -32,7 +32,6 @@ class Camera
 	//====================================================
 
 	int getId() const;
-	int getCompression() const;
 
 	Mat & getFrame();
 	std::vector<unsigned char> * getCompressedFrame();
@@ -41,7 +40,6 @@ class Camera
 	// SETTERS
 	//====================================================
 
-	void setCompression(int ratio);
 
 	//====================================================
 	// FONCTIONS GENERALES POUR LA CAMERA
@@ -49,7 +47,6 @@ class Camera
 
 	bool initCamera();
 	bool captureNewFrame();
-	bool compressFrame();
 	bool upgradeQuality(int resolution, int compression);
 	bool downgradeQuality(int resolution, int compression);
   	bool reOpenCamera();
@@ -60,7 +57,6 @@ class Camera
 	// FONCTIONS MASQUEES D'INITIALISATION
 	//===================================================
 
-	void initCompressionParams();
 	void initResolutions();
 
 
@@ -70,14 +66,10 @@ class Camera
 
 	int 						_id;
 	int 						_resolutionIndex;
-	int 						_compression;
 
 	std::vector<int>			_widthArray;
 	std::vector<int>			_heightArray;
 
-	std::vector<int> 			_compressionParams;
-
-	std::vector<unsigned char> 	_compressedFrame;
 	cv::Mat 					_frame;
 	
 	cv::VideoCapture	*		_camera;
