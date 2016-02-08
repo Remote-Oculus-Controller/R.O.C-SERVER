@@ -51,7 +51,7 @@ void H264LiveServerMediaSession::checkForAuxSDPLine1()
     }
     else
     {
-        int uSecsDelay = 100000;
+        int uSecsDelay = 10000;
         nextTask() = envir().taskScheduler().scheduleDelayedTask(uSecsDelay, (TaskFunc*)checkForAuxSDPLine, this);
     }
 }
@@ -73,7 +73,7 @@ char const* H264LiveServerMediaSession::getAuxSDPLine(RTPSink* rtpSink, FramedSo
 FramedSource* H264LiveServerMediaSession::createNewStreamSource(unsigned clientSessionID, unsigned& estBitRate)
 {
     // Based on encoder configuration i kept it 90000
-    estBitRate = 90000;
+    estBitRate = 1000;
     LiveSourceWithx264 *source = LiveSourceWithx264::createNew(envir());
     // are you trying to keep the reference of the source somewhere? you shouldn't.  
     // Live555 will create and delete this class object many times. if you store it somewhere  

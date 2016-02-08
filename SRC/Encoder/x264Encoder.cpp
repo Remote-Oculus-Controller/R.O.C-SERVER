@@ -15,6 +15,7 @@ x264Encoder::~x264Encoder(void)
 void x264Encoder::initilize()
 {
     x264_param_default_preset(&parameters, "veryfast", "zerolatency");
+    
     parameters.i_log_level = X264_LOG_INFO;
     parameters.i_threads = 1;
     parameters.i_width = 640;
@@ -27,6 +28,8 @@ void x264Encoder::initilize()
     parameters.rc.f_rf_constant = 25;
     parameters.rc.f_rf_constant_max = 35;
     parameters.i_sps_id = 7;
+    
+
     // the following two value you should keep 1
     parameters.b_repeat_headers = 1;    // to get header before every I-Frame
     parameters.b_annexb = 1; // put start code in front of nal. we will remove start code later
@@ -67,14 +70,7 @@ void x264Encoder::encodeFrame(cv::Mat& image)
 
 bool x264Encoder::isNalsAvailableInOutputQueue()
 {
-    if(outputQueue.empty() == true)
-    {
-        return false;
-    }
-    else
-    {
-        return true;
-    }
+    return (!outputQueue.empty());
 }
 
 x264_nal_t x264Encoder::getNalUnit()

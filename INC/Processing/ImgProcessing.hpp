@@ -7,6 +7,9 @@
 	// UNE CLASSE HERITANT DE ImgProcessing
 	//====================================================
 
+	#include "opencv2/opencv.hpp"
+	#include "opencv2/core/cuda.hpp"
+
 	#include "Processing/ImgProcessingParams.hpp"
 
 	class ImgProcessing
@@ -17,7 +20,7 @@
 			// CONSTRUCTEUR
 			//====================================================
 			
-			ImgProcessing();
+			ImgProcessing(ImgProcessingParams * params);
 
 			//====================================================
 			// GETTER PERMETTANT DE SAVOIR SI LA TRANSFORMATION VA
@@ -31,19 +34,13 @@
 			// RETURN FALSE EN CAS D'ERREUR 
 			//====================================================
 			
-			bool setGpuAccelerated(bool value);
+			bool setGpuAccelerated();
 
-			//====================================================
-			// FONCTION PERMETTANT A LA TRANSFORMATION DE RECUPERER
-			// SES PARAMETRES DANS UNE CLASSE ImgProcessingParams
-			// CETTE FONCTION DOIT ETRE REDEFINIE DANS LES CLASSES
-			// HERITANT DE ImgProcessing
-			//====================================================
-			
-			virtual int getParams(ImgProcessingParams & params) = 0;
 
 			//====================================================
 			// FONCTION APPELEE POUR APPLIQUER LA TRANSFORMATION
+			// CETTE FONCTION APELLE apply_cpu si _isGpuAccelerated == true
+			// SINON CETTE FONCTION APELLE apply_gpu
 			//====================================================
 			
 			virtual int apply() = 0;
@@ -51,11 +48,26 @@
 		private:
 
 			//====================================================
+			// FONCTION APPELEE POUR APPLIQUER LA TRANSFORMATION CPU
+			//====================================================
+
+			virtual int apply_cpu() = 0;
+			
+			//====================================================
+			// FONCTION APPELEE POUR APPLIQUER LA TRANSFORMATION GPU
+			//====================================================
+
+			virtual int apply_gpu() = 0;
+
+			//====================================================
 			// TOUTE TRANSFORMATION EST SUR CPU PAR DEFAULT
 			// _isGpuAccelerated = false;
 			//====================================================
 			
 			bool _isGpuAccelerated;
+			ImgProcessingParams * _params;
+
+
 				
 	};
 
