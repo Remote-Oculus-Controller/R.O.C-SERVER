@@ -1,5 +1,7 @@
 #include <unistd.h>
 #include <iostream>
+#include "opencv2/opencv.hpp"
+#include "opencv2/core/cuda.hpp"
 #include "RTSPFactory/RTSPFactory.hpp"
 
 int main(int argc, char**argv)
@@ -8,7 +10,7 @@ int main(int argc, char**argv)
 	int serverId = 0;
 
 	cv::namedWindow("MyVideo",CV_WINDOW_AUTOSIZE); //create a window called "MyVideo"
-
+	std::cout << "Cuda devices : " << cv::cuda::getCudaEnabledDeviceCount() << std::endl;
 	if (argc < 2)
 		return (1);
 	
