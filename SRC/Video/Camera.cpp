@@ -14,7 +14,7 @@ Camera::Camera(int id)
 Camera::~Camera()
 {
 	if (this->_camera->isOpened())
-	this->_camera->release();
+		this->_camera->release();
 	delete (this->_camera);
 }
 
@@ -54,37 +54,11 @@ bool Camera::initCamera()
 
 bool Camera::captureNewFrame()
 {
-  this->_camera->read(this->_frame);
-  return (true);
-}
-
-bool Camera::upgradeQuality(int resolution, int compression)
-{
-	if (resolution)
-	{
-		if (this->_resolutionIndex < this->_widthArray.size() - 1)
-		{
-			this->_resolutionIndex++;
-			return (true);
-		}
-		return (false);
-	}
+	this->_camera->read(this->_frame);
 	return (true);
 }
 
-bool Camera::downgradeQuality(int resolution, int compression)
-{
-	if (resolution)
-	{
-		if (this->_resolutionIndex > 0)
-		{
-			this->_resolutionIndex--;
-			return (true);
-		}
-		return (false);
-	}
-	return (true);
-}
+
 
 bool Camera::reOpenCamera()
 {
@@ -98,25 +72,48 @@ bool Camera::reOpenCamera()
 
 void Camera::initResolutions()
 {
-	int maxResolutions;
-	int defaultResolution;
-	int current;
 
-	std::fstream configFile(CONFIG_FILE, std::ios_base::in);
-	configFile >> maxResolutions;
-	configFile >> defaultResolution;
-	for (int i = 0; i < maxResolutions; i++)
+	YAMLParser parser = YAMLParser(CAMERA_CONFIGURATION_FILE , FileStorage::READ);
+
+	if (parser.isOpened() == false)
 	{
-		configFile >> current;
-		this->_widthArray.push_back(current);
-		configFile >> current;
-		this->_heightArray.push_back(current);
+		std::cout << "Cannot open resolutions file : " << CAMERA_CONFIGURATION_FILE << std::endl;
+		std::cout << "Using default values." << std::endl;
 	}
-	this->_resolutionIndex = (defaultResolution - 1);
-	
-	this->_camera->set(cv::CAP_PROP_FRAME_WIDTH, this->_widthArray[this->_resolutionIndex]);
-	this->_camera->set(cv::CAP_PROP_FRAME_HEIGHT,this->_heightArray[this->_resolutionIndex]);
-	this->_camera->set(cv::CAP_PROP_FPS, 30);
-	std::cout << this->_camera->get(cv::CAP_PROP_FPS) << " FPS" << std::endl;
-	std::cout << this->_camera->get(cv::CAP_PROP_FRAME_WIDTH) << "x" << this->_camera->get(cv::CAP_PROP_FRAME_HEIGHT) << std::endl;
+	else
+	{
+		int width  	= parser.getValueOf("width");
+		int height 	= parser.getValueOf("height");
+		int fps 	= parser.getValueOf("fps");
+
+		this->_camera->set(cv::CAP_PROP_FRAME_WIDTH, width);
+		this->_camera->set(cv::CAP_PROP_FRAME_HEIGHT,height);
+		this->_camera->set(cv::CAP_PROP_FPS, fps);
+
+	}
+
+	this->_width = this->_camera->get(cv::CAP_PROP_FRAME_WIDTH);
+	this->_height = this->_camera->get(cv::CAP_PROP_FRAME_HEIGHT);
+	this->_fps = this->_camera->get(cv::CAP_PROP_FPS);
+
+	std::cout << "Camera parameters are : " << std::endl;
+	std::cout << "FPS    : " << this->_fps << std::endl;
+	std::cout << "Width  : " << this->_width << std::endl; 
+	std::cout << "Height : " << this->_height << std::endl << std::endl; 
+}
+
+
+int Camera::getWidth()
+{
+	return (this->_width);
+}
+
+int Camera::getHeight()
+{
+	return (this->_height);
+}
+
+int Camera::getFps()
+{
+	return (this->_fps);
 }

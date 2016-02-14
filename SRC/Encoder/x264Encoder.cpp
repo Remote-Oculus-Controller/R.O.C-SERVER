@@ -1,9 +1,11 @@
 #include "Encoder/x264Encoder.hpp"
 
 
-x264Encoder::x264Encoder(void)
+x264Encoder::x264Encoder(int width , int height, int fps)
 {
-
+    this->_width = width;
+    this->_height = height;
+    this->_fps = fps;
 }
 
 
@@ -18,15 +20,15 @@ void x264Encoder::initilize()
     
     parameters.i_log_level = X264_LOG_INFO;
     parameters.i_threads = 1;
-    parameters.i_width = 640;
-    parameters.i_height = 480;
-    parameters.i_fps_num = 30;
+    parameters.i_width = this->_width;
+    parameters.i_height = this->_height;
+    parameters.i_fps_num = this->_fps;
     parameters.i_fps_den = 1;
-    parameters.i_keyint_max = 30;
+    parameters.i_keyint_max = this->_fps;
     parameters.b_intra_refresh = 1;
     parameters.rc.i_rc_method = X264_RC_CRF;
-    parameters.rc.f_rf_constant = 25;
-    parameters.rc.f_rf_constant_max = 35;
+    parameters.rc.f_rf_constant = this->_fps - 5;
+    parameters.rc.f_rf_constant_max = this->_fps + 5;
     parameters.i_sps_id = 7;
     
 
@@ -41,7 +43,7 @@ void x264Encoder::initilize()
     picture_in.img.i_csp = X264_CSP_I420;
     
     // i have initilized my color space converter for BGR24 to YUV420 because my opencv video capture gives BGR24 image. You can initilize according to your input pixelFormat
-    convertContext = sws_getContext(parameters.i_width,parameters.i_height, PIX_FMT_BGR24, parameters.i_width,parameters.i_height,PIX_FMT_YUV420P, SWS_FAST_BILINEAR, NULL, NULL, NULL);
+    convertContext = sws_getContext(parameters.i_width,parameters.i_height, AV_PIX_FMT_BGR24, parameters.i_width,parameters.i_height, AV_PIX_FMT_YUV420P, SWS_FAST_BILINEAR, NULL, NULL, NULL);
 }
 
 void x264Encoder::unInitilize()

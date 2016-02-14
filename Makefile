@@ -26,6 +26,7 @@ SRCS	= 	$(SRCSDIR)Main/main.cpp \
 		$(SRCSDIR)Processing/ImgProcessingParams.cpp \
 		$(SRCSDIR)Encoder/x264Encoder.cpp \
 		$(SRCSDIR)RTSPFactory/RTSPFactory.cpp \
+		$(SRCSDIR)Parser/YAMLParser.cpp \
 
 
 NAME = Server
@@ -43,11 +44,13 @@ RM = rm -f
 all: $(NAME)
 
 
-$(OBJSDIR)%.o: 	 $(SRCSDIR)%.cpp
-				 $(CXX) -c -o $@ $< $(CPPFLAGS)
+$(OBJSDIR)%.o:	$(SRCSDIR)%.cpp
+		@echo "Compiling $<"
+		@$(CXX) $(CFLAGS) -c $< -o $@ $(CPPFLAGS)
 
 $(NAME): $(OBJS)
-	$(CXX) $(LDFLAGS) -o $(NAME) $(OBJS) $(LDLIBS)
+	@echo "Linking Server"
+	@$(CXX) $(LDFLAGS) -o $(NAME) $(OBJS) $(LDLIBS)
 
 clean :
 	$(RM) $(OBJS)

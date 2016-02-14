@@ -24,7 +24,7 @@ extern "C"
 class x264Encoder
 {
 public:
-    x264Encoder(void);
+    x264Encoder(int width, int height , int fps);
     ~x264Encoder(void);
 
 public:
@@ -40,6 +40,10 @@ private:
     x264_param_t parameters;
     x264_picture_t picture_in,picture_out;
     x264_t* encoder;
+
+    int _width;
+    int _height;
+    int _fps;
 };
 
 #endif // X264ENCODER_HPP

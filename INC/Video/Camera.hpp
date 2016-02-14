@@ -11,7 +11,9 @@
 #include "opencv2/videoio.hpp"
 #include "opencv2/imgcodecs.hpp"
 
-#define  CONFIG_FILE ".config"
+#include "Parser/YAMLParser.hpp"
+
+#define  CAMERA_CONFIGURATION_FILE "config/resolutions.yml"
 
 using namespace cv;
 
@@ -47,9 +49,11 @@ class Camera
 
 	bool initCamera();
 	bool captureNewFrame();
-	bool upgradeQuality(int resolution, int compression);
-	bool downgradeQuality(int resolution, int compression);
   	bool reOpenCamera();
+
+  	int getWidth();
+  	int getHeight();
+  	int getFps();
 
 	protected:
 
@@ -65,14 +69,13 @@ class Camera
 	//====================================================
 
 	int 						_id;
-	int 						_resolutionIndex;
-
-	std::vector<int>			_widthArray;
-	std::vector<int>			_heightArray;
-
-	cv::Mat 					_frame;
 	
+	cv::Mat 					_frame;
 	cv::VideoCapture	*		_camera;
+
+	int 						_width;
+	int 						_height;
+	int 						_fps;
 
 };
 

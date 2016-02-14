@@ -11,7 +11,7 @@
 #include <unistd.h>
 #include <netinet/in.h>
 
-#define CLEAR(param) memset(param, 0, sizeof(param))
+#define CLEAR(param) memset(param, 0, sizeof(*param))
 
 
 	// CLASSE ABSTRAITE DE BASE QUI PERMET L'INSTANCIATION DES CLASSES

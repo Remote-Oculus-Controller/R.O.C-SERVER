@@ -17,8 +17,9 @@ LiveSourceWithx264::LiveSourceWithx264(UsageEnvironment& env):FramedSource(env)
 
     }
     this->camera = new Camera(0);
+    this->camera->initCamera();
     ++referenceCount;
-    encoder = new x264Encoder();
+    encoder = new x264Encoder(this->camera->getWidth(), this->camera->getHeight() , this->camera->getFps());
     encoder->initilize();
     if(eventTriggerId == 0)
     {
@@ -39,8 +40,6 @@ LiveSourceWithx264::~LiveSourceWithx264(void)
 void LiveSourceWithx264::encodeNewFrame()
 {
         this->camera->captureNewFrame();
-        cv::imshow("MyVideo", this->camera->getFrame()); //show the frame in "MyVideo" window
-        cv::waitKey(30);
         // Got new image to stream
         encoder->encodeFrame(this->camera->getFrame());
         // Take all nals from encoder output queue to our input queue

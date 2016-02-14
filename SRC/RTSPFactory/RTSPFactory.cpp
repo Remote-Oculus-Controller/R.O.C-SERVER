@@ -49,6 +49,7 @@ void * RTSPFactory::createRTSPServer(void * args_void)
 {
 	threadArguments * args = static_cast<threadArguments *>(args_void);
 
+	//OutPacketBuffer::maxSize = maxRTCPPacketSize;
 	TaskScheduler* taskSchedular = BasicTaskScheduler::createNew();
     BasicUsageEnvironment* usageEnvironment = BasicUsageEnvironment::createNew(*taskSchedular);
     RTSPServer* rtspServer = RTSPServer::createNew(*usageEnvironment, args->port, NULL);
