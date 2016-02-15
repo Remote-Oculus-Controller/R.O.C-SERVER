@@ -30,6 +30,7 @@ void x264Encoder::initilize()
     parameters.rc.f_rf_constant = this->_fps - 5;
     parameters.rc.f_rf_constant_max = this->_fps + 5;
     parameters.i_sps_id = 7;
+    parameters.i_log_level = X264_LOG_NONE;
     
 
     // the following two value you should keep 1

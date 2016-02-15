@@ -27,6 +27,8 @@ SRCS	= 	$(SRCSDIR)Main/main.cpp \
 		$(SRCSDIR)Encoder/x264Encoder.cpp \
 		$(SRCSDIR)RTSPFactory/RTSPFactory.cpp \
 		$(SRCSDIR)Parser/YAMLParser.cpp \
+		$(SRCSDIR)Interpretor/Reader.cpp \
+		$(SRCSDIR)Manager/Manager.cpp \
 
 
 NAME = Server

@@ -27,14 +27,12 @@ class RTSPFactory
 		~RTSPFactory();
 
 		int createServer(int cameraId, int port);
-		bool deleteServer(int serverId);
+		bool deleteServer();
 	
 	private:
 
 		static void * createRTSPServer(void * args);
-
-		std::vector<char volatile *> watcher_pool;
-	
+		char volatile * watcher;
 };
 
 #endif // RTSP_FACTORY_HPP
