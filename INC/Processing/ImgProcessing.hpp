@@ -7,10 +7,16 @@
 	// UNE CLASSE HERITANT DE ImgProcessing
 	//====================================================
 
+	#include <iostream>
 	#include "opencv2/opencv.hpp"
 	#include "opencv2/core/cuda.hpp"
 
-	#include "Processing/ImgProcessingParams.hpp"
+	enum processingType
+	{
+		NONE ,
+		CANNY ,
+		BLUR 
+	};
 
 	class ImgProcessing
 	{
@@ -20,7 +26,7 @@
 			// CONSTRUCTEUR
 			//====================================================
 			
-			ImgProcessing(ImgProcessingParams * params);
+			ImgProcessing(processingType type);
 
 			//====================================================
 			// GETTER PERMETTANT DE SAVOIR SI LA TRANSFORMATION VA
@@ -43,7 +49,20 @@
 			// SINON CETTE FONCTION APELLE apply_gpu
 			//====================================================
 			
-			virtual int apply() = 0;
+			void apply(cv::Mat & image);
+
+			//====================================================
+			// FONCTION D'IDENTIFICATION DE LA CLASSE
+			//====================================================
+
+			virtual processingType getID() = 0;
+
+			//====================================================
+			// FONCTION D'IDENTIFICATION DE LA CLASSE (PRINT)
+			//====================================================
+
+			virtual void displayType() = 0;
+
 
 		private:
 
@@ -51,13 +70,13 @@
 			// FONCTION APPELEE POUR APPLIQUER LA TRANSFORMATION CPU
 			//====================================================
 
-			virtual int apply_cpu() = 0;
+			virtual void applyCpu(cv::Mat & image) = 0;
 			
 			//====================================================
 			// FONCTION APPELEE POUR APPLIQUER LA TRANSFORMATION GPU
 			//====================================================
 
-			virtual int apply_gpu() = 0;
+			virtual void applyGpu(cv::Mat & image) = 0;
 
 			//====================================================
 			// TOUTE TRANSFORMATION EST SUR CPU PAR DEFAULT
@@ -65,8 +84,8 @@
 			//====================================================
 			
 			bool _isGpuAccelerated;
-			ImgProcessingParams * _params;
 
+			processingType _type;
 
 				
 	};

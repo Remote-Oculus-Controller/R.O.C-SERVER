@@ -17,19 +17,21 @@ OBJSDIR = ./OBJ/
 
 
 SRCS	= 	$(SRCSDIR)Main/main.cpp \
+		$(SRCSDIR)Parser/YAMLParser.cpp \
 		$(SRCSDIR)Network/Server.cpp \
 		$(SRCSDIR)Network/TcpServer.cpp \
+		$(SRCSDIR)RTSPFactory/RTSPFactory.cpp \
 		$(SRCSDIR)Network/H264LiveServerMediaSession.cpp \
 		$(SRCSDIR)Network/LiveSourceWithx264.cpp \
+		$(SRCSDIR)Encoder/x264Encoder.cpp \
+		$(SRCSDIR)Encoder/x265Encoder.cpp \
 		$(SRCSDIR)Video/Camera.cpp \
 		$(SRCSDIR)Processing/ImgProcessing.cpp \
-		$(SRCSDIR)Processing/ImgProcessingParams.cpp \
-		$(SRCSDIR)Encoder/x264Encoder.cpp \
-		$(SRCSDIR)RTSPFactory/RTSPFactory.cpp \
-		$(SRCSDIR)Parser/YAMLParser.cpp \
+		$(SRCSDIR)Processing/Canny.cpp \
 		$(SRCSDIR)Interpretor/Reader.cpp \
 		$(SRCSDIR)Manager/Manager.cpp \
-
+		
+		
 
 NAME = Server
 
@@ -37,7 +39,7 @@ OBJS = $(SRCS:$(SRCSDIR)%.cpp=$(OBJSDIR)%.o)
 
 CPPFLAGS	=--std=c++0x  -O3  -I$(INCSDIR) -I/usr/locale/include/opencv -I/usr/locale/include/opencv2 -I /usr/local/include -I /usr/local/include/liveMedia -I /usr/local/include/BasicUsageEnvironment -I /usr/local/include/groupsock -I /usr/local/include/UsageEnvironment
 
-LDLIBS		= -L/usr/local/lib/ -lm -lpthread -lx264 -lswscale -lavutil -lopencv_objdetect -lopencv_features2d -lopencv_imgproc -lopencv_imgcodecs -lopencv_highgui -lopencv_videoio -lopencv_core -lliveMedia -lgroupsock -lBasicUsageEnvironment -lUsageEnvironment
+LDLIBS		= -L/usr/local/lib/ -lm -lpthread -lx264 -lx265 -lswscale -lavutil -lopencv_objdetect -lopencv_features2d -lopencv_imgproc -lopencv_imgcodecs -lopencv_highgui -lopencv_videoio -lopencv_core -lliveMedia -lgroupsock -lBasicUsageEnvironment -lUsageEnvironment
 
 CXX = g++
 

@@ -2,10 +2,10 @@
 
 #include <iostream>
 
-ImgProcessing::ImgProcessing(ImgProcessingParams * params)
+ImgProcessing::ImgProcessing(processingType type)
 {
 	this->_isGpuAccelerated = false;
-	this->_params = params;
+	this->_type = type;
 }
 
 bool ImgProcessing::isGpuAccelerated()
@@ -23,4 +23,12 @@ bool ImgProcessing::setGpuAccelerated()
 	std::cout << "GPU ACCELERATED : " << this->_isGpuAccelerated << std::endl;
 
 	return (this->_isGpuAccelerated);
+}
+
+void ImgProcessing::apply(cv::Mat & image)
+{
+	if (!this->_isGpuAccelerated)
+		this->applyCpu(image);
+	else
+		this->applyGpu(image);
 }

@@ -1,5 +1,6 @@
 #include "Network/LiveSourceWithx264.hpp"
 #include "Video/Camera.hpp"
+#include "Processing/Canny.hpp"
 
 LiveSourceWithx264* LiveSourceWithx264::createNew(UsageEnvironment& env)
 {
@@ -19,7 +20,9 @@ LiveSourceWithx264::LiveSourceWithx264(UsageEnvironment& env):FramedSource(env)
     this->camera = new Camera(0);
     this->camera->initCamera();
     ++referenceCount;
-    encoder = new x264Encoder(this->camera->getWidth(), this->camera->getHeight() , this->camera->getFps());
+    encoder = new x264Encoder(this->camera->getWidth(),
+                                this->camera->getHeight(),
+                                this->camera->getFps());
     encoder->initilize();
     if(eventTriggerId == 0)
     {
@@ -41,6 +44,12 @@ void LiveSourceWithx264::encodeNewFrame()
 {
         this->camera->captureNewFrame();
         // Got new image to stream
+        
+	// REMOVE COMMENT FOR CANNY EDGE DETECTION
+	
+	// CannyEdge test;
+        // test.apply(this->camera->getFrame());
+
         encoder->encodeFrame(this->camera->getFrame());
         // Take all nals from encoder output queue to our input queue
         while(encoder->isNalsAvailableInOutputQueue() == true)
@@ -75,8 +84,6 @@ void LiveSourceWithx264::deliverFrame()
     x264_nal_t nal = nalQueue.front();
     nalQueue.pop();
     assert(nal.p_payload != NULL);
-    // You need to remove the start code which is there in front of every nal unit.  
-    // the start code might be 0x00000001 or 0x000001. so detect it and remove it. pass remaining data to live555    
     int trancate = 0;
     if (nal.i_payload >= 4 && nal.p_payload[0] == 0 && nal.p_payload[1] == 0 && nal.p_payload[2] == 0 && nal.p_payload[3] == 1 )
     {
