@@ -1,9 +1,7 @@
 #include "Processing/FaceDetect.hpp"
 
-FaceDetect::FaceDetect(double treshold1, double treshold2, int matrixNm) : ImgProcessing(processingType::CANNY) {
-    this->_treshold1 = treshold1;
-    this->_treshold2 = treshold2;
-    this->_matrixNum = matrixNm;
+FaceDetect::FaceDetect(int scale) : ImgProcessing(processingType::FACEDETECT) {
+    this->_scale = scale;
     std::string cascadeName = "assets/cascades/haarcascades/haarcascade_frontalface_alt.xml";
     if (!this->_cascade.load(cascadeName)) {
         //TODO log this error
@@ -19,11 +17,11 @@ FaceDetect::~FaceDetect() {
 
 void FaceDetect::applyCpu(cv::Mat &image) {
     if (this->_cascadeIsLoaded)
-        detectAndDraw(image, 1);
+        detectAndDraw(image);
 }
 
 
-void FaceDetect::detectAndDraw(cv::Mat &img, double scale) {
+void FaceDetect::detectAndDraw(cv::Mat &img) {
     double t = 0;
     std::vector<cv::Rect> faces, faces2;
     const static cv::Scalar colors[] =
@@ -40,7 +38,7 @@ void FaceDetect::detectAndDraw(cv::Mat &img, double scale) {
     cv::Mat gray, smallImg;
 
     cv::cvtColor(img, gray, cv::COLOR_BGR2GRAY);
-    double fx = 1 / scale;
+    double fx = 1 / this->_scale;
     resize(gray, smallImg, cv::Size(), fx, fx, cv::INTER_LINEAR);
     equalizeHist(smallImg, smallImg);
 
@@ -64,14 +62,14 @@ void FaceDetect::detectAndDraw(cv::Mat &img, double scale) {
 
         double aspect_ratio = (double) r.width / r.height;
         if (0.75 < aspect_ratio && aspect_ratio < 1.3) {
-            center.x = cvRound((r.x + r.width * 0.5) * scale);
-            center.y = cvRound((r.y + r.height * 0.5) * scale);
-            radius = cvRound((r.width + r.height) * 0.25 * scale);
+            center.x = cvRound((r.x + r.width * 0.5) * this->_scale);
+            center.y = cvRound((r.y + r.height * 0.5) * this->_scale);
+            radius = cvRound((r.width + r.height) * 0.25 * this->_scale);
             cv::circle(img, center, radius, color, 3, 8, 0);
         }
         else
-            cv::rectangle(img, cvPoint(cvRound(r.x * scale), cvRound(r.y * scale)),
-                          cvPoint(cvRound((r.x + r.width - 1) * scale), cvRound((r.y + r.height - 1) * scale)),
+            cv::rectangle(img, cvPoint(cvRound(r.x * this->_scale), cvRound(r.y * this->_scale)),
+                          cvPoint(cvRound((r.x + r.width - 1) * this->_scale), cvRound((r.y + r.height - 1) * this->_scale)),
                           color, 3, 8, 0);
 
     }

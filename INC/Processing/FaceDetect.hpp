@@ -9,7 +9,7 @@
 class FaceDetect : public ImgProcessing {
 public:
 
-    FaceDetect(double treshold1 = 50, double treshold2 = 150, int matrixNum = 3);
+    FaceDetect(int scale = 1);
 
     ~FaceDetect();
 
@@ -19,17 +19,14 @@ public:
 
 private:
 
-    void detectAndDraw(cv::Mat &img, double scale);
+    void detectAndDraw(cv::Mat &img);
 
     virtual void applyCpu(cv::Mat &image);
 
     virtual void applyGpu(cv::Mat &image);
 
 
-
-    double _treshold1;
-    double _treshold2;
-    int _matrixNum;
+    int _scale;
     cv::CascadeClassifier _cascade;
     bool _cascadeIsLoaded = false;
 };
