@@ -15,7 +15,8 @@
 	{
 		NONE ,
 		CANNY ,
-		BLUR 
+		BLUR ,
+		FACEDETECT
 	};
 
 	class ImgProcessing

@@ -28,9 +28,10 @@ SRCS	= 	$(SRCSDIR)Main/main.cpp \
 		$(SRCSDIR)Video/Camera.cpp \
 		$(SRCSDIR)Processing/ImgProcessing.cpp \
 		$(SRCSDIR)Processing/Canny.cpp \
+		$(SRCSDIR)Processing/FaceDetect.cpp \
 		$(SRCSDIR)Interpretor/Reader.cpp \
 		$(SRCSDIR)Manager/Manager.cpp \
-		
+
 		
 
 NAME = Server
