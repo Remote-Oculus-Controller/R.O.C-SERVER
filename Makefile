@@ -29,6 +29,7 @@ SRCS	= 	$(SRCSDIR)Main/main.cpp \
 		$(SRCSDIR)Processing/ImgProcessing.cpp \
 		$(SRCSDIR)Processing/Canny.cpp \
 		$(SRCSDIR)Processing/FaceDetect.cpp \
+		$(SRCSDIR)Processing/RedCirclesDetect.cpp \
 		$(SRCSDIR)Interpretor/Reader.cpp \
 		$(SRCSDIR)Manager/Manager.cpp \
 

@@ -1,9 +1,8 @@
 #include "Network/LiveSourceWithx264.hpp"
 #include "Video/Camera.hpp"
-#include "Processing/Canny.hpp"
-
-LiveSourceWithx264* LiveSourceWithx264::createNew(UsageEnvironment& env)
-{
+#include "Processing/RedCirclesDetect.hpp"
+#include "Processing/FaceDetect.hpp"
+LiveSourceWithx264 *LiveSourceWithx264::createNew(UsageEnvironment &env) {
     return new LiveSourceWithx264(env);
 }
 
@@ -11,28 +10,24 @@ EventTriggerId LiveSourceWithx264::eventTriggerId = 0;
 
 unsigned LiveSourceWithx264::referenceCount = 0;
 
-LiveSourceWithx264::LiveSourceWithx264(UsageEnvironment& env):FramedSource(env)
-{
-    if(referenceCount == 0)
-    {
+LiveSourceWithx264::LiveSourceWithx264(UsageEnvironment &env) : FramedSource(env) {
+    if (referenceCount == 0) {
 
     }
     this->camera = new Camera(0);
     this->camera->initCamera();
     ++referenceCount;
     encoder = new x264Encoder(this->camera->getWidth(),
-                                this->camera->getHeight(),
-                                this->camera->getFps());
+                              this->camera->getHeight(),
+                              this->camera->getFps());
     encoder->initilize();
-    if(eventTriggerId == 0)
-    {
+    if (eventTriggerId == 0) {
         eventTriggerId = envir().taskScheduler().createEventTrigger(deliverFrame0);
     }
 }
 
 
-LiveSourceWithx264::~LiveSourceWithx264(void)
-{
+LiveSourceWithx264::~LiveSourceWithx264(void) {
     --referenceCount;
     delete (this->camera);
     encoder->unInitilize();
@@ -40,73 +35,64 @@ LiveSourceWithx264::~LiveSourceWithx264(void)
     eventTriggerId = 0;
 }
 
-void LiveSourceWithx264::encodeNewFrame()
-{
-        this->camera->captureNewFrame();
-        // Got new image to stream
-        
-	// REMOVE COMMENT FOR CANNY EDGE DETECTION
-	
-	// CannyEdge test;
-        // test.apply(this->camera->getFrame());
+void LiveSourceWithx264::encodeNewFrame() {
+    this->camera->captureNewFrame();
+    // Got new image to stream
 
-        encoder->encodeFrame(this->camera->getFrame());
-        // Take all nals from encoder output queue to our input queue
-        while(encoder->isNalsAvailableInOutputQueue() == true)
-        {
-            x264_nal_t nal = encoder->getNalUnit();
-            nalQueue.push(nal);
-        }
+    // REMOVE COMMENT FOR CANNY EDGE DETECTION
+
+    //RedCirclesDetect redCirclesDetect;
+    //redCirclesDetect.apply(this->camera->getFrame());
+    //FaceDetect faceDetect;
+    //faceDetect.apply(this->camera->getFrame());
+
+    encoder->encodeFrame(this->camera->getFrame());
+    // Take all nals from encoder output queue to our input queue
+    while (encoder->isNalsAvailableInOutputQueue() == true) {
+        x264_nal_t nal = encoder->getNalUnit();
+        nalQueue.push(nal);
+    }
 }
 
-void LiveSourceWithx264::deliverFrame0(void* clientData)
-{
-    ((LiveSourceWithx264*)clientData)->deliverFrame();
+void LiveSourceWithx264::deliverFrame0(void *clientData) {
+    ((LiveSourceWithx264 *) clientData)->deliverFrame();
 }
 
-void LiveSourceWithx264::doGetNextFrame()
-{
-    if(nalQueue.empty() == true)
-    {
+void LiveSourceWithx264::doGetNextFrame() {
+    if (nalQueue.empty() == true) {
         encodeNewFrame();
-        gettimeofday(&currentTime,NULL);
+        gettimeofday(&currentTime, NULL);
         deliverFrame();
     }
-    else
-    {
+    else {
         deliverFrame();
     }
 }
 
-void LiveSourceWithx264::deliverFrame()
-{
-    if(!isCurrentlyAwaitingData()) return;
+void LiveSourceWithx264::deliverFrame() {
+    if (!isCurrentlyAwaitingData()) return;
     x264_nal_t nal = nalQueue.front();
     nalQueue.pop();
     assert(nal.p_payload != NULL);
     int trancate = 0;
-    if (nal.i_payload >= 4 && nal.p_payload[0] == 0 && nal.p_payload[1] == 0 && nal.p_payload[2] == 0 && nal.p_payload[3] == 1 )
-    {
+    if (nal.i_payload >= 4 && nal.p_payload[0] == 0 && nal.p_payload[1] == 0 && nal.p_payload[2] == 0 &&
+        nal.p_payload[3] == 1) {
         trancate = 4;
     }
-    else
-    {
-        if(nal.i_payload >= 3 && nal.p_payload[0] == 0 && nal.p_payload[1] == 0 && nal.p_payload[2] == 1 )
-        {
+    else {
+        if (nal.i_payload >= 3 && nal.p_payload[0] == 0 && nal.p_payload[1] == 0 && nal.p_payload[2] == 1) {
             trancate = 3;
         }
     }
 
-    if(nal.i_payload-trancate > fMaxSize)
-    {
+    if (nal.i_payload - trancate > fMaxSize) {
         fFrameSize = fMaxSize;
-        fNumTruncatedBytes = nal.i_payload-trancate - fMaxSize;
+        fNumTruncatedBytes = nal.i_payload - trancate - fMaxSize;
     }
-    else
-    {
-        fFrameSize = nal.i_payload-trancate;
+    else {
+        fFrameSize = nal.i_payload - trancate;
     }
     fPresentationTime = currentTime;
-    memmove(fTo,nal.p_payload+trancate,fFrameSize);
+    memmove(fTo, nal.p_payload + trancate, fFrameSize);
     FramedSource::afterGetting(this);
 }  

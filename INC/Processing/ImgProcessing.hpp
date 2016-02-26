@@ -16,7 +16,8 @@
 		NONE ,
 		CANNY ,
 		BLUR ,
-		FACEDETECT
+		FACEDETECT,
+		REDCIRCLESDETECT,
 	};
 
 	class ImgProcessing
