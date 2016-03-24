@@ -18,6 +18,7 @@
 		BLUR ,
 		FACEDETECT,
 		REDCIRCLESDETECT,
+		ARROW,
 	};
 
 	class ImgProcessing

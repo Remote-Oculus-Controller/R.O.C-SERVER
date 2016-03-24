@@ -2,6 +2,8 @@
 #include "Video/Camera.hpp"
 #include "Processing/RedCirclesDetect.hpp"
 #include "Processing/FaceDetect.hpp"
+#include "Processing/Arrow.hpp"
+
 LiveSourceWithx264 *LiveSourceWithx264::createNew(UsageEnvironment &env) {
     return new LiveSourceWithx264(env);
 }
@@ -45,6 +47,11 @@ void LiveSourceWithx264::encodeNewFrame() {
     //redCirclesDetect.apply(this->camera->getFrame());
     //FaceDetect faceDetect;
     //faceDetect.apply(this->camera->getFrame());
+
+    // REMOVE COMMENT FOR ARROW DIRECTION (static)
+
+    //Arrow arrow(0, 100);
+    //arrow.apply(this->camera->getFrame());
 
     encoder->encodeFrame(this->camera->getFrame());
     // Take all nals from encoder output queue to our input queue

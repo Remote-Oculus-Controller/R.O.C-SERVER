@@ -30,8 +30,10 @@ SRCS	= 	$(SRCSDIR)Main/main.cpp \
 		$(SRCSDIR)Processing/Canny.cpp \
 		$(SRCSDIR)Processing/FaceDetect.cpp \
 		$(SRCSDIR)Processing/RedCirclesDetect.cpp \
+		$(SRCSDIR)Processing/Arrow.cpp \
 		$(SRCSDIR)Interpretor/Reader.cpp \
 		$(SRCSDIR)Manager/Manager.cpp \
+
 
 		
 

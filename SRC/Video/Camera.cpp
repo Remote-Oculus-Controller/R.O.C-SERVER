@@ -46,7 +46,11 @@ bool Camera::initCamera()
 {
 	this->_camera->open(this->_id);
 	if (this->_camera->isOpened() == false)
-		return (false);
+		 {
+		 	std::cout << "Cannot opent camera" << std::endl;
+		 	return (false);
+
+		 }
 	this->_camera->set(cv::CAP_PROP_FOURCC, VideoWriter::fourcc('M', 'J', 'P', 'G'));
 	this->initResolutions();
 	
@@ -89,7 +93,6 @@ void Camera::initResolutions()
 		this->_camera->set(cv::CAP_PROP_FRAME_WIDTH, width);
 		this->_camera->set(cv::CAP_PROP_FRAME_HEIGHT,height);
 		this->_camera->set(cv::CAP_PROP_FPS, fps);
-
 	}
 
 	this->_width = this->_camera->get(cv::CAP_PROP_FRAME_WIDTH);
