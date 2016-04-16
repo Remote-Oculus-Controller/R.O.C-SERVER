@@ -1,9 +1,22 @@
 %YAML:1.0
 
+# NUMBER OF CAMERAS TO HANDLE
+
+camera_count: 2
+
+# MAXIMUM TIME IN ms BETWEEN 2 FRAMES
+
+treshold: 42
+
+# WIDTH OF THE FRAMES
+
 width: 1280
+
+# HEIGHT OF THE FRAMES
+
 height: 720
+
+# FRAMES PER SECOND
+
 fps: 30
 
-default-width: 640
-default-height: 480
-default-fps: 30

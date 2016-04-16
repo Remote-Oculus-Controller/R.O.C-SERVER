@@ -1,27 +1,27 @@
 SRCSDIR = ./SRC/
 INCSDIR = ./INC/
-
-
 OBJSDIR = ./OBJ/
 
 
 SRCS	= 	$(SRCSDIR)Main/main.cpp \
-		$(SRCSDIR)Parser/YAMLParser.cpp \
-		$(SRCSDIR)Network/Server.cpp \
-		$(SRCSDIR)Network/TcpServer.cpp \
-		$(SRCSDIR)RTSPFactory/RTSPFactory.cpp \
-		$(SRCSDIR)Network/H264LiveServerMediaSession.cpp \
-		$(SRCSDIR)Network/LiveSourceWithx264.cpp \
-		$(SRCSDIR)Encoder/x264Encoder.cpp \
-		$(SRCSDIR)Encoder/x265Encoder.cpp \
-		$(SRCSDIR)Video/Camera.cpp \
-		$(SRCSDIR)Processing/ImgProcessing.cpp \
-		$(SRCSDIR)Processing/Canny.cpp \
-		$(SRCSDIR)Processing/FaceDetect.cpp \
-		$(SRCSDIR)Processing/RedCirclesDetect.cpp \
-		$(SRCSDIR)Processing/Arrow.cpp \
-		$(SRCSDIR)Interpretor/Reader.cpp \
-		$(SRCSDIR)Manager/Manager.cpp
+					$(SRCSDIR)Parser/YAMLParser.cpp \
+					$(SRCSDIR)Network/Server.cpp \
+					$(SRCSDIR)Network/TcpServer.cpp \
+					$(SRCSDIR)RTSPFactory/RTSPFactory.cpp \
+					$(SRCSDIR)Network/H264LiveServerMediaSession.cpp \
+					$(SRCSDIR)Network/LiveSourceWithx264.cpp \
+					$(SRCSDIR)Encoder/x264Encoder.cpp \
+					$(SRCSDIR)Encoder/x265Encoder.cpp \
+					$(SRCSDIR)Video/Camera.cpp \
+					$(SRCSDIR)Processing/ImgProcessing.cpp \
+					$(SRCSDIR)Processing/Canny.cpp \
+					$(SRCSDIR)Processing/FaceDetect.cpp \
+					$(SRCSDIR)Processing/RedCirclesDetect.cpp \
+					$(SRCSDIR)Processing/Arrow.cpp \
+					$(SRCSDIR)Interpretor/Reader.cpp \
+					$(SRCSDIR)Manager/Manager.cpp \
+					$(SRCSDIR)Singletons/VideoManagerSingleton.cpp \
+					$(SRCSDIR)Singletons/ImgProcessingWrapperSingleton.cpp
 
 NAME = Server
 

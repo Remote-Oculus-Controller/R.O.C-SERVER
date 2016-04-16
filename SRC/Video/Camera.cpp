@@ -102,7 +102,7 @@ bool Camera::initResolutions()
 	this->_height = this->_camera->get(cv::CAP_PROP_FRAME_HEIGHT);
 	this->_fps = this->_camera->get(cv::CAP_PROP_FPS);
 
-    return true;
+  return true;
 }
 
 int Camera::getWidth()

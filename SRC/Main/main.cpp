@@ -1,5 +1,4 @@
 #include "Manager/Manager.hpp"
-#include "Encoder/x265Encoder.hpp"
 
 int main(int argc, char**argv)
 {
