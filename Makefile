@@ -21,7 +21,7 @@ SRCS	= 	$(SRCSDIR)Main/main.cpp \
 		$(SRCSDIR)Processing/RedCirclesDetect.cpp \
 		$(SRCSDIR)Processing/Arrow.cpp \
 		$(SRCSDIR)Interpretor/Reader.cpp \
-		$(SRCSDIR)Manager/Manager.cpp \		
+		$(SRCSDIR)Manager/Manager.cpp
 
 NAME = Server
 

@@ -47,15 +47,7 @@ bool Camera::initCamera()
 {
 	this->_camera->open(this->_id);
 	if (this->_camera->isOpened() == false)
-<<<<<<< HEAD
-		 {
-		 	std::cout << "Cannot opent camera" << std::endl;
-		 	return (false);
-
-		 }
-=======
 		return false;
->>>>>>> devlopment
 	this->_camera->set(cv::CAP_PROP_FOURCC, VideoWriter::fourcc('M', 'J', 'P', 'G'));
     if (this->initResolutions() == false)
         return false;
