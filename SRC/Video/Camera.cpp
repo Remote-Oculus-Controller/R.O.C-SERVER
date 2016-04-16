@@ -1,5 +1,5 @@
-#include "Video/Camera.hpp"
 #include <iostream>
+#include "Video/Camera.hpp"
 
 //====================================================
 // CONSTRUCTEUR / DESTRUCTEUR
@@ -10,6 +10,7 @@ Camera::Camera(int id)
 	this->_id = id;
 	this->_camera = new cv::VideoCapture(this->_id);
 }
+
 
 Camera::~Camera()
 {
@@ -22,15 +23,15 @@ Camera::~Camera()
 // GETTERS
 //====================================================
 
-int Camera::getId() const 
+int Camera::getId() const
 {
-	return (this->_id);
+	return this->_id;
 }
 
 
 Mat & Camera::getFrame()
 {
-	return (this->_frame);
+	return this->_frame;
 }
 
 //====================================================
@@ -46,43 +47,53 @@ bool Camera::initCamera()
 {
 	this->_camera->open(this->_id);
 	if (this->_camera->isOpened() == false)
+<<<<<<< HEAD
 		 {
 		 	std::cout << "Cannot opent camera" << std::endl;
 		 	return (false);
 
 		 }
+=======
+		return false;
+>>>>>>> devlopment
 	this->_camera->set(cv::CAP_PROP_FOURCC, VideoWriter::fourcc('M', 'J', 'P', 'G'));
-	this->initResolutions();
-	
+    if (this->initResolutions() == false)
+        return false;
+    return true;
 }
 
-bool Camera::captureNewFrame()
+bool Camera::retrieveFrame()
 {
-	this->_camera->read(this->_frame);
-	return (true);
+	return this->_camera->retrieve(this->_frame);
 }
 
-
+bool Camera::grabFrame()
+{
+	return this->_camera->grab();
+}
 
 bool Camera::reOpenCamera()
 {
 	delete (this->_camera);
 	this->_camera = new cv::VideoCapture(this->_id);
+    if (this->_camera == NULL)
+        return false;
+    return true;
 }
 
 //===================================================
 // FONCTIONS MASQUEES D'INITIALISATION
 //===================================================
 
-void Camera::initResolutions()
+bool Camera::initResolutions()
 {
 
 	YAMLParser parser = YAMLParser(CAMERA_CONFIGURATION_FILE , FileStorage::READ);
 
 	if (parser.isOpened() == false)
 	{
-		std::cout << "Cannot open resolutions file : " << CAMERA_CONFIGURATION_FILE << std::endl;
-		std::cout << "Using default values." << std::endl;
+        std::cout << "Cannot open resolutions file : " << CAMERA_CONFIGURATION_FILE << std::endl;
+        return false;
 	}
 	else
 	{
@@ -99,24 +110,20 @@ void Camera::initResolutions()
 	this->_height = this->_camera->get(cv::CAP_PROP_FRAME_HEIGHT);
 	this->_fps = this->_camera->get(cv::CAP_PROP_FPS);
 
-	std::cout << "Camera parameters are : " << std::endl;
-	std::cout << "FPS    : " << this->_fps << std::endl;
-	std::cout << "Width  : " << this->_width << std::endl; 
-	std::cout << "Height : " << this->_height << std::endl << std::endl; 
+    return true;
 }
-
 
 int Camera::getWidth()
 {
-	return (this->_width);
+	return this->_width;
 }
 
 int Camera::getHeight()
 {
-	return (this->_height);
+	return this->_height;
 }
 
 int Camera::getFps()
 {
-	return (this->_fps);
+  return this->_fps;
 }

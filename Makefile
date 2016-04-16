@@ -1,14 +1,3 @@
-##
-## Makefile for  in /home/roussi_h/rendu/Epikong/etape_2
-## 
-## Made by ROUSSILLE
-## Login   <roussi_h@epitech.net>
-## 
-## Started on  Wed Dec  3 11:23:09 2014 ROUSSILLE
-## Last update Wed Dec 10 01:07:34 2014 ROUSSILLE
-##
-##
-
 SRCSDIR = ./SRC/
 INCSDIR = ./INC/
 
@@ -32,10 +21,7 @@ SRCS	= 	$(SRCSDIR)Main/main.cpp \
 		$(SRCSDIR)Processing/RedCirclesDetect.cpp \
 		$(SRCSDIR)Processing/Arrow.cpp \
 		$(SRCSDIR)Interpretor/Reader.cpp \
-		$(SRCSDIR)Manager/Manager.cpp \
-
-
-		
+		$(SRCSDIR)Manager/Manager.cpp \		
 
 NAME = Server
 
@@ -57,13 +43,13 @@ $(OBJSDIR)%.o:	$(SRCSDIR)%.cpp
 		@$(CXX) $(CFLAGS) -c $< -o $@ $(CPPFLAGS)
 
 $(NAME): $(OBJS)
-	@echo "Linking Server"
-	@$(CXX) $(LDFLAGS) -o $(NAME) $(OBJS) $(LDLIBS)
+		@echo "Linking Server"
+		@$(CXX) $(LDFLAGS) -o $(NAME) $(OBJS) $(LDLIBS)
 
 clean :
 	$(RM) $(OBJS)
 
-fclean : clean 
+fclean : clean
 	$(RM) $(NAME)
 
 re: fclean all

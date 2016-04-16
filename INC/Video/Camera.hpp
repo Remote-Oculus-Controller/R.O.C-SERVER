@@ -21,12 +21,15 @@ class Camera
 {
 
 	public:
-	
+
 	//====================================================
 	// CONSTRUCTEUR / DESTRUCTEUR
 	//====================================================
 
 	Camera(int id = 0);
+
+	Camera(std::string filename);
+
 	~Camera();
 
 	//====================================================
@@ -48,12 +51,13 @@ class Camera
 	//====================================================
 
 	bool initCamera();
-	bool captureNewFrame();
-  	bool reOpenCamera();
+	bool retrieveFrame();
+	bool grabFrame();
+  bool reOpenCamera();
 
-  	int getWidth();
-  	int getHeight();
-  	int getFps();
+  int getWidth();
+  int getHeight();
+  int getFps();
 
 	protected:
 
@@ -61,21 +65,21 @@ class Camera
 	// FONCTIONS MASQUEES D'INITIALISATION
 	//===================================================
 
-	void initResolutions();
+	bool    initResolutions();
 
 
 	//====================================================
 	// ATTRIBUT PROPRE A LA CAMERA
 	//====================================================
 
-	int 						_id;
-	
-	cv::Mat 					_frame;
+	int 									_id;
+
+	cv::Mat 							_frame;
 	cv::VideoCapture	*		_camera;
 
-	int 						_width;
-	int 						_height;
-	int 						_fps;
+	int 									_width;
+	int 									_height;
+	int 									_fps;
 
 };
 

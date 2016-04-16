@@ -37,6 +37,7 @@ LiveSourceWithx264::~LiveSourceWithx264(void) {
     eventTriggerId = 0;
 }
 
+<<<<<<< HEAD
 void LiveSourceWithx264::encodeNewFrame() {
     this->camera->captureNewFrame();
     // Got new image to stream
@@ -59,6 +60,20 @@ void LiveSourceWithx264::encodeNewFrame() {
         x264_nal_t nal = encoder->getNalUnit();
         nalQueue.push(nal);
     }
+=======
+void LiveSourceWithx264::encodeNewFrame()
+{
+        this->camera->grabFrame();
+        this->camera->retrieveFrame();
+
+        // Got new image to stream
+        encoder->encodeFrame(this->camera->getFrame());
+        while(encoder->isNalsAvailableInOutputQueue() == true)
+        {
+            x264_nal_t nal = encoder->getNalUnit();
+            nalQueue.push(nal);
+        }
+>>>>>>> devlopment
 }
 
 void LiveSourceWithx264::deliverFrame0(void *clientData) {
@@ -81,6 +96,11 @@ void LiveSourceWithx264::deliverFrame() {
     x264_nal_t nal = nalQueue.front();
     nalQueue.pop();
     assert(nal.p_payload != NULL);
+<<<<<<< HEAD
+=======
+    // You need to remove the start code which is there in front of every nal unit.
+    // the start code might be 0x00000001 or 0x000001. so detect it and remove it. pass remaining data to live555
+>>>>>>> devlopment
     int trancate = 0;
     if (nal.i_payload >= 4 && nal.p_payload[0] == 0 && nal.p_payload[1] == 0 && nal.p_payload[2] == 0 &&
         nal.p_payload[3] == 1) {
@@ -102,4 +122,8 @@ void LiveSourceWithx264::deliverFrame() {
     fPresentationTime = currentTime;
     memmove(fTo, nal.p_payload + trancate, fFrameSize);
     FramedSource::afterGetting(this);
+<<<<<<< HEAD
 }  
+=======
+}
+>>>>>>> devlopment
