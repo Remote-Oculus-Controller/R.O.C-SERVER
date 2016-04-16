@@ -8,7 +8,7 @@
 class Arrow : public ImgProcessing {
 public:
 
-    Arrow(int angle, int distance);
+    Arrow(int angle, int distance, int width, int height);
 
     ~Arrow();
 
@@ -27,6 +27,8 @@ private:
 
     int _angle;
     int _distance;
+    int _height;
+    int _width;
 };
 
 #endif // ARROW_HPP

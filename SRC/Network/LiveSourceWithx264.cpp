@@ -51,8 +51,8 @@ void LiveSourceWithx264::encodeNewFrame() {
 
     // REMOVE COMMENT FOR ARROW DIRECTION (static)
 
-    //Arrow arrow(0, 100);
-    //arrow.apply(this->camera->getFrame());
+    Arrow arrow(0, 100, this->camera->getWidth(), this->camera->getHeight());
+    arrow.apply(this->camera->getFrame());
 
     encoder->encodeFrame(this->camera->getFrame());
     // Take all nals from encoder output queue to our input queue
