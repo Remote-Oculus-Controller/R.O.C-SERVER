@@ -14,7 +14,7 @@
 
 typedef struct
 {
-	int cameraId;
+	int camerasCount;
 	int port;
 	char volatile watcher;
 } threadArguments;
@@ -28,7 +28,7 @@ class RTSPFactory
 
 		int createServer(int cameraId, int port);
 		bool deleteServer();
-	
+
 	private:
 
 		static void * createRTSPServer(void * args);

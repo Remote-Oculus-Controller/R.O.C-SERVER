@@ -12,13 +12,13 @@ RTSPFactory::~RTSPFactory()
 }
 
 
-int RTSPFactory::createServer(int cameraId, int port)
+int RTSPFactory::createServer(int camerasCount, int port)
 {
 	threadArguments * args = new threadArguments;
 
-	args->cameraId = cameraId;
+	args->camerasCount = camerasCount;
 	args->port = port;
-	args->watcher = 0; 
+	args->watcher = 0;
 
 	this->watcher = &(args->watcher);
 
@@ -49,6 +49,11 @@ void * RTSPFactory::createRTSPServer(void * args_void)
 {
 	threadArguments * args = static_cast<threadArguments *>(args_void);
 
+	if (args->camerasCount <= 0) {
+		args->watcher = -1;
+		return 0;
+	}
+
 	TaskScheduler* taskSchedular = BasicTaskScheduler::createNew();
 	BasicUsageEnvironment* usageEnvironment = BasicUsageEnvironment::createNew(*taskSchedular);
 	RTSPServer* rtspServer = RTSPServer::createNew(*usageEnvironment, args->port, NULL);
@@ -56,17 +61,21 @@ void * RTSPFactory::createRTSPServer(void * args_void)
 	if(rtspServer == NULL)
 	{
 		*usageEnvironment << "Failed to create rtsp server ::" << usageEnvironment->getResultMsg() <<"\n";
-		exit(1);
+		args->watcher = -1;
+		return 0;
 	}
 
-	std::string streamName = "camera_" + std::to_string(args->cameraId);
-	ServerMediaSession* sms = ServerMediaSession::createNew(*usageEnvironment, streamName.c_str(), streamName.c_str(), "Live H264 Stream");
-	H264LiveServerMediaSession *liveSubSession = H264LiveServerMediaSession::createNew(*usageEnvironment, true);
-	sms->addSubsession(liveSubSession);
-	rtspServer->addServerMediaSession(sms);
-	char* url = rtspServer->rtspURL(sms);
-	*usageEnvironment << "Play the stream using url "<<url << "\n";
-	delete[] url;
+	for (unsigned int index = 0 ; index < args->camerasCount ; index++) {
+		std::string streamName = "camera_" + std::to_string(index);
+		ServerMediaSession* sms = ServerMediaSession::createNew(*usageEnvironment, streamName.c_str(), streamName.c_str(), "Live H264 Stream");
+		H264LiveServerMediaSession *liveSubSession = H264LiveServerMediaSession::createNew(*usageEnvironment, true , index);
+		sms->addSubsession(liveSubSession);
+		rtspServer->addServerMediaSession(sms);
+		char* url = rtspServer->rtspURL(sms);
+		*usageEnvironment << "Play the stream using url "<<url << "\n";
+		delete[] url;
+	}
+
 	taskSchedular->doEventLoop(&args->watcher);
 	return 0;
 }

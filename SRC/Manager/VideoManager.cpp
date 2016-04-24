@@ -6,7 +6,6 @@
 
 VideoManager::VideoManager()
 {
-  this->_watcher = 0;
   this->_ready = this->init();
 }
 
@@ -30,13 +29,24 @@ bool VideoManager::isReady()
 
 bool VideoManager::init()
 {
+  unsigned int tmpCount;
+  unsigned int tmpTreshold;
+  unsigned int tmpTimeout;
+
   YAMLParser parser = YAMLParser(VIDEO_MANAGER_CONFIG_FILE , FileStorage::READ);
   if (parser.isOpened() == false)
     return false;
 
-  this->_camerasCount = parser.getValueOf("camera_count");
-  this->_treshold     = parser.getValueOf("treshold");
-  this->_timeout      = 1000 / parser.getValueOf("fps");
+  tmpCount = parser.getValueOf("camera_count");
+  tmpTreshold = parser.getValueOf("treshold");
+  tmpTimeout = parser.getValueOf("fps");
+
+  if (tmpCount == 0 || tmpCount > 4 || tmpTimeout == 0)
+    return false;
+
+  this->_camerasCount = tmpCount;
+  this->_treshold     = tmpTreshold;
+  this->_timeout      = 1000 / tmpTimeout;
 
   for (unsigned int i = 0 ; i < this->_camerasCount ; i++) {
     Camera * camera = new Camera(i);
@@ -66,8 +76,6 @@ bool VideoManager::uninit()
 
 cv::Mat & VideoManager::queryFrame(unsigned int id)
 {
-  this->_cameras[id]->grabFrame();
-  this->_cameras[id]->retrieveFrame();
   return this->_cameras[id]->getFrame();
 }
 
@@ -75,14 +83,16 @@ cv::Mat & VideoManager::queryFrame(unsigned int id)
 // GRAB ALL FRAMES TO SYNC CAMERAS
 //====================================================
 
-bool VideoManager::grab()
+bool VideoManager::grab(unsigned int id)
 {
-  unsigned int error = 0;
-  for (unsigned int i = 0 ; i < this->_cameras.size() ; i++) {
-    if (this->_cameras[i]->grabFrame() == false)
-      error = error + 1;
-  }
-  if (error)
+    if (id < this->_cameras.size())
+      return this->_cameras[id]->grabFrame();
     return false;
-  return true;
+}
+
+bool VideoManager::retrieve(unsigned int id)
+{
+  if (id < this->_cameras.size())
+    return this->_cameras[id]->retrieveFrame();
+  return false;
 }

@@ -1,14 +1,14 @@
 #include "Network/H264LiveServerMediaSession.hpp"
 
 
-H264LiveServerMediaSession* H264LiveServerMediaSession::createNew(UsageEnvironment& env, bool reuseFirstSource)
+H264LiveServerMediaSession* H264LiveServerMediaSession::createNew(UsageEnvironment& env, bool reuseFirstSource , unsigned int id)
 {
-    return new H264LiveServerMediaSession(env, reuseFirstSource);
+    return new H264LiveServerMediaSession(env, reuseFirstSource, id);
 }
 
-H264LiveServerMediaSession::H264LiveServerMediaSession(UsageEnvironment& env, bool reuseFirstSource):OnDemandServerMediaSubsession(env,reuseFirstSource),fAuxSDPLine(NULL), fDoneFlag(0), fDummySink(NULL)
+H264LiveServerMediaSession::H264LiveServerMediaSession(UsageEnvironment& env, bool reuseFirstSource, unsigned int id):OnDemandServerMediaSubsession(env,reuseFirstSource),fAuxSDPLine(NULL), fDoneFlag(0), fDummySink(NULL)
 {
-
+  this->_id = id;
 }
 
 
@@ -73,9 +73,9 @@ char const* H264LiveServerMediaSession::getAuxSDPLine(RTPSink* rtpSink, FramedSo
 FramedSource* H264LiveServerMediaSession::createNewStreamSource(unsigned clientSessionID, unsigned& estBitRate)
 {
     estBitRate = 6000;
-    LiveSourceWithx264 *source = LiveSourceWithx264::createNew(envir());
-    // are you trying to keep the reference of the source somewhere? you shouldn't.  
-    // Live555 will create and delete this class object many times. if you store it somewhere  
+    LiveSourceWithx264 *source = LiveSourceWithx264::createNew(envir() , this->_id);
+    // are you trying to keep the reference of the source somewhere? you shouldn't.
+    // Live555 will create and delete this class object many times. if you store it somewhere
     // you will get memory access violation. instead you should configure you source to always read from your data source
     return H264VideoStreamDiscreteFramer::createNew(envir(),source);
 }
@@ -83,4 +83,4 @@ FramedSource* H264LiveServerMediaSession::createNewStreamSource(unsigned clientS
 RTPSink* H264LiveServerMediaSession::createNewRTPSink(Groupsock* rtpGroupsock, unsigned char rtpPayloadTypeIfDynamic, FramedSource* inputSource)
 {
     return H264VideoRTPSink::createNew(envir(), rtpGroupsock, rtpPayloadTypeIfDynamic);
-}  
+}

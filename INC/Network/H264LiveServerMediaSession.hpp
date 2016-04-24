@@ -8,11 +8,11 @@
 class H264LiveServerMediaSession :public OnDemandServerMediaSubsession
 {
 public:
-    static H264LiveServerMediaSession* createNew(UsageEnvironment& env, bool reuseFirstSource);
+    static H264LiveServerMediaSession* createNew(UsageEnvironment& env, bool reuseFirstSource, unsigned int id);
     void checkForAuxSDPLine1();
     void afterPlayingDummy1();
 protected:
-    H264LiveServerMediaSession(UsageEnvironment& env, bool reuseFirstSource);
+    H264LiveServerMediaSession(UsageEnvironment& env, bool reuseFirstSource, unsigned int id);
     virtual ~H264LiveServerMediaSession(void);
     void setDoneFlag() { fDoneFlag = ~0; }
 protected:
@@ -23,6 +23,7 @@ private:
     char* fAuxSDPLine;
     char fDoneFlag;
     RTPSink* fDummySink;
-};  
+    unsigned int _id;
+};
 
 #endif // H264LIVE_SERVER_MEDIA_SESSION_HPP
