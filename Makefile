@@ -20,8 +20,8 @@ SRCS	= 	$(SRCSDIR)Main/main.cpp \
 					$(SRCSDIR)Processing/Arrow.cpp \
 					$(SRCSDIR)Interpretor/Reader.cpp \
 					$(SRCSDIR)Manager/Manager.cpp \
-					$(SRCSDIR)Singletons/VideoManagerSingleton.cpp \
-					$(SRCSDIR)Singletons/ImgProcessingWrapperSingleton.cpp
+					$(SRCSDIR)Manager/VideoManager.cpp \
+					$(SRCSDIR)Singletons/VideoManagerSingleton.cpp
 
 NAME = Server
 

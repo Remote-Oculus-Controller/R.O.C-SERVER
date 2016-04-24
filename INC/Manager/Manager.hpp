@@ -7,7 +7,7 @@
 class Manager
 {
 	public:
-	
+
 	Manager(int argc, char **argv);
 	~Manager();
 

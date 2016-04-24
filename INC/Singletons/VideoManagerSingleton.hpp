@@ -7,6 +7,6 @@ class VideoManagerSingleton
 {
   public:
     static VideoManager * getInstance();
-}
+};
 
 #endif // VIDEOMANAGERSINGLETON_HPP

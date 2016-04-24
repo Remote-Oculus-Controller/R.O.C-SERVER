@@ -16,7 +16,7 @@ TcpServer::~TcpServer()
 }
 
 //====================================================
-// FONCTIONS SURCHARGEES d'INIT / MARCHE / ARRET 
+// FONCTIONS SURCHARGEES d'INIT / MARCHE / ARRET
 //====================================================
 
 bool TcpServer::initServer()

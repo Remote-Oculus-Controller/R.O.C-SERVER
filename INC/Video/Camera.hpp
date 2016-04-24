@@ -28,8 +28,6 @@ class Camera
 
 	Camera(int id = 0);
 
-	Camera(std::string filename);
-
 	~Camera();
 
 	//====================================================
