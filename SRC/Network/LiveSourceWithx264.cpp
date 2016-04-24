@@ -3,6 +3,7 @@
 #include "Processing/RedCirclesDetect.hpp"
 #include "Processing/FaceDetect.hpp"
 #include "Processing/Arrow.hpp"
+#include "Processing/Canny.hpp"
 
 LiveSourceWithx264 *LiveSourceWithx264::createNew(UsageEnvironment &env , unsigned int id) {
     return new LiveSourceWithx264(env, id);

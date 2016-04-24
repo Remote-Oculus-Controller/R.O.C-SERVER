@@ -72,7 +72,7 @@ char const* H264LiveServerMediaSession::getAuxSDPLine(RTPSink* rtpSink, FramedSo
 
 FramedSource* H264LiveServerMediaSession::createNewStreamSource(unsigned clientSessionID, unsigned& estBitRate)
 {
-    estBitRate = 6000;
+    estBitRate = 10000;
     LiveSourceWithx264 *source = LiveSourceWithx264::createNew(envir() , this->_id);
     // are you trying to keep the reference of the source somewhere? you shouldn't.
     // Live555 will create and delete this class object many times. if you store it somewhere

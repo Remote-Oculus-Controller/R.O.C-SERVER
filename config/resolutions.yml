@@ -2,7 +2,7 @@
 
 # NUMBER OF CAMERAS TO HANDLE
 
-camera_count: 4
+camera_count: 1
 
 # MAXIMUM TIME IN ms BETWEEN 2 FRAMES
 
@@ -19,4 +19,3 @@ height: 720
 # FRAMES PER SECOND
 
 fps: 30
-
