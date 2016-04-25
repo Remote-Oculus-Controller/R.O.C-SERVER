@@ -8,7 +8,7 @@
 Camera::Camera(int id)
 {
 	this->_id = id;
-	this->_camera = new cv::VideoCapture(this->_id);
+	this->_camera = new cv::VideoCapture();
 }
 
 
@@ -45,13 +45,13 @@ Mat & Camera::getFrame()
 
 bool Camera::initCamera()
 {
-	this->_camera->open(this->_id);
-	if (this->_camera->isOpened() == false)
+	if (this->_camera->open(this->_id) ||
+		this->_camera->isOpened() == false)
 		return false;
 	this->_camera->set(cv::CAP_PROP_FOURCC, VideoWriter::fourcc('M', 'J', 'P', 'G'));
-    if (this->initResolutions() == false)
-        return false;
-    return true;
+	if (this->initResolutions() == false)
+		return false;
+	return true;
 }
 
 bool Camera::retrieveFrame()
@@ -68,9 +68,9 @@ bool Camera::reOpenCamera()
 {
 	delete (this->_camera);
 	this->_camera = new cv::VideoCapture(this->_id);
-    if (this->_camera == NULL)
-        return false;
-    return true;
+	if (this->_camera == NULL)
+		return false;
+	return true;
 }
 
 //===================================================
@@ -84,8 +84,8 @@ bool Camera::initResolutions()
 
 	if (parser.isOpened() == false)
 	{
-        std::cout << "Cannot open resolutions file : " << CAMERA_CONFIGURATION_FILE << std::endl;
-        return false;
+		std::cout << "Cannot open resolutions file : " << CAMERA_CONFIGURATION_FILE << std::endl;
+		return false;
 	}
 	else
 	{
@@ -102,7 +102,7 @@ bool Camera::initResolutions()
 	this->_height = this->_camera->get(cv::CAP_PROP_FRAME_HEIGHT);
 	this->_fps = this->_camera->get(cv::CAP_PROP_FPS);
 
-  return true;
+	return true;
 }
 
 int Camera::getWidth()
@@ -117,5 +117,5 @@ int Camera::getHeight()
 
 int Camera::getFps()
 {
-  return this->_fps;
+	return this->_fps;
 }

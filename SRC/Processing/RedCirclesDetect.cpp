@@ -39,7 +39,7 @@ void RedCirclesDetect::detectAndDraw(cv::Mat &image) {
     cv::GaussianBlur(red_hue_image, red_hue_image, cv::Size(9, 9), 2, 2);
 
     std::vector<cv::Vec3f> circles;
-    cv::HoughCircles(red_hue_image, circles, CV_HOUGH_GRADIENT, 1, this->_minDist, 100, 40, this->_minRadius,
+    cv::HoughCircles(red_hue_image, circles, CV_HOUGH_GRADIENT, 1, this->_minDist, 100, 30, this->_minRadius,
                      this->_maxRadius);
 
     for (size_t current_circle = 0; current_circle < circles.size(); ++current_circle) {

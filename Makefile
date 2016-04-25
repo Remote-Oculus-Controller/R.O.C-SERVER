@@ -23,7 +23,13 @@ SRCS	= 	$(SRCSDIR)Main/main.cpp \
 			$(SRCSDIR)Manager/VideoManager.cpp \
 			$(SRCSDIR)Singletons/VideoManagerSingleton.cpp
 
-SRCS_TEST = $(SRCSDIR)Test/main.cpp
+SRCS_TEST = $(SRCSDIR)Test/main.cpp \
+			$(SRCSDIR)Test/YamlTest.cpp \
+			$(SRCSDIR)Parser/YAMLParser.cpp \
+			$(SRCSDIR)Test/CameraTest.cpp \
+			$(SRCSDIR)Video/Camera.cpp \
+
+
 
 NAME = Server
 
