@@ -14,6 +14,12 @@ Manager::~Manager()
 bool Manager::startRTSP()
 {
 
+	YAMLParser parser = YAMLParser(VIDEO_MANAGER_CONFIG_FILE , FileStorage::READ);
+	if (parser.isOpened() == false)
+		return false;
+
+	unsigned int camerasCount = parser.getValueOf("camera_count");
+
 	if (this->_argc < 2)
 		return (false);
 
@@ -22,10 +28,9 @@ bool Manager::startRTSP()
 	if (port <= 0)
 		return (false);
 
-	if (this->_RTSPFactory.createServer(0, port) == -1)
+	if (this->_RTSPFactory.createServer(camerasCount, port) == -1)
 		return (false);
 	return (true);
-
 }
 
 bool Manager::stopRTSP()
@@ -48,7 +53,7 @@ bool Manager::startInterpretor()
 			this->stopRTSP();
 			break;
 		}
-	}	
+	}
 }
 
 bool Manager::stopInterpretor()

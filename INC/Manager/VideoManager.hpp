@@ -20,19 +20,19 @@ class VideoManager {
         bool isReady();
 
         cv::Mat & queryFrame(unsigned int id);
+        bool grab(unsigned int id);
+        bool retrieve(unsigned int id);
 
     private:
 
         bool init();
         bool uninit();
-        bool grab();
 
     private:
 
         unsigned int            _camerasCount;
         unsigned int            _timeout;
         unsigned int            _treshold;
-        unsigned int            _watcher;
 
         bool                    _ready;
         std::mutex              _grabLock;

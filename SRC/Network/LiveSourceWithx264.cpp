@@ -3,20 +3,22 @@
 #include "Processing/RedCirclesDetect.hpp"
 #include "Processing/FaceDetect.hpp"
 #include "Processing/Arrow.hpp"
+#include "Processing/Canny.hpp"
 
-LiveSourceWithx264 *LiveSourceWithx264::createNew(UsageEnvironment &env) {
-    return new LiveSourceWithx264(env);
+LiveSourceWithx264 *LiveSourceWithx264::createNew(UsageEnvironment &env , unsigned int id) {
+    return new LiveSourceWithx264(env, id);
 }
 
 EventTriggerId LiveSourceWithx264::eventTriggerId = 0;
 
 unsigned LiveSourceWithx264::referenceCount = 0;
 
-LiveSourceWithx264::LiveSourceWithx264(UsageEnvironment &env) : FramedSource(env) {
+LiveSourceWithx264::LiveSourceWithx264(UsageEnvironment &env , unsigned int id) : FramedSource(env) {
     if (referenceCount == 0) {
 
     }
     this->camera = new Camera(0);
+    this->_id = id;
     this->camera->initCamera();
     ++referenceCount;
     encoder = new x264Encoder(this->camera->getWidth(),

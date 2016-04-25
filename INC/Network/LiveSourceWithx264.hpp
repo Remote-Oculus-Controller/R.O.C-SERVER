@@ -16,10 +16,10 @@
 class LiveSourceWithx264 : public FramedSource
 {
 public:
-    static LiveSourceWithx264* createNew(UsageEnvironment& env);
+    static LiveSourceWithx264* createNew(UsageEnvironment& env , unsigned int id);
     static EventTriggerId eventTriggerId;
 protected:
-    LiveSourceWithx264(UsageEnvironment& env);
+    LiveSourceWithx264(UsageEnvironment& env , unsigned int id);
     virtual ~LiveSourceWithx264(void);
 private:
     virtual void doGetNextFrame();
@@ -29,11 +29,9 @@ private:
     static unsigned referenceCount;
     std::queue<x264_nal_t> nalQueue;
     timeval currentTime;
-    // videoCaptureDevice is my BGR data source. You can have according to your need
-
     Camera * camera;
-    // Remember the x264 encoder wrapper we wrote in the start
     x264Encoder *encoder;
-}; 
+    unsigned int _id;
+};
 
 #endif // LIVE_SOURCE_WITHX264_HPP

@@ -3,6 +3,9 @@
 
 #include "RTSPFactory/RTSPFactory.hpp"
 #include "Interpretor/Reader.hpp"
+#include "Parser/YAMLParser.hpp"
+
+#define VIDEO_MANAGER_CONFIG_FILE "config/resolutions.yml"
 
 class Manager
 {

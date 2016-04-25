@@ -63,6 +63,20 @@ $(NAME): $(OBJS)
 test: $(OBJS_TEST)
 	@echo "Linking Server (test mode) $<"
 	@$(CXX) $(LDFLAGS) -o $(NAME_TEST) $(OBJS_TEST) $(LDLIBS) $(LDLIBS_TEST)
+tree:
+	mkdir -p OBJ
+	mkdir -p OBJ/Compressor/
+	mkdir -p OBJ/Encoder/
+	mkdir -p OBJ/Interpretor/
+	mkdir -p OBJ/Main/
+	mkdir -p OBJ/Manager/
+	mkdir -p OBJ/Network/
+	mkdir -p OBJ/Parser/
+	mkdir -p OBJ/Processing/
+	mkdir -p OBJ/RTSPFactory/
+	mkdir -p OBJ/Singletons/
+	mkdir -p OBJ/Test/
+	mkdir -p OBJ/Video/
 
 clean :
 	$(RM) $(OBJS) $(OBJS_TEST)
