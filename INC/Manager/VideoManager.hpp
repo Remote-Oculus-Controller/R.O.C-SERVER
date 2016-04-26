@@ -3,13 +3,19 @@
 
 #include <iostream>
 #include <ctime>
-#include <mutex>
 #include <vector>
-
+#include <thread>
+#include <mutex>
 #include "Video/Camera.hpp"
 #include "Parser/YAMLParser.hpp"
 
 #define VIDEO_MANAGER_CONFIG_FILE "config/resolutions.yml"
+
+typedef struct {
+  Camera * _camera;
+  std::mutex mtx;
+  volatile int watcher;
+} concurentCamera;
 
 class VideoManager {
 
@@ -20,13 +26,16 @@ class VideoManager {
         bool isReady();
 
         cv::Mat & queryFrame(unsigned int id);
-        bool grab(unsigned int id);
-        bool retrieve(unsigned int id);
+        bool run();
 
     private:
 
         bool init();
         bool uninit();
+        bool spawn();
+
+        bool grab(unsigned int id);
+        bool retrieve(unsigned int id);
 
     private:
 
@@ -35,7 +44,6 @@ class VideoManager {
         unsigned int            _treshold;
 
         bool                    _ready;
-        std::mutex              _grabLock;
         time_t                  _lastGrab;
         std::vector<Camera *>   _cameras;
 };

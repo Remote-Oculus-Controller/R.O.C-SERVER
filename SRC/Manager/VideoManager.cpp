@@ -90,6 +90,10 @@ bool VideoManager::grab(unsigned int id)
     return false;
 }
 
+//====================================================
+// GRAB ALL FRAMES TO SYNC CAMERAS
+//====================================================
+
 bool VideoManager::retrieve(unsigned int id)
 {
   if (id < this->_cameras.size())

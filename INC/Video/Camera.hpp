@@ -51,6 +51,7 @@ class Camera
 	bool initCamera();
 	bool retrieveFrame();
 	bool grabFrame();
+	bool flipFrame();
   bool reOpenCamera();
 
   int getWidth();
@@ -72,7 +73,8 @@ class Camera
 
 	int 									_id;
 
-	cv::Mat 							_frame;
+	cv::Mat 							_frontFrame;
+	cv::Mat 							_backFrame;
 	cv::VideoCapture	*		_camera;
 
 	int 									_width;

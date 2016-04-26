@@ -31,7 +31,7 @@ int Camera::getId() const
 
 Mat & Camera::getFrame()
 {
-	return this->_frame;
+	return this->_frontFrame;
 }
 
 //====================================================
@@ -56,12 +56,17 @@ bool Camera::initCamera()
 
 bool Camera::retrieveFrame()
 {
-	return this->_camera->retrieve(this->_frame);
+	return this->_camera->retrieve(this->_backFrame);
 }
 
 bool Camera::grabFrame()
 {
 	return this->_camera->grab();
+}
+
+bool Camera::flipFrame()
+{
+	this->_frontFrame = this->_backFrame.clone();
 }
 
 bool Camera::reOpenCamera()
