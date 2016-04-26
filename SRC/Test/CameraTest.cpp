@@ -33,6 +33,7 @@ namespace {
 		virtual void TearDown() {
     // Code here will be called immediately after each test (right
     // before the destructor).
+        delete this->camera;
 		}
 
 		bool OpenCamera(int id) {
