@@ -14,7 +14,7 @@ x264Encoder::~x264Encoder(void)
 
 }
 
-void x264Encoder::initilize()
+bool x264Encoder::initilize()
 {
     x264_param_default_preset(&parameters, "veryfast", "zerolatency");
 
@@ -54,6 +54,7 @@ void x264Encoder::initilize()
                                     NULL,
                                     NULL,
                                     NULL);
+    return true;
 }
 
 void x264Encoder::unInitilize()

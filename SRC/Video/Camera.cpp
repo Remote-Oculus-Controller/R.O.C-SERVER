@@ -48,7 +48,7 @@ bool Camera::initCamera()
 	if (this->_camera->open(this->_id) == false||
 		this->_camera->isOpened() == false)
 		return false;
-	this->_camera->set(cv::CAP_PROP_FOURCC, VideoWriter::fourcc('M', 'J', 'P', 'G'));
+	// this->_camera->set(cv::CAP_PROP_FOURCC, VideoWriter::fourcc('M', 'J', 'P', 'G'));
 	if (this->initResolutions() == false)
 		return false;
 	return true;

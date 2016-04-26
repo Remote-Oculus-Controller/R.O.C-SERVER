@@ -28,7 +28,7 @@ public:
     ~x264Encoder(void);
 
 public:
-    void initilize();
+    bool initilize();
     void unInitilize();
     void encodeFrame(cv::Mat& image);
     bool isNalsAvailableInOutputQueue();
