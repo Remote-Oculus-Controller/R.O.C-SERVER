@@ -43,23 +43,19 @@ namespace {
   // Objects declared here can be used by all tests in the test case for Foo.
 	};
 
-	TEST_F(CameraTest, CameraOpeningOk) {
+	TEST_F(CameraTest, CameraOpening) {
 		ASSERT_TRUE(this->camera->initCamera());
 	}
 
-	TEST_F(CameraTest, CameraOpeningFailed) {
-		ASSERT_FALSE(this->OpenCamera(0));
+	TEST_F(CameraTest, CameraParameters)
+	{
+		int width  	= this->camera->getWidth();
+		int height 	= this->camera->getHeight();
+		int fps 	= this->camera->getFps();
+
+		ASSERT_EQ(width,1280);
+		ASSERT_EQ(height,720);
+		ASSERT_EQ(fps,30);
+
 	}
-
-	// TEST_F(CameraTest, ParserPamaters)
-	// {
-	// 	// int width  	= this->parser->getValueOf("width");
-	// 	// int height 	= this->parser->getValueOf("height");
-	// 	// int fps 	= this->parser->getValueOf("fps");
-
-	// 	// ASSERT_EQ(width,1280);
-	// 	// ASSERT_EQ(height,720);
-	// 	// ASSERT_EQ(fps,30);
-
-	// }
 }  // namespace
