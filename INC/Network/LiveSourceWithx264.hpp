@@ -5,6 +5,7 @@
 #include "FramedSource.hh"
 #include "Encoder/x264Encoder.hpp"
 
+#include "Singletons/VideoManagerSingleton.hpp"
 
 #include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
@@ -25,11 +26,13 @@ private:
     virtual void doGetNextFrame();
     static void deliverFrame0(void* clientData);
     void deliverFrame();
+    void fetchNewFrame();
+    void processNewFrame();
     void encodeNewFrame();
     static unsigned referenceCount;
     std::queue<x264_nal_t> nalQueue;
     timeval currentTime;
-    Camera * camera;
+    VideoManager * _videoHandler;
     x264Encoder *encoder;
     unsigned int _id;
 };

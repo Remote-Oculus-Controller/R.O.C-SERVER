@@ -1,9 +1,4 @@
 #include "Network/LiveSourceWithx264.hpp"
-#include "Video/Camera.hpp"
-#include "Processing/RedCirclesDetect.hpp"
-#include "Processing/FaceDetect.hpp"
-#include "Processing/Arrow.hpp"
-#include "Processing/Canny.hpp"
 
 LiveSourceWithx264 *LiveSourceWithx264::createNew(UsageEnvironment &env , unsigned int id) {
     return new LiveSourceWithx264(env, id);
@@ -17,13 +12,13 @@ LiveSourceWithx264::LiveSourceWithx264(UsageEnvironment &env , unsigned int id) 
     if (referenceCount == 0) {
 
     }
-    this->camera = new Camera(0);
+
     this->_id = id;
-    this->camera->initCamera();
+    this->_videoHandler = VideoManagerSingleton::getInstance();
     ++referenceCount;
-    encoder = new x264Encoder(this->camera->getWidth(),
-                              this->camera->getHeight(),
-                              this->camera->getFps());
+    encoder = new x264Encoder(this->_videoHandler->getWidthById(this->_id),
+                              this->_videoHandler->getHeightById(this->_id),
+                              this->_videoHandler->getFpsById(this->_id));
     encoder->initilize();
     if (eventTriggerId == 0) {
         eventTriggerId = envir().taskScheduler().createEventTrigger(deliverFrame0);
@@ -33,20 +28,25 @@ LiveSourceWithx264::LiveSourceWithx264(UsageEnvironment &env , unsigned int id) 
 
 LiveSourceWithx264::~LiveSourceWithx264(void) {
     --referenceCount;
-    delete (this->camera);
     encoder->unInitilize();
     envir().taskScheduler().deleteEventTrigger(eventTriggerId);
     eventTriggerId = 0;
 }
 
 
+void LiveSourceWithx264::fetchNewFrame()
+{
+  this->_videoHandler->queryFrame(this->_id);
+}
+
+void LiveSourceWithx264::processNewFrame()
+{
+  // APPLY PROCESSING
+}
+
 void LiveSourceWithx264::encodeNewFrame()
 {
-        this->camera->grabFrame();
-        this->camera->retrieveFrame();
-
-        // Got new image to stream
-        encoder->encodeFrame(this->camera->getFrame());
+        encoder->encodeFrame(this->_videoHandler->getFrame(this->_id));
         while(encoder->isNalsAvailableInOutputQueue() == true)
         {
             x264_nal_t nal = encoder->getNalUnit();
@@ -60,6 +60,8 @@ void LiveSourceWithx264::deliverFrame0(void *clientData) {
 
 void LiveSourceWithx264::doGetNextFrame() {
     if (nalQueue.empty() == true) {
+        fetchNewFrame();
+        processNewFrame();
         encodeNewFrame();
         gettimeofday(&currentTime, NULL);
         deliverFrame();

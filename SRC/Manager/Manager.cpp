@@ -13,7 +13,6 @@ Manager::~Manager()
 
 bool Manager::startRTSP()
 {
-
 	YAMLParser parser = YAMLParser(VIDEO_MANAGER_CONFIG_FILE , FileStorage::READ);
 	if (parser.isOpened() == false)
 		return false;
@@ -59,4 +58,18 @@ bool Manager::startInterpretor()
 bool Manager::stopInterpretor()
 {
 
+}
+
+bool Manager::startVideoManager()
+{
+	this->_videoHandler = VideoManagerSingleton::getInstance();
+	if (this->_videoHandler == NULL)
+		return false;
+
+	return this->_videoHandler->isReady();
+}
+
+bool Manager::stopVideoManager()
+{
+	
 }

@@ -26,6 +26,12 @@ class VideoManager {
         bool isReady();
 
         cv::Mat & queryFrame(unsigned int id);
+        cv::Mat & getFrame(unsigned int id);
+
+        int getWidthById(unsigned int id);
+        int getHeightById(unsigned int id);
+        int getFpsById(unsigned int id);
+
         bool run();
 
     private:
