@@ -17,35 +17,42 @@ LockList::LockList(unsigned int count_ , unsigned int timeout_)
 void LockList::notifyLocker()
 {
   std::unique_lock<std::mutex> lck(_mutexLocker);
-  std::cout << "Notify locker" << std::endl;
   this->_conditionLocker.notify_all();
+  lck.unlock();
 }
 
 void LockList::waitLockee()
 {
   std::unique_lock<std::mutex> lck(_mutexLocker);
-std::cout << "Wait lockee" << std::endl;
   while (this->_lockedCount < this->_count)
     this->_conditionLocker.wait(lck);
+  lck.unlock();
 }
 
 void LockList::wakeUp()
 {
+  std::unique_lock<std::mutex> lckRegister(_mutexRegister);
   std::unique_lock<std::mutex> lck(_mutexLockee);
 
-  std::cout << "Wake Up" << std::endl;
   this->_locked = false;
   this->_conditionLockee.notify_all();
+  lck.unlock();
+  while (this->_lockedCount > 0);
+  lckRegister.unlock();
 }
 
 void LockList::lock()
 {
+  std::unique_lock<std::mutex> lckRegister(_mutexRegister);
   std::unique_lock<std::mutex> lck(_mutexLockee);
+
   this->_locked = true;
-  std::cout << "Lock" << std::endl;
   this->_lockedCount++;
+  lckRegister.unlock();
+  std::cout << this->_lockedCount  << std::endl;
   this->notifyLocker();
   while (this->_locked == true)
     this->_conditionLockee.wait(lck);
   this->_lockedCount--;
+  std::cout << this->_lockedCount  << std::endl;
 }

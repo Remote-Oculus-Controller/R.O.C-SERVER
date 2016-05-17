@@ -8,7 +8,7 @@ void lock(int Id)
 {
   unsigned int i = 0;
   std::cout << "Starting locker !" << std::endl;
-  while (i < 10)
+  while (i < 999999)
   {
     list.waitLockee();
     list.wakeUp();
@@ -20,7 +20,7 @@ void lock(int Id)
 void print(int Id)
 {
   unsigned int i = 0;
-  while (i < 10)
+  while (i < 999999)
   {
     std::cout << "(" << i << ")" << "Registering : " << Id << std::endl;
     list.lock();
