@@ -23,7 +23,7 @@ SRCS	= 	$(SRCSDIR)Main/main.cpp \
 			$(SRCSDIR)Manager/VideoManager.cpp \
 			$(SRCSDIR)Singletons/VideoManagerSingleton.cpp \
 			$(SRCSDIR)Sync/Semaphore.cpp \
-			$(SRCSDIR)Sync/WaitList.cpp
+			$(SRCSDIR)Sync/LockList.cpp
 
 SRCS_TEST = $(SRCSDIR)Test/main.cpp
 
