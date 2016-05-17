@@ -10,11 +10,11 @@ treshold: 42
 
 # WIDTH OF THE FRAMES
 
-width: 640
+width: 1280
 
 # HEIGHT OF THE FRAMES
 
-height: 480
+height: 720
 
 # FRAMES PER SECOND
 

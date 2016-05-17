@@ -62,6 +62,9 @@ bool VideoManager::init()
     }
     this->_cameras.push_back(camera);
   }
+  this->_lockList = new LockList(this->_camerasCount , 0);
+  if (!this->_lockList)
+    return false;
   this->_ready = true;
   return this->_ready;
 }
@@ -86,6 +89,7 @@ bool VideoManager::uninit()
 
 cv::Mat & VideoManager::queryFrame(unsigned int id)
 {
+  this->_lockList->lock();
   this->_cameras[id]->grabFrame();
   this->_cameras[id]->retrieveFrame();
   this->_cameras[id]->flipFrame();
@@ -147,4 +151,48 @@ int VideoManager::getFpsById(unsigned int id)
   if (id < this->_cameras.size())
     return this->_cameras[id]->getFps();
   return -1;
+}
+
+void VideoManager::grabAll()
+{
+  for(std::vector<Camera *>::iterator it = this->_cameras.begin(); it != this->_cameras.end(); ++it) {
+    (*it)->grabFrame();
+  }
+}
+
+void VideoManager::retrieveAll()
+{
+  for(std::vector<Camera *>::iterator it = this->_cameras.begin(); it != this->_cameras.end(); ++it) {
+    (*it)->retrieveFrame();
+  }
+}
+
+void VideoManager::flipAll()
+{
+  for(std::vector<Camera *>::iterator it = this->_cameras.begin(); it != this->_cameras.end(); ++it) {
+    (*it)->flipFrame();
+  }
+}
+
+bool VideoManager::run()
+{
+  std::thread runner(&VideoManager::loop, this);
+  runner.detach();
+}
+
+bool VideoManager::loop()
+{
+  while (true)
+  {
+    this->grabAll();
+    this->retrieveAll();
+    this->_lockList->waitLockee();
+    this->flipAll();
+    this->_lockList->wakeUp();
+  }
+}
+
+void VideoManager::waitSync()
+{
+  this->_lockList->lock();
 }

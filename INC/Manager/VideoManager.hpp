@@ -8,6 +8,7 @@
 #include <mutex>
 #include "Video/Camera.hpp"
 #include "Parser/YAMLParser.hpp"
+#include "Sync/LockList.hpp"
 
 #define VIDEO_MANAGER_CONFIG_FILE "config/resolutions.yml"
 
@@ -28,11 +29,14 @@ class VideoManager {
         cv::Mat & queryFrame(unsigned int id);
         cv::Mat & getFrame(unsigned int id);
 
+        void waitSync();
+
         int getWidthById(unsigned int id);
         int getHeightById(unsigned int id);
         int getFpsById(unsigned int id);
 
         bool run();
+        bool loop();
 
     private:
 
@@ -43,6 +47,10 @@ class VideoManager {
         bool grab(unsigned int id);
         bool retrieve(unsigned int id);
 
+        void grabAll();
+        void retrieveAll();
+        void flipAll();
+
     private:
 
         unsigned int            _camerasCount;
@@ -52,6 +60,7 @@ class VideoManager {
         bool                    _ready;
         time_t                  _lastGrab;
         std::vector<Camera *>   _cameras;
+        LockList *              _lockList;
 };
 
 #endif

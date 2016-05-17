@@ -36,7 +36,7 @@ LiveSourceWithx264::~LiveSourceWithx264(void) {
 
 void LiveSourceWithx264::fetchNewFrame()
 {
-  this->_videoHandler->queryFrame(this->_id);
+  this->_videoHandler->waitSync();
 }
 
 void LiveSourceWithx264::processNewFrame()

@@ -65,11 +65,11 @@ bool Manager::startVideoManager()
 	this->_videoHandler = VideoManagerSingleton::getInstance();
 	if (this->_videoHandler == NULL)
 		return false;
-
+	this->_videoHandler->run();
 	return this->_videoHandler->isReady();
 }
 
 bool Manager::stopVideoManager()
 {
-	
+
 }
