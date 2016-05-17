@@ -21,7 +21,9 @@ SRCS	= 	$(SRCSDIR)Main/main.cpp \
 			$(SRCSDIR)Interpretor/Reader.cpp \
 			$(SRCSDIR)Manager/Manager.cpp \
 			$(SRCSDIR)Manager/VideoManager.cpp \
-			$(SRCSDIR)Singletons/VideoManagerSingleton.cpp
+			$(SRCSDIR)Singletons/VideoManagerSingleton.cpp \
+			$(SRCSDIR)Sync/Semaphore.cpp \
+			$(SRCSDIR)Sync/WaitList.cpp
 
 SRCS_TEST = $(SRCSDIR)Test/main.cpp
 
@@ -45,7 +47,6 @@ RM = rm -f
 
 all: $(NAME)
 
-
 $(OBJSDIR)%.o:	$(SRCSDIR)%.cpp
 		@echo "Compiling $<"
 		@$(CXX) $(CFLAGS) -c $< -o $@ $(CPPFLAGS)
@@ -57,6 +58,7 @@ $(NAME): $(OBJS)
 test: $(OBJS_TEST)
 	@echo "Linking Server (test mode) $<"
 	@$(CXX) $(LDFLAGS) -o $(NAME_TEST) $(OBJS_TEST) $(LDLIBS) $(LDLIBS_TEST)
+
 tree:
 	mkdir -p OBJ
 	mkdir -p OBJ/Compressor/
@@ -71,6 +73,7 @@ tree:
 	mkdir -p OBJ/Singletons/
 	mkdir -p OBJ/Test/
 	mkdir -p OBJ/Video/
+	mkdir -p OBJ/Sync/
 
 clean :
 	$(RM) $(OBJS) $(OBJS_TEST)
