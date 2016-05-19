@@ -2,7 +2,7 @@
 
 # NUMBER OF CAMERAS TO HANDLE
 
-camera_count: 1
+camera_count: 2
 
 # MAXIMUM TIME IN ms BETWEEN 2 FRAMES
 

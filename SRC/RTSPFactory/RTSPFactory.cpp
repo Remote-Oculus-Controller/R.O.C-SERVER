@@ -16,22 +16,18 @@ int RTSPFactory::createServer(int camerasCount, int port)
 {
 	threadArguments * args = new threadArguments;
 
-	args->camerasCount = 0;
+	args->camerasCount = camerasCount;
 	args->port = port;
 	args->watcher = 0;
 
 	this->watcher = &(args->watcher);
 
-	for (unsigned int i = 0 ; i < camerasCount ; i++)
-	{
 		pthread_t thread;
 		if (pthread_create(&thread, NULL,  &RTSPFactory::createRTSPServer , args) == -1)
 		{
 			this->watcher = NULL;
 			return (1);
 		}
-		args->camerasCount++;
-	}
 
 	return (0);
 }
@@ -52,9 +48,10 @@ void * RTSPFactory::createRTSPServer(void * args_void)
 {
 	threadArguments * args = static_cast<threadArguments *>(args_void);
 
+	std::cout << "Create RTSP " << args->camerasCount << std::endl;
 	if (args->camerasCount <= 0) {
-		args->watcher = -1;
-		return 0;
+	//	args->watcher = -1;
+	//	return 0;
 	}
 
 	TaskScheduler* taskSchedular = BasicTaskScheduler::createNew();

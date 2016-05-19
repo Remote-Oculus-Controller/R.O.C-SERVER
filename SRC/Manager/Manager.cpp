@@ -27,8 +27,11 @@ bool Manager::startRTSP()
 	if (port <= 0)
 		return (false);
 
-	if (this->_RTSPFactory.createServer(camerasCount, port) == -1)
-		return (false);
+	for (unsigned int i = 0 ; i < camerasCount ; i++)
+	{
+		if (this->_RTSPFactory.createServer(i, port) == -1)
+			return (false);
+	}
 	return (true);
 }
 
