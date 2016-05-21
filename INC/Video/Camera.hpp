@@ -11,9 +11,8 @@
 #include "opencv2/videoio.hpp"
 #include "opencv2/imgcodecs.hpp"
 
-#include "Parser/YAMLParser.hpp"
-
-#define  CAMERA_CONFIGURATION_FILE "config/resolutions.yml"
+#include "Logger/Logger.hpp"
+#include "Parser/ConfigParser.hpp"
 
 using namespace cv;
 

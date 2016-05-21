@@ -1,6 +1,10 @@
 #include <mutex>
 #include <iostream>
 #include <condition_variable>
+#include <chrono>
+
+#include "Logger/Logger.hpp"
+#include "Parser/ConfigParser.hpp"
 
 class LockList
 {
@@ -24,7 +28,7 @@ class LockList
 
     std::mutex                 _mutexRegister;
     std::condition_variable    _conditionRegister;
-    
+
     unsigned int               _count;
     unsigned int               _timeout;
     volatile unsigned int      _lockedCount;

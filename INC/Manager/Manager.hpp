@@ -3,16 +3,15 @@
 
 #include "RTSPFactory/RTSPFactory.hpp"
 #include "Interpretor/Reader.hpp"
-#include "Parser/YAMLParser.hpp"
 #include "Singletons/VideoManagerSingleton.hpp"
-
-#define VIDEO_MANAGER_CONFIG_FILE "config/resolutions.yml"
+#include "Logger/Logger.hpp"
+#include "Parser/ConfigParser.hpp"
 
 class Manager
 {
 	public:
 
-	Manager(int argc, char **argv);
+	Manager();
 	~Manager();
 
 	bool startRTSP();
@@ -26,17 +25,13 @@ class Manager
 
 	private:
 
-	RTSPFactory _RTSPFactory;
-	Reader 		_reader;
-	VideoManager * _videoHandler;
+	RTSPFactory  *	_RTSPFactory;
+	Reader 					_reader;
+	VideoManager * 	_videoHandler;
 
 	// TCP Server 	(get and send commands)
 	// Interpretor
 	// Controls
-
-	int 		_argc;
-	char **		_argv;
-
 };
 
 #endif // MANAGER_HPP

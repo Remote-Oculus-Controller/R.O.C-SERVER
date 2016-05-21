@@ -2,11 +2,11 @@
 
 # NUMBER OF CAMERAS TO HANDLE
 
-camera_count: 2
+camera_count: 1
 
 # MAXIMUM TIME IN ms BETWEEN 2 FRAMES
 
-treshold: 42
+timeout: 1000
 
 # WIDTH OF THE FRAMES
 
@@ -19,3 +19,7 @@ height: 720
 # FRAMES PER SECOND
 
 fps: 30
+
+# SERVER PORT
+
+port: 8000

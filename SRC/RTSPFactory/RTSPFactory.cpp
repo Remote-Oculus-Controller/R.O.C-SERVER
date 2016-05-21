@@ -2,34 +2,36 @@
 
 RTSPFactory::RTSPFactory()
 {
-	this->watcher = NULL;
+	this->watcher = new char;
+	*(this->watcher) = 0;
+
+	// MAX PACKET SIZE 128K
+	OutPacketBuffer::maxSize = 131072;
 }
+
 
 RTSPFactory::~RTSPFactory()
 {
-	if (this->watcher)
-		*(this->watcher) = 1;
+	this->deleteServer();
 }
 
 
-int RTSPFactory::createServer(int camerasCount, int port)
+int RTSPFactory::createServer(int id, int port)
 {
-	threadArguments * args = new threadArguments;
+	std::unique_lock<std::mutex> lock(_lock);
+	this->_done = false;
 
-	args->camerasCount = camerasCount;
-	args->port = port;
-	args->watcher = 0;
+	std::thread * thread = new std::thread(&RTSPFactory::createRTSPServer , this , id , port , this->watcher);
+	thread->detach();
 
-	this->watcher = &(args->watcher);
+	while (this->_done == false)
+		this->_condition.wait(lock);
 
-		pthread_t thread;
-		if (pthread_create(&thread, NULL,  &RTSPFactory::createRTSPServer , args) == -1)
-		{
-			this->watcher = NULL;
-			return (1);
-		}
+	if (*(this->watcher) != 0) {
+		return 1;
+	}
 
-	return (0);
+	return 0;
 }
 
 bool RTSPFactory::deleteServer()
@@ -37,43 +39,41 @@ bool RTSPFactory::deleteServer()
 	if (this->watcher)
 	{
 		*(this->watcher) = 1;
-		this->watcher = NULL;
 		return (true);
 	}
 	else
 		return (false);
 }
 
-void * RTSPFactory::createRTSPServer(void * args_void)
+void  RTSPFactory::createRTSPServer(unsigned int id , unsigned int port , volatile char * watcher)
 {
-	threadArguments * args = static_cast<threadArguments *>(args_void);
-
-	std::cout << "Create RTSP " << args->camerasCount << std::endl;
-	if (args->camerasCount <= 0) {
-	//	args->watcher = -1;
-	//	return 0;
-	}
-
+	std::unique_lock<std::mutex> lock(_lock);
 	TaskScheduler* taskSchedular = BasicTaskScheduler::createNew();
 	BasicUsageEnvironment* usageEnvironment = BasicUsageEnvironment::createNew(*taskSchedular);
-	RTSPServer* rtspServer = RTSPServer::createNew(*usageEnvironment, args->port, NULL);
+	RTSPServer* rtspServer = RTSPServer::createNew(*usageEnvironment, port, NULL);
 
 	if(rtspServer == NULL)
 	{
-		*usageEnvironment << "Failed to create rtsp server ::" << usageEnvironment->getResultMsg() <<"\n";
-		args->watcher = -1;
-		return 0;
+		logger::log(usageEnvironment->getResultMsg() , logger::logType::FAILURE);
+		*watcher = -1;
+		this->_done = true;
+		this->_condition.notify_all();
+		return;
 	}
 
-		std::string streamName = "camera_" + std::to_string(args->camerasCount);
+		H264LiveServerMediaSession *liveSubSession = H264LiveServerMediaSession::createNew(*usageEnvironment, true , id);
+		std::string streamName = "camera_" + std::to_string(id);
 		ServerMediaSession* sms = ServerMediaSession::createNew(*usageEnvironment, streamName.c_str(), streamName.c_str(), "Live H264 Stream");
-		H264LiveServerMediaSession *liveSubSession = H264LiveServerMediaSession::createNew(*usageEnvironment, true , args->camerasCount);
 		sms->addSubsession(liveSubSession);
 		rtspServer->addServerMediaSession(sms);
 		char* url = rtspServer->rtspURL(sms);
-		*usageEnvironment << "Play the stream using url "<<url << "\n";
+		logger::log(INFO_RTSP_URL(url) , logger::logType::PRIORITY);
 		delete[] url;
 
-	taskSchedular->doEventLoop(&args->watcher);
-	return 0;
+		this->_done = true;
+		this->_condition.notify_all();
+		lock.unlock();
+		taskSchedular->doEventLoop(watcher);
+
+		return;
 }

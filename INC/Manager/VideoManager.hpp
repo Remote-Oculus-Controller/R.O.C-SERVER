@@ -7,16 +7,11 @@
 #include <thread>
 #include <mutex>
 #include "Video/Camera.hpp"
-#include "Parser/YAMLParser.hpp"
 #include "Sync/LockList.hpp"
+#include "Logger/Logger.hpp"
+#include "Parser/ConfigParser.hpp"
 
 #define VIDEO_MANAGER_CONFIG_FILE "config/resolutions.yml"
-
-typedef struct {
-  Camera * _camera;
-  std::mutex mtx;
-  volatile int watcher;
-} concurentCamera;
 
 class VideoManager {
 
@@ -58,9 +53,14 @@ class VideoManager {
         unsigned int            _treshold;
 
         bool                    _ready;
+        bool                    _isAlive;
+        bool                    _isAsyncRunning;
         time_t                  _lastGrab;
         std::vector<Camera *>   _cameras;
         LockList *              _lockList;
+
+        std::mutex              _lock;
+        std::condition_variable _condition;
 };
 
 #endif

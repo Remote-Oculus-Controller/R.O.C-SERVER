@@ -1,49 +1,43 @@
 #include "Manager/Manager.hpp"
 
-Manager::Manager(int argc , char ** argv)
+Manager::Manager()
 {
-	this->_argc = argc;
-	this->_argv = argv;
+	logger::log(START_MANAGER , logger::INFO);
+	this->_RTSPFactory = new RTSPFactory();
+	logger::log(SUCCESS_MANAGER , logger::SUCCESS);
 }
 
 Manager::~Manager()
 {
-
+	delete this->_RTSPFactory;
+	delete this->_videoHandler;
+	logger::log(STOP_MANAGER , logger::SUCCESS);
 }
 
 bool Manager::startRTSP()
 {
-	YAMLParser parser = YAMLParser(VIDEO_MANAGER_CONFIG_FILE , FileStorage::READ);
-	if (parser.isOpened() == false)
-		return false;
+	logger::log(START_RTSP , logger::INFO);
 
-	unsigned int camerasCount = parser.getValueOf("camera_count");
-
-	if (this->_argc < 2)
-		return (false);
-
-	int port = atoi(this->_argv[1]);
-
-	if (port <= 0)
-		return (false);
-
-	for (unsigned int i = 0 ; i < camerasCount ; i++)
+	for (unsigned int i = 0 ; i < configuration::camera_count ; i++)
 	{
-		if (this->_RTSPFactory.createServer(i, port) == -1)
+		if (this->_RTSPFactory->createServer(i, configuration::port)) {
 			return (false);
+		}
 	}
+
+	logger::log(SUCCESS_RTSP , logger::logType::SUCCESS);
 	return (true);
 }
 
 bool Manager::stopRTSP()
 {
-	this->_RTSPFactory.deleteServer();
+	logger::log(STOP_RTSP , logger::logType::SUCCESS);
+	this->_RTSPFactory->deleteServer();
 }
 
 bool Manager::startInterpretor()
 {
 	std::vector<std::string> tokens;
-	std::cout << "Waiting for RTSP Server..." << std::endl;
 	sleep(1);
 
 	while (1)
@@ -53,14 +47,16 @@ bool Manager::startInterpretor()
 		if (tokens.size() && tokens[0] == "stop")
 		{
 			this->stopRTSP();
+			this->stopInterpretor();
 			break;
 		}
 	}
+	return true;
 }
 
 bool Manager::stopInterpretor()
 {
-
+	logger::log(STOP_INTERPRETOR , logger::logType::SUCCESS);
 }
 
 bool Manager::startVideoManager()
@@ -68,11 +64,15 @@ bool Manager::startVideoManager()
 	this->_videoHandler = VideoManagerSingleton::getInstance();
 	if (this->_videoHandler == NULL)
 		return false;
-	this->_videoHandler->run();
-	return this->_videoHandler->isReady();
+	if (this->_videoHandler->isReady())
+	{
+		this->_videoHandler->run();
+		logger::log(SUCCESS_VIDEOMANAGER , logger::logType::SUCCESS);
+		return true;
+	}
+		return false;
 }
 
 bool Manager::stopVideoManager()
 {
-
 }

@@ -17,6 +17,7 @@ Camera::~Camera()
 	if (this->_camera->isOpened())
 		this->_camera->release();
 	delete (this->_camera);
+	logger::log(STOP_CAMERA , logger::logType::SUCCESS);
 }
 
 //====================================================
@@ -84,30 +85,32 @@ bool Camera::reOpenCamera()
 
 bool Camera::initResolutions()
 {
+		this->_camera->set(cv::CAP_PROP_FRAME_WIDTH, configuration::width);
+		this->_camera->set(cv::CAP_PROP_FRAME_HEIGHT, configuration::height);
+		this->_camera->set(cv::CAP_PROP_FPS, configuration::fps);
 
-	YAMLParser parser = YAMLParser(CAMERA_CONFIGURATION_FILE , FileStorage::READ);
+		this->_width = this->_camera->get(cv::CAP_PROP_FRAME_WIDTH);
+		this->_height = this->_camera->get(cv::CAP_PROP_FRAME_HEIGHT);
+		this->_fps = this->_camera->get(cv::CAP_PROP_FPS);
 
-	if (parser.isOpened() == false)
-	{
-        std::cout << "Cannot open resolutions file : " << CAMERA_CONFIGURATION_FILE << std::endl;
-        return false;
-	}
-	else
-	{
-		int width  	= parser.getValueOf("width");
-		int height 	= parser.getValueOf("height");
-		int fps 	= parser.getValueOf("fps");
+		if (this->_width != configuration::width)
+			logger::log(ERROR_CAMERA_WIDTH , logger::logType::FAILURE);
+		else
+			logger::log(SUCCESS_WIDTH , logger::logType::SUCCESS);
+		if (this->_height != configuration::height)
+			logger::log(ERROR_CAMERA_HEIGHT , logger::logType::FAILURE);
+		else
+			logger::log(SUCCESS_HEIGHT , logger::logType::SUCCESS);
+		if (this->_fps != configuration::fps)
+			logger::log(ERROR_CAMERA_FPS , logger::logType::FAILURE);
+		else
+			logger::log(SUCCESS_FPS , logger::logType::SUCCESS);
 
-		this->_camera->set(cv::CAP_PROP_FRAME_WIDTH, width);
-		this->_camera->set(cv::CAP_PROP_FRAME_HEIGHT,height);
-		this->_camera->set(cv::CAP_PROP_FPS, fps);
-	}
+		logger::log(INFO_CONFIG("Camera width" , this->_width), logger::logType::INFO);
+		logger::log(INFO_CONFIG("Camera height" , this->_height), logger::logType::INFO);
+		logger::log(INFO_CONFIG("Camera fps" , this->_fps), logger::logType::INFO);
 
-	this->_width = this->_camera->get(cv::CAP_PROP_FRAME_WIDTH);
-	this->_height = this->_camera->get(cv::CAP_PROP_FRAME_HEIGHT);
-	this->_fps = this->_camera->get(cv::CAP_PROP_FPS);
-
-  return true;
+		return true;
 }
 
 int Camera::getWidth()

@@ -4,26 +4,29 @@ OBJSDIR = ./OBJ/
 
 
 SRCS	= 	$(SRCSDIR)Main/main.cpp \
-			$(SRCSDIR)Parser/YAMLParser.cpp \
-			$(SRCSDIR)Network/Server.cpp \
-			$(SRCSDIR)Network/TcpServer.cpp \
-			$(SRCSDIR)RTSPFactory/RTSPFactory.cpp \
-			$(SRCSDIR)Network/H264LiveServerMediaSession.cpp \
-			$(SRCSDIR)Network/LiveSourceWithx264.cpp \
-			$(SRCSDIR)Encoder/x264Encoder.cpp \
-			$(SRCSDIR)Encoder/x265Encoder.cpp \
-			$(SRCSDIR)Video/Camera.cpp \
-			$(SRCSDIR)Processing/ImgProcessing.cpp \
-			$(SRCSDIR)Processing/Canny.cpp \
-			$(SRCSDIR)Processing/FaceDetect.cpp \
-			$(SRCSDIR)Processing/RedCirclesDetect.cpp \
-			$(SRCSDIR)Processing/Arrow.cpp \
-			$(SRCSDIR)Interpretor/Reader.cpp \
-			$(SRCSDIR)Manager/Manager.cpp \
-			$(SRCSDIR)Manager/VideoManager.cpp \
-			$(SRCSDIR)Singletons/VideoManagerSingleton.cpp \
-			$(SRCSDIR)Sync/Semaphore.cpp \
-			$(SRCSDIR)Sync/LockList.cpp
+					$(SRCSDIR)Parser/YAMLParser.cpp \
+					$(SRCSDIR)Parser/ConfigParser.cpp \
+					$(SRCSDIR)Network/Server.cpp \
+					$(SRCSDIR)Network/TcpServer.cpp \
+					$(SRCSDIR)RTSPFactory/RTSPFactory.cpp \
+					$(SRCSDIR)Network/H264LiveServerMediaSession.cpp \
+					$(SRCSDIR)Network/LiveSourceWithx264.cpp \
+					$(SRCSDIR)Encoder/x264Encoder.cpp \
+					$(SRCSDIR)Encoder/x265Encoder.cpp \
+					$(SRCSDIR)Video/Camera.cpp \
+					$(SRCSDIR)Processing/ImgProcessing.cpp \
+					$(SRCSDIR)Processing/Canny.cpp \
+					$(SRCSDIR)Processing/FaceDetect.cpp \
+					$(SRCSDIR)Processing/RedCirclesDetect.cpp \
+					$(SRCSDIR)Processing/Arrow.cpp \
+					$(SRCSDIR)Interpretor/Reader.cpp \
+					$(SRCSDIR)Manager/Manager.cpp \
+					$(SRCSDIR)Manager/VideoManager.cpp \
+					$(SRCSDIR)Singletons/VideoManagerSingleton.cpp \
+					$(SRCSDIR)Sync/LockList.cpp \
+					$(SRCSDIR)Sync/Semaphore.cpp \
+					$(SRCSDIR)Logger/Logger.cpp 
+
 
 SRCS_TEST = $(SRCSDIR)Test/main.cpp
 
@@ -74,6 +77,7 @@ tree:
 	mkdir -p OBJ/Test/
 	mkdir -p OBJ/Video/
 	mkdir -p OBJ/Sync/
+	mkdir -p OBJ/Logger/
 
 clean :
 	$(RM) $(OBJS) $(OBJS_TEST)

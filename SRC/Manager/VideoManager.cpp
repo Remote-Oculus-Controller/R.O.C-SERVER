@@ -6,13 +6,25 @@
 
 VideoManager::VideoManager()
 {
+  logger::log(START_VIDEOMANAGER , logger::logType::INFO);
   this->_ready = false;
   init();
+  this->_isAlive = true;
+  this->_isAsyncRunning = false;
 }
 
 VideoManager::~VideoManager()
 {
+  std::unique_lock<std::mutex> lock(this->_lock);
+
+  logger::log(INFO_WAIT_SYNC_JOB , logger::logType::INFO);
+  this->_isAlive = false;
+
+  while (this->_isAsyncRunning)
+    this->_condition.wait(lock);
+
   this->uninit();
+  logger::log(STOP_VIDEOMANAGER , logger::logType::SUCCESS);
   this->_ready = false;
 }
 
@@ -38,31 +50,29 @@ bool VideoManager::init()
   if (this->_ready == true)
     return true;
 
-  YAMLParser parser = YAMLParser(VIDEO_MANAGER_CONFIG_FILE , FileStorage::READ);
-  if (parser.isOpened() == false)
-    return false;
-
-  tmpCount = parser.getValueOf("camera_count");
-  tmpTreshold = parser.getValueOf("treshold");
-  tmpTimeout = parser.getValueOf("fps");
-
-  if (tmpCount == 0 || tmpCount > 4 || tmpTimeout == 0)
-    return false;
-
-  this->_camerasCount = tmpCount;
-  this->_treshold     = tmpTreshold;
-  this->_timeout      = 1000 / tmpTimeout;
+  this->_camerasCount = configuration::camera_count;
+  this->_timeout      = configuration::timeout;
 
   for (unsigned int i = 0 ; i < this->_camerasCount ; i++) {
-    Camera * camera = new Camera(i);
-    if (camera->initCamera() == false)
+    try
     {
-      this->uninit();
+      Camera * camera = new Camera(i);
+      if (camera->initCamera() == false)
+      {
+        logger::log(ERROR_CANERAS_INIT , logger::logType::FAILURE);
+        this->uninit();
+        return false;
+      }
+      this->_cameras.push_back(camera);
+    }
+
+    catch ( cv::Exception & e )
+    {
+      logger::log(ERROR_CAMERAS_OPEN , logger::logType::FAILURE);
       return false;
     }
-    this->_cameras.push_back(camera);
   }
-  this->_lockList = new LockList(this->_camerasCount , 0);
+  this->_lockList = new LockList(this->_camerasCount , configuration::timeout);
   if (!this->_lockList)
     return false;
   this->_ready = true;
@@ -182,14 +192,25 @@ bool VideoManager::run()
 
 bool VideoManager::loop()
 {
-  while (true)
+  this->_isAsyncRunning = true;
+  std::unique_lock<std::mutex> lock(this->_lock);
+  lock.unlock();
+  logger::log(SUCCESS_SYNC_JOB , logger::logType::SUCCESS);
+  while (true && this->_isAlive)
   {
+    lock.lock();
     this->grabAll();
     this->retrieveAll();
+    lock.unlock();
     this->_lockList->waitLockee();
+    lock.lock();
     this->flipAll();
+    lock.unlock();
     this->_lockList->wakeUp();
   }
+  logger::log(STOP_SYNC_JOB , logger::logType::SUCCESS);
+  this->_isAsyncRunning = false;
+  this->_condition.notify_all();
 }
 
 void VideoManager::waitSync()

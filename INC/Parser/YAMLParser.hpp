@@ -7,7 +7,7 @@
 class YAMLParser
 {
 	public:
-		
+
 		YAMLParser(std::string fileName , cv::FileStorage::Mode mode);
 		~YAMLParser();
 
@@ -20,7 +20,6 @@ class YAMLParser
 		cv::FileStorage::Mode _mode;
 		cv::FileStorage _file;
 
-		
 };
 
 #endif // YAML_PARSER_HPP
