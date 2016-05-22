@@ -20,7 +20,7 @@ bool Manager::startRTSP()
 
 	for (unsigned int i = 0 ; i < configuration::camera_count ; i++)
 	{
-		if (this->_RTSPFactory->createServer(i, configuration::port)) {
+		if (this->_RTSPFactory->createServer(i, configuration::port + i)) {
 			return (false);
 		}
 	}
