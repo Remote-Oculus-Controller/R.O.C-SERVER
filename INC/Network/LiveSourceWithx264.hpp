@@ -6,6 +6,7 @@
 #include "Encoder/x264Encoder.hpp"
 
 #include "Singletons/VideoManagerSingleton.hpp"
+#include "Singletons/ImgProcessingWrapperSingleton.hpp"
 
 #include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
@@ -33,6 +34,7 @@ private:
     std::queue<x264_nal_t> nalQueue;
     timeval currentTime;
     VideoManager * _videoHandler;
+    ImgProcessingWrapper * _imgProcessingWrapperHandler;
     x264Encoder *encoder;
     unsigned int _id;
 };

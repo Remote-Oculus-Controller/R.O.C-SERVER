@@ -27,6 +27,7 @@
 #define WARNING_SYNC_USELESS  "Synchronizing only one camera"
 #define WARNING_SYNC_TIMEOUT  "Synchonization timed out"
 #define WARNING_EXIT_SIGNAL   "Exit command catched , performing cleanup"
+#define WARNING_EXIT_LOGGER   "Stopping logger : no more logs beyond this point"
 
 #define SUCCESS_MANAGER       "ROC Manager started"
 #define SUCCESS_VIDEOMANAGER  "ROC VideoManager started"

@@ -1,5 +1,5 @@
-#ifndef CANNY_HPP
-#define CANNY_HPP
+#ifndef CANNYEDGE_HPP
+#define CANNYEDGE_HPP
 
 #include "Processing/ImgProcessing.hpp"
 
@@ -21,7 +21,7 @@ class CannyEdge : public ImgProcessing
 	double 	_treshold1;
 	double 	_treshold2;
 	int 	_matrixNum;
-	
+
 };
 
-#endif // CANNY_HPP
+#endif // CANNYEDGE_HPP

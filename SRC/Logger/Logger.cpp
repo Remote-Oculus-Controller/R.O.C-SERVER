@@ -12,10 +12,12 @@ namespace logger
 
     Logger::Logger()
     {
+      this->isAlive = true;
       this->start = std::chrono::steady_clock::now();
       std::thread runner(&Logger::run, this);
       runner.detach();
     }
+
 
     Logger * Logger::getInstance()
     {

@@ -15,17 +15,19 @@ SRCS	= 	$(SRCSDIR)Main/main.cpp \
 					$(SRCSDIR)Encoder/x265Encoder.cpp \
 					$(SRCSDIR)Video/Camera.cpp \
 					$(SRCSDIR)Processing/ImgProcessing.cpp \
-					$(SRCSDIR)Processing/Canny.cpp \
+					$(SRCSDIR)Processing/CannyEdge.cpp \
 					$(SRCSDIR)Processing/FaceDetect.cpp \
 					$(SRCSDIR)Processing/RedCirclesDetect.cpp \
 					$(SRCSDIR)Processing/Arrow.cpp \
+					$(SRCSDIR)Processing/ImgProcessingWrapper.cpp \
 					$(SRCSDIR)Interpretor/Reader.cpp \
 					$(SRCSDIR)Manager/Manager.cpp \
 					$(SRCSDIR)Manager/VideoManager.cpp \
 					$(SRCSDIR)Singletons/VideoManagerSingleton.cpp \
+					$(SRCSDIR)Singletons/ImgProcessingWrapperSingleton.cpp \
 					$(SRCSDIR)Sync/LockList.cpp \
 					$(SRCSDIR)Sync/Semaphore.cpp \
-					$(SRCSDIR)Logger/Logger.cpp 
+					$(SRCSDIR)Logger/Logger.cpp
 
 
 SRCS_TEST = $(SRCSDIR)Test/main.cpp

@@ -4,6 +4,8 @@
 #include "RTSPFactory/RTSPFactory.hpp"
 #include "Interpretor/Reader.hpp"
 #include "Singletons/VideoManagerSingleton.hpp"
+#include "Singletons/ImgProcessingWrapperSingleton.hpp"
+#include "Processing/CannyEdge.hpp"
 #include "Logger/Logger.hpp"
 #include "Parser/ConfigParser.hpp"
 

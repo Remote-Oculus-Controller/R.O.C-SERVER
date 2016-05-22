@@ -7,6 +7,6 @@ class ImgProcessingWrapperSingleton
 {
   public:
     static ImgProcessingWrapper * getInstance();
-}
+};
 
 #endif // IMGPROCESSINGWRAPPERSINGLETON_HPP

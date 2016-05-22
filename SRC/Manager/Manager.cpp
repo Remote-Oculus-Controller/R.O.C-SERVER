@@ -44,11 +44,22 @@ bool Manager::startInterpretor()
 	{
 		std::cout << ":> ";
 		tokens = this->_reader.getTokens();
-		if (tokens.size() && tokens[0] == "stop")
+		if (tokens.size())
 		{
-			this->stopRTSP();
-			this->stopInterpretor();
-			break;
+			if (tokens[0] == "stop")
+			{
+				this->stopRTSP();
+				this->stopInterpretor();
+				break;
+			}
+			if (tokens[0] == "canny")
+			{
+				ImgProcessingWrapperSingleton::getInstance()->addProcessing(new CannyEdge() , 0);
+			}
+			if (tokens[0] == "clear")
+			{
+				ImgProcessingWrapperSingleton::getInstance()->clearProcessing();
+			}
 		}
 	}
 	return true;
@@ -63,14 +74,14 @@ bool Manager::startVideoManager()
 {
 	this->_videoHandler = VideoManagerSingleton::getInstance();
 	if (this->_videoHandler == NULL)
-		return false;
+	return false;
 	if (this->_videoHandler->isReady())
 	{
 		this->_videoHandler->run();
 		logger::log(SUCCESS_VIDEOMANAGER , logger::logType::SUCCESS);
 		return true;
 	}
-		return false;
+	return false;
 }
 
 bool Manager::stopVideoManager()

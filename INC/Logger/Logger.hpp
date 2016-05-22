@@ -21,16 +21,18 @@ namespace logger
     PRIORITY,
     SUCCESS ,
     WARNING ,
-    FAILURE
+    FAILURE ,
   };
 
 
   void log(std::string message , logType type);
+
   class Logger
   {
     public:
 
       Logger();
+
       static Logger * getInstance();
 
       std::string buildLog(std::string message , logType type);
@@ -45,10 +47,12 @@ namespace logger
 
       void run();
 
+      bool                    isAlive;
+      bool                    isAsyncRunning;
+
       std::mutex              queueLock;
       std::condition_variable condition;
       std::queue<std::string> messageQueue;
-
       std::chrono::steady_clock::time_point start;
   };
 }

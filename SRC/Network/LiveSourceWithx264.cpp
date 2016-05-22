@@ -15,6 +15,7 @@ LiveSourceWithx264::LiveSourceWithx264(UsageEnvironment &env , unsigned int id) 
 
     this->_id = id;
     this->_videoHandler = VideoManagerSingleton::getInstance();
+    this->_imgProcessingWrapperHandler = ImgProcessingWrapperSingleton::getInstance();
     ++referenceCount;
     encoder = new x264Encoder(this->_videoHandler->getWidthById(this->_id),
                               this->_videoHandler->getHeightById(this->_id),
@@ -41,7 +42,7 @@ void LiveSourceWithx264::fetchNewFrame()
 
 void LiveSourceWithx264::processNewFrame()
 {
-  // APPLY PROCESSING
+  this->_imgProcessingWrapperHandler->apply(this->_videoHandler->getFrame(this->_id));
 }
 
 void LiveSourceWithx264::encodeNewFrame()
