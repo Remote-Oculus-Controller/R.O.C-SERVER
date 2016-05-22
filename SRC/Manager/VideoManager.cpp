@@ -59,7 +59,7 @@ bool VideoManager::init()
       Camera * camera = new Camera(i);
       if (camera->initCamera() == false)
       {
-        logger::log(ERROR_CANERAS_INIT , logger::logType::FAILURE);
+        logger::log(ERROR_CAMERAS_INIT , logger::logType::FAILURE);
         this->uninit();
         return false;
       }

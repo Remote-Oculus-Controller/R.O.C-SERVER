@@ -55,7 +55,7 @@
 #define ERROR_FPS             "Error while setting FPS : must be a positive integer"
 #define ERROR_PORT            "Error while parsing port number : must be a positive integer number"
 #define ERROR_CAMERAS_OPEN    "Error while opening ROC Cameras : check that the device(s) are plugged in"
-#define ERROR_CANERAS_INIT    "Error while initializing ROC Cameras : check that the device(s) supports the requirements"
+#define ERROR_CAMERAS_INIT    "Error while initializing ROC Cameras : check that the device(s) supports the requirements and is not busy"
 #define ERROR_CAMERA_WIDTH    "Error while setting ROC Camera width"
 #define ERROR_CAMERA_HEIGHT   "Error while setting ROC Camera height"
 #define ERROR_CAMERA_FPS      "Error while setting ROC Camera fps"
