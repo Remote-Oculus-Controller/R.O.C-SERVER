@@ -10,6 +10,13 @@ namespace logger
         instance->pushLog(instance->buildLog(message , type));
     }
 
+    void waitSync()
+    {
+      Logger * instance = Logger::getInstance();
+      if (instance)
+        instance->sync();
+    }
+
     Logger::Logger()
     {
       this->isAlive = true;
@@ -47,18 +54,31 @@ namespace logger
       this->condition.notify_all();
     }
 
+    void Logger::sync()
+    {
+      std::unique_lock<std::mutex> lock(this->syncLock);
+      while (!this->messageQueue.empty()) {
+        this->conditionSync.wait_for(lock , std::chrono::milliseconds(100));
+      }
+    }
+
     void Logger::run()
     {
       std::unique_lock<std::mutex> lock(this->queueLock);
+      std::unique_lock<std::mutex> lockSync(this->syncLock);
+      lockSync.unlock();
       while (true)
       {
         while (this->messageQueue.empty())
           this->condition.wait(lock);
+        lockSync.lock();
         while (!this->messageQueue.empty())
         {
           std::cout << this->messageQueue.front() << std::endl;
           this->messageQueue.pop();
         }
+        this->conditionSync.notify_all();
+        lockSync.unlock();
       }
     }
 

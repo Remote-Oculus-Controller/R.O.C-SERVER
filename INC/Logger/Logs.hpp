@@ -45,7 +45,7 @@
 #define ERROR_VIDEOMANAGER    "Error while starting ROC VideoManager"
 #define ERROR_RTSP            "Error while starting ROC RTSP Server(s)"
 #define ERROR_INTERPRETOR     "Error while starting ROC Interpretor"
-#define ERROR_CONFIG_LOAD     "Error while loading ROC Configuration"
+#define ERROR_CONFIG_OPEN     "Error while opening ROC configuration file"
 #define ERROR_CONFIG          "Error while Parsing ROC Configuration"
 #define ERROR_CANERAS         "Error while starting ROC Cameras"
 #define ERROR_CAMERAS_COUNT   "Error while getting ROC Cameras count : must be a positive integer number"

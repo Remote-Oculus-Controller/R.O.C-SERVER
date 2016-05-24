@@ -15,7 +15,7 @@ namespace configuration
 
     YAMLParser parser = YAMLParser(CONFIG_FILE , cv::FileStorage::READ);
     if (parser.isOpened() == false) {
-      logger::log(ERROR_CONFIG_LOAD , logger::logType::FAILURE);
+      logger::log(ERROR_CONFIG_OPEN , logger::logType::FAILURE);
       return false;
     }
 

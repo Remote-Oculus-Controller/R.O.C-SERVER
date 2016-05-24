@@ -74,6 +74,7 @@ FramedSource* H264LiveServerMediaSession::createNewStreamSource(unsigned clientS
 {
     estBitRate = 10000;
     LiveSourceWithx264 *source = LiveSourceWithx264::createNew(envir() , this->_id);
+    std::cout << "Connection ! " << std::endl;
     // are you trying to keep the reference of the source somewhere? you shouldn't.
     // Live555 will create and delete this class object many times. if you store it somewhere
     // you will get memory access violation. instead you should configure you source to always read from your data source

@@ -26,6 +26,7 @@ namespace logger
 
 
   void log(std::string message , logType type);
+  void waitSync();
 
   class Logger
   {
@@ -37,6 +38,7 @@ namespace logger
 
       std::string buildLog(std::string message , logType type);
       void pushLog(std::string formatedMessage);
+      void sync();
 
     private:
 
@@ -51,7 +53,9 @@ namespace logger
       bool                    isAsyncRunning;
 
       std::mutex              queueLock;
+      std::mutex              syncLock;
       std::condition_variable condition;
+      std::condition_variable conditionSync;
       std::queue<std::string> messageQueue;
       std::chrono::steady_clock::time_point start;
   };
