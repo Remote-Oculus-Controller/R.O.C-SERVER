@@ -4,9 +4,14 @@
 
 camera_count: 1
 
+# PHYSICAL IDs OF THE CAMERAS
+# The Server WILL segfault if only one of the ID's is incorrect
+
+cameras_id: [0]
+
 # MAXIMUM TIME IN ms BETWEEN 2 FRAMES
 
-timeout: 1000
+timeout: 40
 
 # WIDTH OF THE FRAMES
 
@@ -23,3 +28,15 @@ fps: 30
 # SERVER PORT
 
 port: 8550
+
+# DIRECTLY CONTROL EXPOSURE TIME
+# 1 == MANUAL
+# 0 == AUTOMATIC
+
+manual_exposure: 1
+
+# EXPOSURE TIME IN MS IF MANUAL EXPOSURE IS set
+# A value of 0 will let the server set it for you (recommended)
+# Otherwise , set the value yourself
+
+exposure_time: 30

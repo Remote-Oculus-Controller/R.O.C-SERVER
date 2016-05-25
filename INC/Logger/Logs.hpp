@@ -28,6 +28,7 @@
 #define WARNING_SYNC_TIMEOUT  "Synchonization timed out"
 #define WARNING_EXIT_SIGNAL   "Exit command catched , performing cleanup"
 #define WARNING_EXIT_LOGGER   "Stopping logger : no more logs beyond this point"
+#define WARNING_MANUAL        "About to set manual exposure , things may break if your device doesn't support it"
 
 #define SUCCESS_MANAGER       "ROC Manager started"
 #define SUCCESS_VIDEOMANAGER  "ROC VideoManager started"
@@ -53,6 +54,7 @@
 #define ERROR_WIDTH           "Error while setting width : must be a positive integer"
 #define ERROR_HEIGHT          "Error while setting height : must be a positive integer"
 #define ERROR_FPS             "Error while setting FPS : must be a positive integer"
+#define ERROR_IDs             "Error while setting cameras IDs , mismatch in camera_count and number of ID(s)"
 #define ERROR_PORT            "Error while parsing port number : must be a positive integer number"
 #define ERROR_CAMERAS_OPEN    "Error while opening ROC Cameras : check that the device(s) are plugged in"
 #define ERROR_CAMERAS_INIT    "Error while initializing ROC Cameras : check that the device(s) supports the requirements and is not busy"

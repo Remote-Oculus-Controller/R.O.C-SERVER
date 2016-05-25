@@ -18,7 +18,14 @@ int YAMLParser::getValueOf(std::string property)
 	int value;
 
 	this->_file[property] >> value;
-	return (value);
+	return value;
+}
+
+std::vector<int> YAMLParser::getVectorOf(std::string property)
+{
+	std::vector<int> vector;
+	this->_file[property] >> vector;
+	return vector;
 }
 
 bool YAMLParser::isOpened()

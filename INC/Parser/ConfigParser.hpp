@@ -14,6 +14,10 @@ namespace configuration
   extern unsigned int height;
   extern unsigned int fps;
   extern unsigned int port;
+  extern unsigned int exposure_time;
+  extern bool manual_exposure;
+  extern std::vector<int> cameras_id;
+
 
   bool loadConfig();
 
@@ -24,6 +28,7 @@ namespace configuration
     static bool checkWidth();
     static bool checkHeight();
     static bool checkFps();
+    static bool checkIDs();
     static bool checkTimeout();
     static bool checkPort();
     static bool logConfig();

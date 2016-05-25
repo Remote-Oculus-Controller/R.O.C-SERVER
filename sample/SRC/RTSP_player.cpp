@@ -7,7 +7,7 @@ int main(int argc , char ** argv)
 {
   if (argc < 2)
     return 1;
-
+  
   cv::VideoCapture capture(argv[1]);
   if (!capture.isOpened())
     return 1;
@@ -21,6 +21,5 @@ int main(int argc , char ** argv)
       return 1;
     cv::imshow("TEST", frame);
     cv::waitKey(1);
-
   }
 }

@@ -2,6 +2,7 @@
 #define YAML_PARSER_HPP
 
 #include "opencv2/opencv.hpp"
+#include <vector>
 #include <time.h>
 
 class YAMLParser
@@ -12,7 +13,9 @@ class YAMLParser
 		~YAMLParser();
 
 		bool isOpened();
-		int getValueOf(std::string property);
+
+		int 							getValueOf(std::string property);
+		std::vector<int> 	getVectorOf(std::string property);
 
 	private:
 

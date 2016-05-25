@@ -56,7 +56,7 @@ bool VideoManager::init()
   for (unsigned int i = 0 ; i < this->_camerasCount ; i++) {
     try
     {
-      Camera * camera = new Camera(i);
+      Camera * camera = new Camera(configuration::cameras_id[i]);
       if (camera->initCamera() == false)
       {
         logger::log(ERROR_CAMERAS_INIT , logger::logType::FAILURE);
