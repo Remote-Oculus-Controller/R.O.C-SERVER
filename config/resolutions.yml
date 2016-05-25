@@ -15,11 +15,11 @@ timeout: 40
 
 # WIDTH OF THE FRAMES
 
-width: 1280
+width: 640
 
 # HEIGHT OF THE FRAMES
 
-height: 720
+height: 480
 
 # FRAMES PER SECOND
 

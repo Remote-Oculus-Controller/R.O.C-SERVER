@@ -6,6 +6,7 @@
 #include "Singletons/VideoManagerSingleton.hpp"
 #include "Singletons/ImgProcessingWrapperSingleton.hpp"
 #include "Processing/CannyEdge.hpp"
+#include "Processing/FaceDetect.hpp"
 #include "Logger/Logger.hpp"
 #include "Parser/ConfigParser.hpp"
 

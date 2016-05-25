@@ -60,6 +60,10 @@ bool Manager::startInterpretor()
 			{
 				ImgProcessingWrapperSingleton::getInstance()->clearProcessing();
 			}
+			if (tokens[0] == "face")
+			{
+				ImgProcessingWrapperSingleton::getInstance()->addProcessing(new FaceDetect() , 0);
+			}
 		}
 	}
 	return true;
