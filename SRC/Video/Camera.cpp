@@ -88,15 +88,6 @@ bool Camera::initResolutions()
 		this->_camera->set(cv::CAP_PROP_FRAME_HEIGHT, configuration::height);
 		this->_camera->set(cv::CAP_PROP_FPS, configuration::fps);
 
-		if (configuration::manual_exposure) {
-			logger::log(WARNING_MANUAL , logger::logType::WARNING);
-			this->_camera->set(cv::CAP_PROP_AUTO_EXPOSURE , 1);
-			if (configuration::exposure_time == 0)
-				this->_camera->set(cv::CAP_PROP_EXPOSURE , 1000 / configuration::fps);
-			else
-				this->_camera->set(cv::CAP_PROP_EXPOSURE , configuration::exposure_time);
-		}
-
 		this->_width = this->_camera->get(cv::CAP_PROP_FRAME_WIDTH);
 		this->_height = this->_camera->get(cv::CAP_PROP_FRAME_HEIGHT);
 		this->_fps = this->_camera->get(cv::CAP_PROP_FPS);

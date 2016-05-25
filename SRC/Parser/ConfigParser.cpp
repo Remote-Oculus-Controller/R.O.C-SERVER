@@ -8,8 +8,6 @@ namespace configuration
   unsigned int height = 0;
   unsigned int fps = 0;
   unsigned int port = 0;
-  unsigned int exposure_time = 0;
-  bool manual_exposure = false;
   std::vector<int> cameras_id;
 
   bool loadConfig()
@@ -28,8 +26,6 @@ namespace configuration
     height = parser.getValueOf("height");
     fps = parser.getValueOf("fps");
     port = parser.getValueOf("port");
-    manual_exposure = static_cast<int>(parser.getValueOf("manual_exposure")) != 0;
-    exposure_time = parser.getValueOf("exposure_time");
     cameras_id = parser.getVectorOf("cameras_id");
 
     if (ConfigParser::checkCamerasCount() == false)
@@ -63,7 +59,7 @@ namespace configuration
       logger::log(ERROR_IDs , logger::logType::FAILURE);
       return false;
     }
-    
+
     if (ConfigParser::checkTimeout() == false)
     {
 
@@ -125,9 +121,6 @@ namespace configuration
     logger::log(INFO_CONFIG("Width\t" , width) , logger::logType::INFO);
     logger::log(INFO_CONFIG("Height\t" , height) , logger::logType::INFO);
     logger::log(INFO_CONFIG("Fps\t" , fps) , logger::logType::INFO);
-    logger::log(INFO_CONFIG("Manual exposure" , manual_exposure) , logger::logType::INFO);
-    if (manual_exposure)
-      logger::log(INFO_CONFIG("Exposure time" , exposure_time) , logger::logType::INFO);
     logger::log(INFO_CONFIG("Timeout\t" , timeout) , logger::logType::INFO);
     logger::log(INFO_CONFIG("Port\t" , port) , logger::logType::INFO);
 

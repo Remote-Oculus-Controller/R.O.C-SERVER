@@ -28,15 +28,3 @@ fps: 30
 # SERVER PORT
 
 port: 8550
-
-# DIRECTLY CONTROL EXPOSURE TIME
-# 1 == MANUAL
-# 0 == AUTOMATIC
-
-manual_exposure: 1
-
-# EXPOSURE TIME IN MS IF MANUAL EXPOSURE IS set
-# A value of 0 will let the server set it for you (recommended)
-# Otherwise , set the value yourself
-
-exposure_time: 30
