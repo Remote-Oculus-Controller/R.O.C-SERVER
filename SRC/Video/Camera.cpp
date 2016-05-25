@@ -90,6 +90,7 @@ bool Camera::initResolutions()
 
 		if (configuration::manual_exposure) {
 			logger::log(WARNING_MANUAL , logger::logType::WARNING);
+			this->_camera->set(cv::CAP_PROP_AUTO_EXPOSURE , 0);
 			if (configuration::exposure_time == 0)
 				this->_camera->set(cv::CAP_PROP_EXPOSURE , 1000 / configuration::fps);
 			else
