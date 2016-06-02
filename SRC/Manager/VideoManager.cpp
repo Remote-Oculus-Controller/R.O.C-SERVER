@@ -184,6 +184,22 @@ void VideoManager::flipAll()
   }
 }
 
+bool VideoManager::setAll(int propId , double value)
+{
+  for(std::vector<Camera *>::iterator it = this->_cameras.begin(); it != this->_cameras.end(); ++it) {
+    if ((*it)->set(propId , value) == false)
+      return false;
+  }
+  return true;
+}
+
+bool VideoManager::setOne(int propId , double value , unsigned int id)
+{
+  if (id < this->_cameras.size())
+    return this->_cameras[id]->set(propId , value);
+  return false;
+}
+
 bool VideoManager::run()
 {
   std::thread runner(&VideoManager::loop, this);

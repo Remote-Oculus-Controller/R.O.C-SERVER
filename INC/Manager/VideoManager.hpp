@@ -11,8 +11,6 @@
 #include "Logger/Logger.hpp"
 #include "Parser/ConfigParser.hpp"
 
-#define VIDEO_MANAGER_CONFIG_FILE "config/resolutions.yml"
-
 class VideoManager {
 
     public:
@@ -30,6 +28,9 @@ class VideoManager {
         int getHeightById(unsigned int id);
         int getFpsById(unsigned int id);
 
+        bool setAll(int propId, double value);
+        bool setOne(int propId, double value , unsigned int id);
+
         bool run();
         bool loop();
 
@@ -45,6 +46,7 @@ class VideoManager {
         void grabAll();
         void retrieveAll();
         void flipAll();
+
 
     private:
 

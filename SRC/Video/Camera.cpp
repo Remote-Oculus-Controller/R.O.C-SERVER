@@ -78,6 +78,11 @@ bool Camera::reOpenCamera()
     return true;
 }
 
+bool Camera::set(int propId , double value)
+{
+	return this->_camera->set(propId , value);
+}
+
 //===================================================
 // FONCTIONS MASQUEES D'INITIALISATION
 //===================================================

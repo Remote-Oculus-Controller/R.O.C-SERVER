@@ -64,6 +64,10 @@ bool Manager::startInterpretor()
 			{
 				ImgProcessingWrapperSingleton::getInstance()->addProcessing(new FaceDetect() , 0);
 			}
+			if (tokens[0] == "zoom")
+			{
+				this->_videoHandler->setAll(cv::CAP_PROP_ZOOM , 50);
+			}
 		}
 	}
 	return true;

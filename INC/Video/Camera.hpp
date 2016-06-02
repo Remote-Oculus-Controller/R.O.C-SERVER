@@ -52,6 +52,7 @@ class Camera
 	bool grabFrame();
 	bool flipFrame();
   bool reOpenCamera();
+	bool set(int propId , double value);
 
   int getWidth();
   int getHeight();
