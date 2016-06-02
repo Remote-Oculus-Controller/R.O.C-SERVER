@@ -64,9 +64,30 @@ bool Manager::startInterpretor()
 			{
 				ImgProcessingWrapperSingleton::getInstance()->addProcessing(new FaceDetect() , 0);
 			}
-			if (tokens[0] == "zoom")
+			if (tokens[0] == "zoom" && tokens[1] == "on")
 			{
-				this->_videoHandler->setAll(cv::CAP_PROP_ZOOM , 50);
+				this->_videoHandler->setAll(cv::CAP_PROP_ZOOM , std::stod(tokens[2].c_str()));
+			}
+			if (tokens[0] == "zoom" && tokens[1] == "off")
+			{
+				this->_videoHandler->setAll(cv::CAP_PROP_ZOOM , 0);
+			}
+			if (tokens[0] == "zoom" && tokens[1] == "test")
+			{
+				for (double i = 0 ; i < 99 ; i+= 1)
+				{
+					this->_videoHandler->setAll(cv::CAP_PROP_ZOOM , i);
+					std::this_thread::sleep_for(std::chrono::milliseconds(10));
+				}
+				for (double i = 99 ; i > 0 ; i-= 1)
+				{
+					this->_videoHandler->setAll(cv::CAP_PROP_ZOOM , i);
+					std::this_thread::sleep_for(std::chrono::milliseconds(10));
+				}
+			}
+			if (tokens[0] == "exposure")
+			{
+				this->_videoHandler->setAll(cv::CAP_PROP_EXPOSURE , std::stod(tokens[1].c_str()));
 			}
 		}
 	}

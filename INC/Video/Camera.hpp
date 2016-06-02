@@ -3,8 +3,10 @@
 
 #include <iostream>
 #include <fstream>
+#include <mutex>
 #include <vector>
 #include <unistd.h>
+#include <string>
 
 #include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
@@ -26,7 +28,6 @@ class Camera
 	//====================================================
 
 	Camera(int id = 0);
-
 	~Camera();
 
 	//====================================================
@@ -48,11 +49,12 @@ class Camera
 	//====================================================
 
 	bool initCamera();
+	bool reOpenCamera();
 	bool retrieveFrame();
 	bool grabFrame();
 	bool flipFrame();
-  bool reOpenCamera();
 	bool set(int propId , double value);
+	bool setZoom(double value);
 
   int getWidth();
   int getHeight();
@@ -60,12 +62,13 @@ class Camera
 
 	protected:
 
+	bool doZoom();
+
 	//===================================================
 	// FONCTIONS MASQUEES D'INITIALISATION
 	//===================================================
 
 	bool    initResolutions();
-
 
 	//====================================================
 	// ATTRIBUT PROPRE A LA CAMERA
@@ -80,6 +83,9 @@ class Camera
 	int 									_width;
 	int 									_height;
 	int 									_fps;
+
+	double 								_zoom;
+	std::mutex 						_lock;
 
 };
 

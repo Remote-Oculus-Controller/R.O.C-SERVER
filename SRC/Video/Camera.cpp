@@ -9,6 +9,7 @@ Camera::Camera(int id)
 {
 	this->_id = id;
 	this->_camera = new cv::VideoCapture(this->_id);
+	this->_zoom = 0.0;
 }
 
 
@@ -56,7 +57,7 @@ bool Camera::initCamera()
 
 bool Camera::retrieveFrame()
 {
-	return this->_camera->retrieve(this->_backFrame);
+	return this->_camera->retrieve(this->_backFrame) && this->doZoom();
 }
 
 bool Camera::grabFrame()
@@ -80,6 +81,8 @@ bool Camera::reOpenCamera()
 
 bool Camera::set(int propId , double value)
 {
+	if (propId == 27)
+			return this->setZoom(value);
 	return this->_camera->set(propId , value);
 }
 
@@ -110,7 +113,6 @@ bool Camera::initResolutions()
 		else
 			logger::log(SUCCESS_FPS , logger::logType::SUCCESS);
 
-
 		logger::log(INFO_CONFIG("Camera width" , this->_width), logger::logType::INFO);
 		logger::log(INFO_CONFIG("Camera height" , this->_height), logger::logType::INFO);
 		logger::log(INFO_CONFIG("Camera fps" , this->_fps), logger::logType::INFO);
@@ -131,4 +133,34 @@ int Camera::getHeight()
 int Camera::getFps()
 {
   return this->_fps;
+}
+
+bool Camera::setZoom(double value)
+{
+	std::unique_lock<std::mutex> locker(this->_lock);
+	this->_zoom = value;
+	return true;
+}
+
+bool Camera::doZoom()
+{
+	std::unique_lock<std::mutex> locker(this->_lock);
+		if (this->_zoom > 0)
+		{
+			if (this->_zoom >= 100)
+				return false;
+
+			double width  = (1 - (this->_zoom / 100)) * this->_width;
+			double height = (1 - (this->_zoom / 100)) * this->_height;
+			double x =  this->_width / 2;
+			double y = this->_height / 2;
+			double  ptoX = x-(width / 2);
+			double  ptoY = y-(height /2);
+			Rect zone = Rect(ptoX, ptoY, width, height);
+			Mat zoomedFrame = this->_backFrame(zone);
+			resize(zoomedFrame, zoomedFrame , Size(this->_width , this->_height) , 0, 0, CV_INTER_LINEAR);
+			this->_backFrame = zoomedFrame;
+			return true;
+		}
+		return false;
 }
