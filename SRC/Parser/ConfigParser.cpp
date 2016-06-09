@@ -8,6 +8,8 @@ namespace configuration
   unsigned int height = 0;
   unsigned int fps = 0;
   unsigned int port = 0;
+  unsigned int tcpPort = 0;
+
   std::vector<int> cameras_id;
 
   bool loadConfig()
@@ -27,6 +29,7 @@ namespace configuration
     fps = parser.getValueOf("fps");
     port = parser.getValueOf("port");
     cameras_id = parser.getVectorOf("cameras_id");
+    tcpPort = parser.getValueOf("tcp_port");
 
     if (ConfigParser::checkCamerasCount() == false)
     {

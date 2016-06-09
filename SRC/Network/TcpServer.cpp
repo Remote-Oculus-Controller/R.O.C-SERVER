@@ -7,12 +7,14 @@
 
 TcpServer::TcpServer(unsigned short port) : Server(port)
 {
-	//nothing to do here...
+	this->_isSocketOpen = false;
+	this->_isServerRunning = false;
 }
 
 TcpServer::~TcpServer()
 {
-	//nothing to do here...
+	if (this->_isSocketOpen == true)
+		close(this->_socketClient);
 }
 
 //====================================================
@@ -38,6 +40,7 @@ bool TcpServer::initServer()
 
 	if (listen(this->_socket, 1) < 0)
 		return (false);
+	logger::log(INFO_TCP_PORT(this->_port) , logger::logType::PRIORITY);
 	return (true);
 }
 
@@ -49,7 +52,6 @@ bool TcpServer::runServer()
 		return (false);
 	this->_isServerRunning = true;
 }
-
 
 //====================================================
 // FONCTIONS SURCHARGEES D'ENVOI ET DE RECEPTION

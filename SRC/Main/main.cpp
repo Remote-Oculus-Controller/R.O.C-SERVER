@@ -26,10 +26,16 @@ int main(int argc, char**argv)
 		return 3;
 	}
 
+	if (manager.startTcpServer() == false) {
+		logger::log(ERROR_TCP , logger::logType::FAILURE);
+		logger::waitSync();
+		return 4;
+	}
+
 	if (manager.startInterpretor() == false) {
 		logger::log(ERROR_INTERPRETOR , logger::logType::FAILURE);
 		logger::waitSync();
-		return 4;
+		return 5;
 	}
 
 	return 0;

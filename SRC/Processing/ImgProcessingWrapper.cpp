@@ -2,7 +2,7 @@
 
 ImgProcessingWrapper::ImgProcessingWrapper()
 {
-
+  this->_semaphore = new Semaphore(configuration::camera_count);
 }
 
 ImgProcessingWrapper::~ImgProcessingWrapper()
@@ -12,9 +12,11 @@ ImgProcessingWrapper::~ImgProcessingWrapper()
 
 void ImgProcessingWrapper::apply(cv::Mat & frame)
 {
+  this->_semaphore->wait();
   for(std::vector<ImgProcessing *>::iterator it = this->_imgProcessings.begin(); it != this->_imgProcessings.end(); ++it) {
     (*it)->apply(frame);
   }
+  this->_semaphore->notify();
 }
 
 unsigned int ImgProcessingWrapper::getProcessingCount()
@@ -42,13 +44,13 @@ bool ImgProcessingWrapper::clearProcessing()
   this->_imgProcessings.erase(this->_imgProcessings.begin() , this->_imgProcessings.end());
   this->unlockProcessings();
 }
-
 void ImgProcessingWrapper::lockProcessings()
+
 {
-  this->_lock.lock();
+    this->_semaphore->wait(true);
 }
 
 void ImgProcessingWrapper::unlockProcessings()
 {
-  this->_lock.unlock();
+  this->_semaphore->notify(true);
 }

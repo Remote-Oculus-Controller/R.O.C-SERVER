@@ -10,6 +10,8 @@
 #include "opencv2/imgcodecs.hpp"
 
 #include "Processing/ImgProcessing.hpp"
+#include "Sync/Semaphore.hpp"
+#include "Parser/ConfigParser.hpp"
 
 class ImgProcessingWrapper
 {
@@ -27,11 +29,12 @@ class ImgProcessingWrapper
 
   private:
 
-        void lockProcessings();
-        void unlockProcessings();
+      void lockProcessings();
+      void unlockProcessings();
 
-      std::vector<ImgProcessing *> _imgProcessings;
-      std::mutex                 _lock;
+      std::vector<ImgProcessing *>  _imgProcessings;
+      std::mutex                    _lock;
+      Semaphore *                   _semaphore;
 };
 
 #endif // IMGPROCESSINGWRAPPER_HPP

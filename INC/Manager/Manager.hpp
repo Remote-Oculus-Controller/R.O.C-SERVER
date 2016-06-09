@@ -9,6 +9,7 @@
 #include "Processing/FaceDetect.hpp"
 #include "Logger/Logger.hpp"
 #include "Parser/ConfigParser.hpp"
+#include "Network/TcpServer.hpp"
 
 class Manager
 {
@@ -26,11 +27,17 @@ class Manager
 	bool startInterpretor();
 	bool stopInterpretor();
 
+	bool startTcpServer();
+	bool stopTcpServer();
+
 	private:
+
+	void networkLoop();
 
 	RTSPFactory  *	_RTSPFactory;
 	Reader 					_reader;
 	VideoManager * 	_videoHandler;
+	TcpServer * 		_TcpServer;
 
 	// TCP Server 	(get and send commands)
 	// Interpretor

@@ -3,11 +3,12 @@
 
 #include "Network/Server.hpp"
 #include "Network/TcpPacket.hpp"
+#include "Logger/Logger.hpp"
 
 class TcpServer : public Server
 {
 	public:
-	
+
 	//====================================================
 	// CONSTRUCTEUR / DESTRUCTEUR
 	//====================================================
@@ -16,7 +17,7 @@ class TcpServer : public Server
 	virtual ~TcpServer();
 
 	//====================================================
-	// FONCTIONS SURCHARGEES d'INIT / MARCHE 
+	// FONCTIONS SURCHARGEES d'INIT / MARCHE
 	//====================================================
 
 	virtual bool initServer();
@@ -25,22 +26,22 @@ class TcpServer : public Server
 	//====================================================
 	// FONCTIONS SURCHARGEES D'ENVOI ET DE RECEPTION
 	//====================================================
-	
+
 	virtual size_t Read(char *buffer, size_t bufferLenght);
-    virtual size_t Send(char *buffer, size_t bufferLenght);
+  virtual size_t Send(char *buffer, size_t bufferLenght);
 
-    //====================================================
-    // FONCTION STATIQUE DE CREATION DE PAQUET
-    //====================================================
+  //====================================================
+  // FONCTION STATIQUE DE CREATION DE PAQUET
+  //====================================================
 
-    static TcpPacket * getNewPacket();
+  static TcpPacket * getNewPacket();
 
 	protected:
 
 	//====================================================
 	// ATTRIBUT PROPRE AU SERVEUR TCP
 	//====================================================
-		
+
 	int 	_socketClient;
 };
 

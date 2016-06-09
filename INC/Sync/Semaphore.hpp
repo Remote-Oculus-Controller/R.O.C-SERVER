@@ -6,11 +6,12 @@ class Semaphore
 {
   public:
     Semaphore(int count_ = 0);
-    void notify();
-    void wait();
+    void notify(bool unique = false);
+    void wait(bool unique = false);
 
   private:
     mutex _mtx;
     condition_variable _cv;
     int _count;
+    int _capacity;
 };

@@ -14,6 +14,7 @@ namespace configuration
   extern unsigned int height;
   extern unsigned int fps;
   extern unsigned int port;
+  extern unsigned int tcpPort;
   extern std::vector<int> cameras_id;
 
 

@@ -21,6 +21,7 @@
 #define STOP_SYNC_JOB         "Stopped ROC Sync job"
 
 #define INFO_RTSP_URL(url)    ((std::string)"ROC RTSP Server started on url " + url)
+#define INFO_TCP_PORT(var)    ((std::string)"ROC TCP Server started on port " + std::to_string(var))
 #define INFO_CONFIG(k , v)    ((std::string) k + "\t: " + std::to_string(v))
 #define INFO_WAIT_SYNC_JOB    "Waiting for ROC Sync job to finish"
 
@@ -61,4 +62,6 @@
 #define ERROR_CAMERA_WIDTH    "Error while setting ROC Camera width"
 #define ERROR_CAMERA_HEIGHT   "Error while setting ROC Camera height"
 #define ERROR_CAMERA_FPS      "Error while setting ROC Camera fps"
+#define ERROR_TCP             "Error while establishing TCP connection"
+
 #endif
