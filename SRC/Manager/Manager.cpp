@@ -124,10 +124,12 @@ void Manager::networkLoop()
 	size_t count;
 	bool isProcessingOn = false;
 	this->_TcpServer = new TcpServer(configuration::tcpPort);
-	this->_TcpServer->initServer();
-	this->_TcpServer->runServer();
+	if (this->_TcpServer->initServer() == false || this->_TcpServer->runServer() == false)
+		{
+			logger::log("ERROR TCP" , logger::logType::FAILURE);
+			return;
+		}
 	logger::log(SUCCESS_TCP, logger::logType::SUCCESS);
-
 	while (1)
 	{
 		if ((count = this->_TcpServer->Read((char *)&packet , sizeof(packet))) <= 0)
