@@ -107,14 +107,9 @@ bool Manager::stopVideoManager()
 
 bool Manager::startTcpServer()
 {
-	this->_TcpServer = new TcpServer(configuration::tcpPort);
-	if (this->_TcpServer->initServer() && this->_TcpServer->runServer())
-	{
 		std::thread * thread = new std::thread(&Manager::networkLoop , this);
 		thread->detach();
 		return true;
-	}
-	return false;
 }
 
 bool Manager::stopTcpServer()
@@ -128,6 +123,11 @@ void Manager::networkLoop()
 	TcpPacket packet;
 	size_t count;
 	bool isProcessingOn = false;
+	this->_TcpServer = new TcpServer(configuration::tcpPort);
+	this->_TcpServer->initServer();
+	logger::log(SUCCESS_TCP, logger::logType::SUCCESS);
+	this->_TcpServer->runServer();
+
 	while (1)
 	{
 		if ((count = this->_TcpServer->Read((char *)&packet , sizeof(packet))) <= 0)

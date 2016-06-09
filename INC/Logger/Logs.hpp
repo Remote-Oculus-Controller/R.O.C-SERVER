@@ -41,6 +41,7 @@
 #define SUCCESS_WIDTH         "ROC Camera width successfully set"
 #define SUCCESS_HEIGHT        "ROC Camera height successfully set"
 #define SUCCESS_FPS           "ROC Camera fps successfully set"
+#define SUCCESS_TCP           "ROC Client connected"
 
 #define ERROR_ARGS            "Error while getting program arguments : ./Server [PORT]"
 #define ERROR_MANAGER         "Error while starting ROC Manager"
