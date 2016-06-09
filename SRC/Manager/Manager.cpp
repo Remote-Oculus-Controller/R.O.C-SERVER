@@ -125,8 +125,8 @@ void Manager::networkLoop()
 	bool isProcessingOn = false;
 	this->_TcpServer = new TcpServer(configuration::tcpPort);
 	this->_TcpServer->initServer();
-	logger::log(SUCCESS_TCP, logger::logType::SUCCESS);
 	this->_TcpServer->runServer();
+	logger::log(SUCCESS_TCP, logger::logType::SUCCESS);
 
 	while (1)
 	{
