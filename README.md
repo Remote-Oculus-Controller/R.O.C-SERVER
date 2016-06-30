@@ -1,5 +1,9 @@
 ![Alt text](/assets/logo-roc-flat.png?raw=true "ROC logo")
 
+<p align="center">
+  <img url="https://github.com/Happykat/R.O.C-SERVER/blob/development/assets/logo-roc-flat.png"/>
+</p>
+
 # R.O.C-SERVER
 
 R.O.C-SERVER is a video server able to stream h.264 encoded video from several cameras to
