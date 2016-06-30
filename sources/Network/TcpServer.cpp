@@ -25,6 +25,7 @@ bool TcpServer::initServer()
 {
 	if (this->_isSocketOpen == true || this->_isServerRunning == true)
 		return (false);
+
 	if ((this->_socket = socket(AF_INET, SOCK_STREAM, 0)) < 0)
 		return (false);
 	this->_isSocketOpen = true;
@@ -48,6 +49,7 @@ bool TcpServer::runServer()
 {
 	if (this->_isSocketOpen == false || this->_isServerRunning == true)
 		return (false);
+
 	if ((this->_socketClient  = accept(this->_socket, (struct sockaddr *) NULL, NULL)) < 0)
 		return (false);
 	this->_isServerRunning = true;

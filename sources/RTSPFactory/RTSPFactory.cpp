@@ -4,8 +4,6 @@ RTSPFactory::RTSPFactory()
 {
 	this->watcher = new char;
 	*(this->watcher) = 0;
-
-	// MAX PACKET SIZE 128K
 	OutPacketBuffer::maxSize = 131072;
 }
 
@@ -17,7 +15,7 @@ RTSPFactory::~RTSPFactory()
 
 
 int RTSPFactory::createServer(int id, int port)
-{
+{	
 	std::unique_lock<std::mutex> lock(_lock);
 	this->_done = false;
 
@@ -30,7 +28,6 @@ int RTSPFactory::createServer(int id, int port)
 	if (*(this->watcher) != 0) {
 		return 1;
 	}
-
 	return 0;
 }
 

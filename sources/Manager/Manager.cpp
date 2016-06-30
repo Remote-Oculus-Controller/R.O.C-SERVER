@@ -126,7 +126,7 @@ void Manager::networkLoop()
 	this->_TcpServer = new TcpServer(configuration::tcpPort);
 	if (this->_TcpServer->initServer() == false || this->_TcpServer->runServer() == false)
 		{
-			logger::log("ERROR TCP" , logger::logType::FAILURE);
+			logger::log("ERROR TCP uqlq" , logger::logType::FAILURE);
 			return;
 		}
 	logger::log(SUCCESS_TCP, logger::logType::SUCCESS);
@@ -134,7 +134,7 @@ void Manager::networkLoop()
 	{
 		if ((count = this->_TcpServer->Read((char *)&packet , sizeof(packet))) <= 0)
 			{
-				logger::log("ERROR TCP" , logger::logType::FAILURE);
+				logger::log("ERROR TCP zarma" , logger::logType::FAILURE);
 				return;
 			}
 		switch (packet.action)

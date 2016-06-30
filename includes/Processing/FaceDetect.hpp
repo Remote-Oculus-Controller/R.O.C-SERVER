@@ -2,9 +2,11 @@
 #define FACE_DETECT_HPP
 
 #include "Processing/ImgProcessing.hpp"
-#include "opencv2/objdetect.hpp"
-#include "opencv2/highgui.hpp"
-#include "opencv2/imgproc.hpp"
+#include <opencv2/opencv.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/core/core.hpp>
+#include <opencv2/objdetect/objdetect.hpp>
 
 class FaceDetect : public ImgProcessing {
 public:
@@ -27,7 +29,12 @@ private:
 
 
     int _scale;
+
     cv::CascadeClassifier _cascade;
+
+    #ifdef ROC_WITH_CUDA
+    #endif
+
     bool _cascadeIsLoaded = false;
 };
 

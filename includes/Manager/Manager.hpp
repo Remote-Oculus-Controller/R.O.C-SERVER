@@ -34,8 +34,8 @@ class Manager
 
 	void networkLoop();
 
-	RTSPFactory  *	_RTSPFactory;
 	Reader 					_reader;
+	RTSPFactory  *	_RTSPFactory;
 	VideoManager * 	_videoHandler;
 	TcpServer * 		_TcpServer;
 
