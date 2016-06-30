@@ -27,7 +27,7 @@ fps: 30
 
 # VIDEO SERVER PORT
 
-port: 8551
+port: 8552
 
 # COMMANDS SERVER PORT
 
