@@ -1,5 +1,3 @@
-![Alt text](/assets/logo-roc-flat.png?raw=true "ROC logo")
-
 <p align="center">
   <img src="https://github.com/Happykat/R.O.C-SERVER/blob/development/assets/logo-roc-flat.png"/>
 </p>
