@@ -1,10 +1,15 @@
+#include <stdlib.h>
+
 #include "Logger/Logger.hpp"
 #include "Manager/Manager.hpp"
+#include "Manager/Cleanup.hpp"
 #include "Parser/ConfigParser.hpp"
 
 int main(int argc, char**argv)
 {
 	logger::log(START_SERVER 	, logger::logType::INFO);
+
+	ROC_DEFER_CLEANUP;
 
 	Manager * manager = new Manager();
 
@@ -26,22 +31,12 @@ int main(int argc, char**argv)
 		return 3;
 	}
 
-	if (manager->startTcpServer() == false) {
-		logger::log(ERROR_TCP , logger::logType::FAILURE);
-		logger::waitSync();
-		return 4;
-	}
-
-	if (manager->startInterpretor() == false) {
-		logger::log(ERROR_INTERPRETOR , logger::logType::FAILURE);
-		logger::waitSync();
-		return 5;
-	}
-
-	delete manager;
+	manager->waitFlag();
 
 	logger::log(STOP_SERVER , logger::logType::INFO);
 	logger::waitSync();
+
+	delete manager;
 
 	return 0;
 }

@@ -1,5 +1,5 @@
-#ifndef MANAGER_HPP
-#define MANAGER_HPP
+#ifndef  MANAGER_HPP
+#define 	MANAGER_HPP
 
 #include "RTSPFactory/RTSPFactory.hpp"
 #include "Interpretor/Reader.hpp"
@@ -10,6 +10,7 @@
 #include "Logger/Logger.hpp"
 #include "Parser/ConfigParser.hpp"
 #include "Network/TcpServer.hpp"
+#include "Manager/Cleanup.hpp"
 
 class Manager
 {
@@ -24,24 +25,15 @@ class Manager
 	bool startVideoManager();
 	bool stopVideoManager();
 
-	bool startInterpretor();
-	bool stopInterpretor();
-
-	bool startTcpServer();
-	bool stopTcpServer();
+	void waitFlag();
 
 	private:
-
-	void networkLoop();
 
 	Reader 					_reader;
 	RTSPFactory  *	_RTSPFactory;
 	VideoManager * 	_videoHandler;
 	TcpServer * 		_TcpServer;
 
-	// TCP Server 	(get and send commands)
-	// Interpretor
-	// Controls
 };
 
 #endif // MANAGER_HPP

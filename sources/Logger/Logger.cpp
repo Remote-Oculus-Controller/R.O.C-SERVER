@@ -38,8 +38,6 @@ namespace logger
     std::string Logger::buildLog(std::string message , logType type)
     {
       std::string formatedMessage;
-
-      this->addTimeStamp(formatedMessage);
       this->setColor(formatedMessage , type);
       this->addLogType(formatedMessage , type);
       formatedMessage += message;
