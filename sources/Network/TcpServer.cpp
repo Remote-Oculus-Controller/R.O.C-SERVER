@@ -15,6 +15,7 @@ TcpServer::~TcpServer()
 {
 	if (this->_isSocketOpen == true)
 		close(this->_socketClient);
+	close(this->_socket);
 }
 
 //====================================================
@@ -48,11 +49,14 @@ bool TcpServer::initServer()
 bool TcpServer::runServer()
 {
 	if (this->_isSocketOpen == false || this->_isServerRunning == true)
-		return (false);
-
-	if ((this->_socketClient  = accept(this->_socket, (struct sockaddr *) NULL, NULL)) < 0)
-		return (false);
+		return false;
+	logger::log("Waiting TCP connection..." , logger::logType::INFO);
+	if ((this->_socketClient  = accept(this->_socket, (struct sockaddr *) NULL, NULL)) < 0) {
+		logger::log("Error on accept !" , logger::logType::FAILURE);
+		return false;
+	}
 	this->_isServerRunning = true;
+	return true;
 }
 
 //====================================================
@@ -71,16 +75,4 @@ size_t TcpServer::Send(char *buffer, size_t bufferLenght)
 	if (this->_isServerRunning == false)
 		return (-1);
 	return (send(this->_socketClient, buffer, bufferLenght, 0));
-}
-
-//====================================================
-// FONCTION STATIQUE DE CREATION DE PAQUET
-//====================================================
-
-TcpPacket * TcpServer::getNewPacket()
-{
-	TcpPacket * newPacket = new TcpPacket;
-	if (newPacket)
-		CLEAR(newPacket);
-	return (newPacket);
 }

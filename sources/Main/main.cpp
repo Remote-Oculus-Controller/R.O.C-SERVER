@@ -31,6 +31,12 @@ int main(int argc, char**argv)
 		return 3;
 	}
 
+	if(manager->startNetworkManager() == false) {
+		logger::log(ERROR_NETWORKMANAGER , logger::logType::FAILURE);
+		logger::waitSync();
+		return 4;
+	}
+	
 	manager->waitFlag();
 
 	logger::log(STOP_SERVER , logger::logType::INFO);

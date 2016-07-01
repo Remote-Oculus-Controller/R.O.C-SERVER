@@ -18,8 +18,6 @@ Server::~Server()
 	{
 		if (this->_isServerRunning == true)
 			this->stopServer();
-		if (close(this->_isSocketOpen) == -1)
-			std::cout << "Error while closing socket..." << std::endl;
 	}
 }
 

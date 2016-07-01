@@ -3,15 +3,17 @@
 Manager::Manager()
 {
 	logger::log(START_MANAGER , logger::INFO);
-	this->_videoHandler = NULL;
+	this->_videoManager = NULL;
 	this->_RTSPFactory = NULL;
+	this->_networkManager = NULL;
 	logger::log(SUCCESS_MANAGER , logger::SUCCESS);
 }
 
 Manager::~Manager()
 {
 	delete this->_RTSPFactory;
-	delete this->_videoHandler;
+	delete this->_videoManager;
+	delete this->_networkManager;
 	logger::log(STOP_MANAGER , logger::SUCCESS);
 }
 
@@ -43,12 +45,12 @@ bool Manager::stopRTSP()
 
 bool Manager::startVideoManager()
 {
-	this->_videoHandler = VideoManagerSingleton::getInstance();
-	if (this->_videoHandler == NULL)
+	this->_videoManager = VideoManagerSingleton::getInstance();
+	if (this->_videoManager == NULL)
 	return false;
-	if (this->_videoHandler->isReady())
+	if (this->_videoManager->isReady())
 	{
-		this->_videoHandler->run();
+		this->_videoManager->run();
 		logger::log(SUCCESS_VIDEOMANAGER , logger::logType::SUCCESS);
 		return true;
 	}
@@ -57,6 +59,20 @@ bool Manager::startVideoManager()
 
 bool Manager::stopVideoManager()
 {
+}
+
+bool Manager::startNetworkManager()
+{
+	this->_networkManager = new NetworkManager(this , configuration::tcpPort);
+	if (this->_networkManager->init() == false)
+		return false;
+	this->_networkManager->run();
+	return true;
+}
+
+bool Manager::stopNetworkManager()
+{
+
 }
 
 void Manager::waitFlag()

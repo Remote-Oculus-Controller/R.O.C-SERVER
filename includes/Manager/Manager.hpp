@@ -9,8 +9,10 @@
 #include "Processing/FaceDetect.hpp"
 #include "Logger/Logger.hpp"
 #include "Parser/ConfigParser.hpp"
-#include "Network/TcpServer.hpp"
+#include "Network/NetworkManager.hpp"
 #include "Manager/Cleanup.hpp"
+
+class NetworkManager;
 
 class Manager
 {
@@ -25,14 +27,17 @@ class Manager
 	bool startVideoManager();
 	bool stopVideoManager();
 
+	bool startNetworkManager();
+	bool stopNetworkManager();
+
 	void waitFlag();
 
 	private:
 
-	Reader 					_reader;
-	RTSPFactory  *	_RTSPFactory;
-	VideoManager * 	_videoHandler;
-	TcpServer * 		_TcpServer;
+	Reader 						_reader;
+	RTSPFactory  *		_RTSPFactory;
+	VideoManager * 		_videoManager;
+	NetworkManager * 	_networkManager;
 
 };
 

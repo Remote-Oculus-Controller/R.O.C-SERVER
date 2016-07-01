@@ -19,6 +19,7 @@
 #define STOP_INTERPRETOR      "Stopped ROC Interpretor"
 #define STOP_CAMERA           "Stopped ROC Cameras"
 #define STOP_SYNC_JOB         "Stopped ROC Sync job"
+#define STOP_NETWORK_JOB      "Stopped ROC Network Job"
 
 #define INFO_RTSP_URL(url)    ((std::string)"ROC RTSP Server started on url " + url)
 #define INFO_TCP_PORT(var)    ((std::string)"ROC TCP Server started on port " + std::to_string(var))
@@ -46,6 +47,7 @@
 #define ERROR_ARGS            "Error while getting program arguments : ./Server [PORT]"
 #define ERROR_MANAGER         "Error while starting ROC Manager"
 #define ERROR_VIDEOMANAGER    "Error while starting ROC VideoManager"
+#define ERROR_NETWORKMANAGER  "Error while starting ROC NetworkManager"
 #define ERROR_RTSP            "Error while starting ROC RTSP Server(s)"
 #define ERROR_INTERPRETOR     "Error while starting ROC Interpretor"
 #define ERROR_CONFIG_OPEN     "Error while opening ROC configuration file"

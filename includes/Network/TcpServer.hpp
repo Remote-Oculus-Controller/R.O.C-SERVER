@@ -30,12 +30,6 @@ class TcpServer : public Server
 	virtual size_t Read(char *buffer, size_t bufferLenght);
   virtual size_t Send(char *buffer, size_t bufferLenght);
 
-  //====================================================
-  // FONCTION STATIQUE DE CREATION DE PAQUET
-  //====================================================
-
-  static TcpPacket * getNewPacket();
-
 	protected:
 
 	//====================================================

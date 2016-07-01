@@ -15,11 +15,11 @@ timeout: 40
 
 # WIDTH OF THE FRAMES
 
-width: 640
+width: 1280
 
 # HEIGHT OF THE FRAMES
 
-height: 480
+height: 720
 
 # FRAMES PER SECOND
 
@@ -27,7 +27,7 @@ fps: 30
 
 # VIDEO SERVER PORT
 
-port: 8552
+port: 8550
 
 # COMMANDS SERVER PORT
 

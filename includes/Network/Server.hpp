@@ -19,19 +19,19 @@
 
 class Server
 {
-	
+
 	public:
 
 	//====================================================
 	// CONSTRUCTEUR / DESTRUCTEUR
-	//====================================================	
-	
+	//====================================================
+
 	Server(unsigned short port);
 	virtual ~Server();
 
 	//====================================================
 	// FONCTIONS VIRTUELLES PURES
-	// 
+	//
 	// initServer : Initialise le serveur suivant les par-
 	//				amètres donnés
 	//
@@ -59,7 +59,7 @@ class Server
 	virtual bool getIsServerRunning();
 	virtual bool getIsSocketOpen();
 	virtual long unsigned  getClientIp();
-	
+
 	//====================================================
 	// Fonction Statique de conversion de String en short
 	//====================================================
@@ -73,14 +73,14 @@ class Server
 	//====================================================
 
 	unsigned short		_port;
-	int 				_socket;
+	int 							_socket;
 	struct sockaddr_in 	_serverAdress;
-	socklen_t			_serverAdressLenght;
+	socklen_t						_serverAdressLenght;
 
 	bool 				_isSocketOpen;
 	bool 				_isServerRunning;
 
-	
+
 
 };
 
