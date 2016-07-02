@@ -44,7 +44,11 @@ void NetworkManager::runner() {
             }
 
             this->_parent->inputFlowPush(NetworkInterface::get(this->_buffer , read));
-            std::cout << this->_parent->inputFlowPop()->magic() << std::endl;
+            protocol::Packet * elem = this->_parent->inputFlowPop();
+            std::cout << "===========================" << std::endl;
+            std::cout << elem->magic() << std::endl;
+            std::cout << elem->id() << std::endl;
+            std::cout << "===========================" << std::endl;
         }
 
     }
