@@ -43,14 +43,7 @@ void NetworkManager::runner() {
                 break;
             }
 
-            this->_parent->inputFlowPush(NetworkInterface::get(this->_buffer , read));
-            protocol::Packet * elem = this->_parent->inputFlowPop();
-            std::cout << "===========================" << std::endl;
-            std::cout << elem->magic() << std::endl;
-            std::cout << elem->id() << std::endl;
-            std::cout << "===========================" << std::endl;
-        }
-
+            }
     }
     this->_isAsyncRunning = false;
 }
