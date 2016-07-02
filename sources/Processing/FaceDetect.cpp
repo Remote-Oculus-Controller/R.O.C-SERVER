@@ -11,9 +11,9 @@ FaceDetect::FaceDetect(int scale) : ImgProcessing(processingType::FACEDETECT) {
     } else {
         this->_cascadeIsLoaded = true;
     }
-#ifdef ROC_WITH_CUDA
+    #ifdef ROC_WITH_CUDA
 
-#endif
+    #endif
 }
 
 FaceDetect::~FaceDetect() {
@@ -29,16 +29,17 @@ void FaceDetect::applyCpu(cv::Mat &image) {
 void FaceDetect::detectAndDraw(cv::Mat &img) {
     double t = 0;
     std::vector<cv::Rect> faces, faces2;
-    const static cv::Scalar colors[] = {
-        cv::Scalar(255, 0, 0),
-        cv::Scalar(255, 128, 0),
-        cv::Scalar(255, 255, 0),
-        cv::Scalar(0, 255, 0),
-        cv::Scalar(0, 128, 255),
-        cv::Scalar(0, 255, 255),
-        cv::Scalar(0, 0, 255),
-        cv::Scalar(255, 0, 255)
-    };
+    const static cv::Scalar colors[] =
+            {
+                    cv::Scalar(255, 0, 0),
+                    cv::Scalar(255, 128, 0),
+                    cv::Scalar(255, 255, 0),
+                    cv::Scalar(0, 255, 0),
+                    cv::Scalar(0, 128, 255),
+                    cv::Scalar(0, 255, 255),
+                    cv::Scalar(0, 0, 255),
+                    cv::Scalar(255, 0, 255)
+            };
     cv::Mat gray, smallImg;
 
     cv::cvtColor(img, gray, cv::COLOR_BGR2GRAY);
@@ -48,7 +49,7 @@ void FaceDetect::detectAndDraw(cv::Mat &img) {
 
     this->_cascade.detectMultiScale(smallImg, faces,
                                     1.1, 2, 0
-                                    | cv::CASCADE_SCALE_IMAGE,
+                                            | cv::CASCADE_SCALE_IMAGE,
                                     cv::Size(30, 30));
 
     t = (double) cvGetTickCount() - t;
@@ -61,14 +62,14 @@ void FaceDetect::detectAndDraw(cv::Mat &img) {
         int radius;
 
         double aspect_ratio = (double) r.width / r.height;
-        cv::rectangle(img, cvPoint(cvRound(r.x * this->_scale), cvRound(r.y * this->_scale)),
-                      cvPoint(cvRound((r.x + r.width - 1) * this->_scale), cvRound((r.y + r.height - 1) * this->_scale)),
-                      color, 3, 8, 0);
+            cv::rectangle(img, cvPoint(cvRound(r.x * this->_scale), cvRound(r.y * this->_scale)),
+                          cvPoint(cvRound((r.x + r.width - 1) * this->_scale), cvRound((r.y + r.height - 1) * this->_scale)),
+                          color, 3, 8, 0);
     }
 }
 
 void FaceDetect::applyGpu(cv::Mat &image) {
-    applyCpu(image);
+  applyCpu(image);
 }
 
 

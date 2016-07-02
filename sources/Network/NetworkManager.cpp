@@ -8,24 +8,24 @@ NetworkManager::NetworkManager(Manager * parent , unsigned short port) {
 }
 
 NetworkManager::~NetworkManager() {
-    this->waitRunner();
-    logger::log(STOP_NETWORK_JOB , logger::logType::SUCCESS);
-    if (this->_server)
-        delete this->_server;
+  this->waitRunner();
+  logger::log(STOP_NETWORK_JOB , logger::logType::SUCCESS);
+  if (this->_server)
+    delete this->_server;
 }
 
 bool NetworkManager::init() {
-    return (this->_server != NULL && this->_parent != NULL && this->_server->initServer() == true);
+  return (this->_server != NULL && this->_parent != NULL && this->_server->initServer() == true);
 }
 
 void NetworkManager::run() {
-    this->_run = true;
-    std::thread * thread = new std::thread(&NetworkManager::runner , this);
-    thread->detach();
+  this->_run = true;
+  std::thread * thread = new std::thread(&NetworkManager::runner , this);
+	thread->detach();
 }
 
 void NetworkManager::runner() {
-    this->_isAsyncRunning = true;
+  this->_isAsyncRunning = true;
     size_t read;
 
     while (this->_run) {
@@ -45,19 +45,18 @@ void NetworkManager::runner() {
 
             }
     }
-    this->_isAsyncRunning = false;
-}
+    this->_isAsyncRunning = false;}
 
 void NetworkManager::waitRunner() {
 
-    std::unique_lock<std::mutex> lock(this->_lock);
+  std::unique_lock<std::mutex> lock(this->_lock);
 
-    if (this->_run)
-        return;
+  if (this->_run)
+    return;
 
-    this->_run = false;
+  this->_run = false;
 
-    while (this->_isAsyncRunning)
-        this->_condition.wait(lock);
+  while (this->_isAsyncRunning)
+    this->_condition.wait(lock);
 
 }

@@ -1,18 +1,21 @@
 #include "Encoder/x264Encoder.hpp"
 
 
-x264Encoder::x264Encoder(int width , int height, int fps) {
+x264Encoder::x264Encoder(int width , int height, int fps)
+{
     this->_width = width;
     this->_height = height;
     this->_fps = fps;
 }
 
 
-x264Encoder::~x264Encoder(void) {
+x264Encoder::~x264Encoder(void)
+{
 
 }
 
-void x264Encoder::initilize() {
+void x264Encoder::initilize()
+{
     x264_param_default_preset(&parameters, "veryfast", "zerolatency");
 
     parameters.i_log_level = X264_LOG_INFO;
@@ -53,12 +56,14 @@ void x264Encoder::initilize() {
                                     NULL);
 }
 
-void x264Encoder::unInitilize() {
+void x264Encoder::unInitilize()
+{
     x264_encoder_close(encoder);
     sws_freeContext(convertContext);
 }
 
-void x264Encoder::encodeFrame(cv::Mat& image) {
+void x264Encoder::encodeFrame(cv::Mat& image)
+{
     int srcStride = parameters.i_width * 3;
     sws_scale(convertContext, &(image.data), &srcStride, 0, parameters.i_height, picture_in.img.plane, picture_in.img.i_stride);
     x264_nal_t* nals ;
@@ -66,18 +71,22 @@ void x264Encoder::encodeFrame(cv::Mat& image) {
     int frameSize = -1;
 
     frameSize = x264_encoder_encode(encoder, &nals, &i_nals, &picture_in, &picture_out);
-    if(frameSize > 0) {
-        for(int i = 0; i< i_nals; i++) {
+    if(frameSize > 0)
+    {
+        for(int i = 0; i< i_nals; i++)
+        {
             outputQueue.push(nals[i]);
         }
     }
 }
 
-bool x264Encoder::isNalsAvailableInOutputQueue() {
+bool x264Encoder::isNalsAvailableInOutputQueue()
+{
     return (!outputQueue.empty());
 }
 
-x264_nal_t x264Encoder::getNalUnit() {
+x264_nal_t x264Encoder::getNalUnit()
+{
     x264_nal_t nal;
     nal = outputQueue.front();
     outputQueue.pop();
