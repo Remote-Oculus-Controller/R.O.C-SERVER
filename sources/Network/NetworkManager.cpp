@@ -35,17 +35,29 @@ void NetworkManager::runner() {
         }
 
         logger::log(SUCCESS_TCP_CLIENT , logger::logType::SUCCESS);
-        while (this->_run) {
+        while (this->_run)
+        {
             read = this->_server->Read(this->_buffer , TCP_BUFFER_SIZE);
-            if (read <= 0) {
+            if (read <= 0)
+            {
                 logger::log(WARNING_TCP_DISCONNECTED , logger::logType::WARNING);
                 this->_server->discardClient();
                 break;
             }
 
+            this->_parent->pushInput(NetworkInterface::get(this->_buffer , read));
+            logger::log("Added a message !" , logger::logType::SUCCESS);
+            while (this->_parent->isOutputAvailable())
+            {
+              protocol::Packet * elem = this->_parent->popOutput();
+              NetworkInterface::put( elem , this->_buffer);
+              this->_server->Send(this->_buffer  , elem->ByteSize());
+            }
+
             }
     }
-    this->_isAsyncRunning = false;}
+    this->_isAsyncRunning = false;
+  }
 
 void NetworkManager::waitRunner() {
 

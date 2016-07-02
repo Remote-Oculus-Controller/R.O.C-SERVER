@@ -12,6 +12,7 @@
 
 #include "Manager/Manager.hpp"
 #include "Network/TcpServer.hpp"
+#include "Network/NetworkInterface.hpp"
 #include "Logger/Logger.hpp"
 #include "proto.pb.h"
 

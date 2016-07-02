@@ -80,3 +80,47 @@ void Manager::waitFlag()
 	while (Cleanup::flag == 0)
 		std::this_thread::sleep_for(std::chrono::milliseconds(500));
 }
+
+
+bool Manager::isInputAvailable()
+{
+	std::unique_lock<std::mutex> _lock(_inputLock);
+	return !this->_input.empty();
+}
+
+bool Manager::isOutputAvailable()
+{
+	std::unique_lock<std::mutex> _lock(_outputLock);
+ 	return !this->_output.empty();
+ }
+
+void Manager::pushInput(protocol::Packet * elem)
+{
+	std::unique_lock<std::mutex> _lock(_inputLock);
+	this->_input.push(elem);
+
+}
+
+void Manager::pushOutput(protocol::Packet * elem)
+{
+	std::unique_lock<std::mutex> _lock(_outputLock);
+	this->_output.push(elem);
+}
+
+protocol::Packet * Manager::popInput()
+{
+	protocol::Packet * elem;
+	std::unique_lock<std::mutex> _lock(_inputLock);
+	elem =  this->_input.back();
+	this->_input.pop();
+	return elem;
+}
+
+protocol::Packet * Manager::popOutput()
+{
+	protocol::Packet * elem;
+	std::unique_lock<std::mutex> _lock(_outputLock);
+	elem =  this->_output.back();
+	this->_output.pop();
+	return elem;
+}
