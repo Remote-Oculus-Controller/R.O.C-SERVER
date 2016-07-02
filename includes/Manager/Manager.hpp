@@ -16,9 +16,12 @@
 class NetworkManager;
 
 class Manager {
+
   public:
 
     Manager();
+    Manager(const Manager & copy);
+
     ~Manager();
 
     bool startRTSP();

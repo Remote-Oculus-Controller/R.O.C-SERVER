@@ -3,9 +3,17 @@
 Manager::Manager() {
     logger::log(START_MANAGER , logger::INFO);
     this->_videoManager = NULL;
-    this->_RTSPManager = NULL;
     this->_networkManager = NULL;
-    logger::log(SUCCESS_MANAGER , logger::SUCCESS);
+		this->_RTSPManager = NULL;
+		logger::log(SUCCESS_MANAGER , logger::SUCCESS);
+}
+
+
+Manager::Manager(const Manager & copy)
+{
+		this->_videoManager = copy._videoManager;
+		this->_RTSPManager = copy._RTSPManager;
+		this->_networkManager = copy._networkManager;
 }
 
 Manager::~Manager() {

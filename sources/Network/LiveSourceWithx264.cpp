@@ -1,12 +1,11 @@
 #include "Network/LiveSourceWithx264.hpp"
 
+EventTriggerId LiveSourceWithx264::eventTriggerId = 0;
+unsigned LiveSourceWithx264::referenceCount = 0;
+
 LiveSourceWithx264 *LiveSourceWithx264::createNew(UsageEnvironment &env , unsigned int id) {
     return new LiveSourceWithx264(env, id);
 }
-
-EventTriggerId LiveSourceWithx264::eventTriggerId = 0;
-
-unsigned LiveSourceWithx264::referenceCount = 0;
 
 LiveSourceWithx264::LiveSourceWithx264(UsageEnvironment &env , unsigned int id) : FramedSource(env) {
     if (referenceCount == 0) {
@@ -33,7 +32,6 @@ LiveSourceWithx264::~LiveSourceWithx264(void) {
     envir().taskScheduler().deleteEventTrigger(eventTriggerId);
     eventTriggerId = 0;
 }
-
 
 void LiveSourceWithx264::fetchNewFrame() {
     this->_videoHandler->waitSync();

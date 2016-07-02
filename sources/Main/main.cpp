@@ -6,11 +6,10 @@
 #include "Parser/ConfigParser.hpp"
 
 int main(int argc, char**argv) {
+
     logger::log(START_SERVER 	, logger::logType::INFO);
-
     ROC_DEFER_CLEANUP;
-
-    Manager * manager = new Manager();
+    Manager manager = Manager();
 
     if (configuration::loadConfig() == false) {
         logger::log(ERROR_CONFIG , logger::logType::FAILURE);
@@ -18,30 +17,28 @@ int main(int argc, char**argv) {
         return 1;
     }
 
-    if (manager->startVideoManager() == false) {
+    if (manager.startVideoManager() == false) {
         logger::log(ERROR_VIDEOMANAGER , logger::logType::FAILURE);
         logger::waitSync();
         return 2;
     }
 
-    if (manager->startRTSP() == false) {
+    if (manager.startRTSP() == false) {
         logger::log(ERROR_RTSP , logger::logType::FAILURE);
         logger::waitSync();
         return 3;
     }
 
-    if(manager->startNetworkManager() == false) {
+    if(manager.startNetworkManager() == false) {
         logger::log(ERROR_NETWORKMANAGER , logger::logType::FAILURE);
         logger::waitSync();
         return 4;
     }
 
-    manager->waitFlag();
+    manager.waitFlag();
 
     logger::log(STOP_SERVER , logger::logType::INFO);
     logger::waitSync();
-
-    delete manager;
 
     return 0;
 }
