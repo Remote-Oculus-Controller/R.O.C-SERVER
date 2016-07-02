@@ -6,7 +6,7 @@
 #include "opencv2/imgproc.hpp"
 
 class Arrow : public ImgProcessing {
-public:
+  public:
 
     Arrow(int angle, int distance, int width, int height);
 
@@ -16,7 +16,7 @@ public:
 
     virtual void displayType();
 
-private:
+  private:
 
     void Draw(cv::Mat &img);
 

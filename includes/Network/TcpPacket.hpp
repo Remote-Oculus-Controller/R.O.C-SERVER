@@ -5,12 +5,11 @@
 
 #define MAGICNUMBER 0x4242
 
-typedef struct _TcpPacket
-{
-	uint32_t	magicNumber;
-	uint32_t	action;
-	double  param1;
-	double  param2;
+typedef struct _TcpPacket {
+    uint32_t	magicNumber;
+    uint32_t	action;
+    double  param1;
+    double  param2;
 }				TcpPacket;
 
 // action 0x0 : stop

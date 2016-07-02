@@ -19,29 +19,28 @@ class Manager;
 
 #define TCP_BUFFER_SIZE 512
 
-class NetworkManager
-{
+class NetworkManager {
   public:
 
-      NetworkManager(Manager * parent , unsigned short port);
-      ~NetworkManager();
-      void run();
-      bool init();
+    NetworkManager(Manager * parent , unsigned short port);
+    ~NetworkManager();
+    void run();
+    bool init();
 
   protected:
 
-      void runner();
-      void waitRunner();
+    void runner();
+    void waitRunner();
 
   protected:
 
-      Manager *   _parent;
-      TcpServer * _server;
-      char        _buffer[TCP_BUFFER_SIZE];
-      bool        _run;
-      bool        _isAsyncRunning;
-      std::mutex  _lock;
-      std::condition_variable _condition;
+    Manager *   _parent;
+    TcpServer * _server;
+    char        _buffer[TCP_BUFFER_SIZE];
+    bool        _run;
+    bool        _isAsyncRunning;
+    std::mutex  _lock;
+    std::condition_variable _condition;
 
 };
 

@@ -3,24 +3,23 @@
 
 #include "Processing/ImgProcessing.hpp"
 
-class CannyEdge : public ImgProcessing
-{
-	public:
+class CannyEdge : public ImgProcessing {
+  public:
 
-	CannyEdge(double treshold1 = 50 , double treshold2 = 150 , int matrixNum = 3);
-	~CannyEdge();
+    CannyEdge(double treshold1 = 50 , double treshold2 = 150 , int matrixNum = 3);
+    ~CannyEdge();
 
-	virtual processingType getID();
-	virtual void displayType();
+    virtual processingType getID();
+    virtual void displayType();
 
-	private:
+  private:
 
-	virtual void applyCpu(cv::Mat & image);
-	virtual void applyGpu(cv::Mat & image);
+    virtual void applyCpu(cv::Mat & image);
+    virtual void applyGpu(cv::Mat & image);
 
-	double 	_treshold1;
-	double 	_treshold2;
-	int 	_matrixNum;
+    double 	_treshold1;
+    double 	_treshold2;
+    int 	_matrixNum;
 
 };
 

@@ -6,22 +6,20 @@
 
 #define CONFIG_FILE "config/resolutions.yml"
 
-namespace configuration
-{
-  extern unsigned int camera_count;
-  extern unsigned int timeout;
-  extern unsigned int width;
-  extern unsigned int height;
-  extern unsigned int fps;
-  extern unsigned int port;
-  extern unsigned int tcpPort;
-  extern std::vector<int> cameras_id;
+namespace configuration {
+extern unsigned int camera_count;
+extern unsigned int timeout;
+extern unsigned int width;
+extern unsigned int height;
+extern unsigned int fps;
+extern unsigned int port;
+extern unsigned int tcpPort;
+extern std::vector<int> cameras_id;
 
 
-  bool loadConfig();
+bool loadConfig();
 
-  class ConfigParser
-  {
+class ConfigParser {
   public:
     static bool checkCamerasCount();
     static bool checkWidth();
@@ -31,7 +29,7 @@ namespace configuration
     static bool checkTimeout();
     static bool checkPort();
     static bool logConfig();
-  };
+};
 }
 
 #endif // CONFIGPARSER_HPP

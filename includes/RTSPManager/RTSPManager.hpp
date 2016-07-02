@@ -16,23 +16,22 @@
 #include "Logger/Logger.hpp"
 
 
-class RTSPFactory
-{
-	public:
+class RTSPManager {
+  public:
 
-		RTSPFactory();
-		~RTSPFactory();
+    RTSPManager();
+    ~RTSPManager();
 
-		int createServer(int cameraId, int port);
-		bool deleteServer();
+    int createServer(int cameraId, int port);
+    bool deleteServer();
 
-	private:
+  private:
 
-		void createRTSPServer(unsigned int id , unsigned int port , volatile char * watcher);
-		char volatile * watcher;
-		bool volatile _done;
-		std::mutex _lock;
-		std::condition_variable _condition;
+    void createRTSPServer(unsigned int id , unsigned int port , volatile char * watcher);
+    char volatile * watcher;
+    bool volatile _done;
+    std::mutex _lock;
+    std::condition_variable _condition;
 };
 
 #endif // RTSP_FACTORY_HPP

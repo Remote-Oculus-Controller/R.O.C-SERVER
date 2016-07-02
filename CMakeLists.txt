@@ -69,7 +69,7 @@ file(GLOB ENCODER sources/Encoder/*.cpp)
 file(GLOB SYNC sources/Sync/*.cpp)
 file(GLOB LOGGER sources/Logger/*.cpp)
 file(GLOB NETWORK sources/Network/*.cpp)
-file(GLOB RTSPFACTORY sources/RTSPFactory/*.cpp)
+file(GLOB RTSPManager sources/RTSPManager/*.cpp)
 file(GLOB ENCODER sources/Encoder/*.cpp)
 file(GLOB MANAGER sources/Manager/*.cpp)
 file(GLOB PARSER sources/Parser/*.cpp)
@@ -92,7 +92,7 @@ endif()
 
 # add the executable
 
-add_executable(ROC ${MAIN} ${VIDEO} ${SYNC} ${NETWORK} ${RTSPFACTORY} ${ENCODER} ${MANAGER} ${LOGGER} ${PARSER} ${PROCESSING} ${SINGLETONS} ${INTERPRETOR} ${PROTO_SRCS} ${PROTO_HDRS})
+add_executable(ROC ${MAIN} ${VIDEO} ${SYNC} ${NETWORK} ${RTSPManager} ${ENCODER} ${MANAGER} ${LOGGER} ${PARSER} ${PROCESSING} ${SINGLETONS} ${INTERPRETOR} ${PROTO_SRCS} ${PROTO_HDRS})
 
 # link libraries
 

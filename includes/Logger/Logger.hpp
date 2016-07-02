@@ -13,52 +13,49 @@
 
 #include "Logger/Logs.hpp"
 
-namespace logger
-{
-  enum logType
-  {
+namespace logger {
+enum logType {
     INFO ,
     PRIORITY,
     SUCCESS ,
     WARNING ,
     FAILURE ,
-  };
+};
 
 
-  void log(std::string message , logType type);
-  void waitSync();
+void log(std::string message , logType type);
+void waitSync();
 
-  class Logger
-  {
-    public:
+class Logger {
+  public:
 
-      Logger();
+    Logger();
 
-      static Logger * getInstance();
+    static Logger * getInstance();
 
-      std::string buildLog(std::string message , logType type);
-      void pushLog(std::string formatedMessage);
-      void sync();
+    std::string buildLog(std::string message , logType type);
+    void pushLog(std::string formatedMessage);
+    void sync();
 
-    private:
+  private:
 
-      void setColor(std::string & message , logType type);
-      void resetColor(std::string & message);
-      void addTimeStamp(std::string & message);
-      void addLogType(std::string & message ,  logType type);
+    void setColor(std::string & message , logType type);
+    void resetColor(std::string & message);
+    void addTimeStamp(std::string & message);
+    void addLogType(std::string & message ,  logType type);
 
-      void run();
+    void run();
 
-      bool                    isAlive;
-      bool                    isAsyncRunning;
+    bool                    isAlive;
+    bool                    isAsyncRunning;
 
-      std::mutex              queueLock;
-      std::mutex              syncLock;
-      std::condition_variable condition;
-      std::condition_variable conditionSync;
-      std::queue<std::string> messageQueue;
-      std::chrono::steady_clock::time_point start;
-  };
+    std::mutex              queueLock;
+    std::mutex              syncLock;
+    std::condition_variable condition;
+    std::condition_variable conditionSync;
+    std::queue<std::string> messageQueue;
+    std::chrono::steady_clock::time_point start;
+};
 }
 
 #endif

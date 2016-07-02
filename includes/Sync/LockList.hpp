@@ -6,8 +6,7 @@
 #include "Logger/Logger.hpp"
 #include "Parser/ConfigParser.hpp"
 
-class LockList
-{
+class LockList {
   public:
 
     LockList(unsigned int count_ , unsigned int timeout_);

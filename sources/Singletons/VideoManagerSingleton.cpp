@@ -1,10 +1,9 @@
 #include "Singletons/VideoManagerSingleton.hpp"
 
-VideoManager * VideoManagerSingleton::getInstance()
-{
-  static VideoManager * instance = NULL;
+VideoManager * VideoManagerSingleton::getInstance() {
+    static VideoManager * instance = NULL;
 
-  if (instance == NULL)
-    instance = new VideoManager();
-  return instance;
+    if (instance == NULL)
+        instance = new VideoManager();
+    return instance;
 }

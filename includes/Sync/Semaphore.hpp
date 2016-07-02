@@ -2,8 +2,7 @@
 #include <condition_variable>
 using namespace std;
 
-class Semaphore
-{
+class Semaphore {
   public:
     Semaphore(int count_ = 0);
     void notify(bool unique = false);

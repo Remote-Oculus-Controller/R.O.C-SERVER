@@ -9,7 +9,7 @@
 #include <opencv2/objdetect/objdetect.hpp>
 
 class FaceDetect : public ImgProcessing {
-public:
+  public:
 
     FaceDetect(int scale = 1);
 
@@ -19,7 +19,7 @@ public:
 
     virtual void displayType();
 
-private:
+  private:
 
     void detectAndDraw(cv::Mat &img);
 
@@ -32,8 +32,8 @@ private:
 
     cv::CascadeClassifier _cascade;
 
-    #ifdef ROC_WITH_CUDA
-    #endif
+#ifdef ROC_WITH_CUDA
+#endif
 
     bool _cascadeIsLoaded = false;
 };

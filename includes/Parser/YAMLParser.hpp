@@ -5,23 +5,22 @@
 #include <vector>
 #include <time.h>
 
-class YAMLParser
-{
-	public:
+class YAMLParser {
+  public:
 
-		YAMLParser(std::string fileName , cv::FileStorage::Mode mode);
-		~YAMLParser();
+    YAMLParser(std::string fileName , cv::FileStorage::Mode mode);
+    ~YAMLParser();
 
-		bool isOpened();
+    bool isOpened();
 
-		int 							getValueOf(std::string property);
-		std::vector<int> 	getVectorOf(std::string property);
+    int 							getValueOf(std::string property);
+    std::vector<int> 	getVectorOf(std::string property);
 
-	private:
+  private:
 
-		std::string _filename;
-		cv::FileStorage::Mode _mode;
-		cv::FileStorage _file;
+    std::string _filename;
+    cv::FileStorage::Mode _mode;
+    cv::FileStorage _file;
 
 };
 

@@ -13,56 +13,56 @@
 
 class VideoManager {
 
-    public:
+  public:
 
-        VideoManager();
-        ~VideoManager();
-        bool isReady();
+    VideoManager();
+    ~VideoManager();
+    bool isReady();
 
-        cv::Mat & queryFrame(unsigned int id);
-        cv::Mat & getFrame(unsigned int id);
+    cv::Mat & queryFrame(unsigned int id);
+    cv::Mat & getFrame(unsigned int id);
 
-        void waitSync();
+    void waitSync();
 
-        int getWidthById(unsigned int id);
-        int getHeightById(unsigned int id);
-        int getFpsById(unsigned int id);
+    int getWidthById(unsigned int id);
+    int getHeightById(unsigned int id);
+    int getFpsById(unsigned int id);
 
-        bool setAll(int propId, double value);
-        bool setOne(int propId, double value , unsigned int id);
+    bool setAll(int propId, double value);
+    bool setOne(int propId, double value , unsigned int id);
 
-        bool run();
-        bool loop();
+    bool run();
+    bool loop();
 
-    private:
+  private:
 
-        bool init();
-        bool uninit();
-        bool spawn();
+    bool init();
+    bool uninit();
+    bool spawn();
 
-        bool grab(unsigned int id);
-        bool retrieve(unsigned int id);
+    bool grab(unsigned int id);
+    bool retrieve(unsigned int id);
 
-        void grabAll();
-        void retrieveAll();
-        void flipAll();
+    void grabAll();
+    void retrieveAll();
+    void flipAll();
 
 
-    private:
+  private:
 
-        unsigned int            _camerasCount;
-        unsigned int            _timeout;
-        unsigned int            _treshold;
+    unsigned int            _camerasCount;
+    unsigned int            _timeout;
+    unsigned int            _treshold;
 
-        bool                    _ready;
-        bool                    _isAlive;
-        bool                    _isAsyncRunning;
-        time_t                  _lastGrab;
-        std::vector<Camera *>   _cameras;
-        LockList *              _lockList;
+    bool                    _ready;
+    bool                    _isAlive;
+    bool                    _isAsyncRunning;
+    time_t                  _lastGrab;
+    std::vector<Camera *>   _cameras;
+    LockList *              _lockList;
 
-        std::mutex              _lock;
-        std::condition_variable _condition;
+    std::mutex              _lock;
+    std::condition_variable _condition;
 };
 
 #endif

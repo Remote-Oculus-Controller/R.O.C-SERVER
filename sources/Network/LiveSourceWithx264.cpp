@@ -35,24 +35,20 @@ LiveSourceWithx264::~LiveSourceWithx264(void) {
 }
 
 
-void LiveSourceWithx264::fetchNewFrame()
-{
-  this->_videoHandler->waitSync();
+void LiveSourceWithx264::fetchNewFrame() {
+    this->_videoHandler->waitSync();
 }
 
-void LiveSourceWithx264::processNewFrame()
-{
-  this->_imgProcessingWrapperHandler->apply(this->_videoHandler->getFrame(this->_id));
+void LiveSourceWithx264::processNewFrame() {
+    this->_imgProcessingWrapperHandler->apply(this->_videoHandler->getFrame(this->_id));
 }
 
-void LiveSourceWithx264::encodeNewFrame()
-{
-        encoder->encodeFrame(this->_videoHandler->getFrame(this->_id));
-        while(encoder->isNalsAvailableInOutputQueue() == true)
-        {
-            x264_nal_t nal = encoder->getNalUnit();
-            nalQueue.push(nal);
-        }
+void LiveSourceWithx264::encodeNewFrame() {
+    encoder->encodeFrame(this->_videoHandler->getFrame(this->_id));
+    while(encoder->isNalsAvailableInOutputQueue() == true) {
+        x264_nal_t nal = encoder->getNalUnit();
+        nalQueue.push(nal);
+    }
 }
 
 void LiveSourceWithx264::deliverFrame0(void *clientData) {
@@ -66,8 +62,7 @@ void LiveSourceWithx264::doGetNextFrame() {
         encodeNewFrame();
         gettimeofday(&currentTime, NULL);
         deliverFrame();
-    }
-    else {
+    } else {
         deliverFrame();
     }
 }
@@ -80,10 +75,9 @@ void LiveSourceWithx264::deliverFrame() {
 
     int trancate = 0;
     if (nal.i_payload >= 4 && nal.p_payload[0] == 0 && nal.p_payload[1] == 0 && nal.p_payload[2] == 0 &&
-        nal.p_payload[3] == 1) {
+            nal.p_payload[3] == 1) {
         trancate = 4;
-    }
-    else {
+    } else {
         if (nal.i_payload >= 3 && nal.p_payload[0] == 0 && nal.p_payload[1] == 0 && nal.p_payload[2] == 1) {
             trancate = 3;
         }
@@ -92,8 +86,7 @@ void LiveSourceWithx264::deliverFrame() {
     if (nal.i_payload - trancate > fMaxSize) {
         fFrameSize = fMaxSize;
         fNumTruncatedBytes = nal.i_payload - trancate - fMaxSize;
-    }
-    else {
+    } else {
         fFrameSize = nal.i_payload - trancate;
     }
     fPresentationTime = currentTime;

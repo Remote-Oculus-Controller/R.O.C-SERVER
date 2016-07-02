@@ -15,15 +15,14 @@
 
 #include "Video/Camera.hpp"
 
-class LiveSourceWithx264 : public FramedSource
-{
-public:
+class LiveSourceWithx264 : public FramedSource {
+  public:
     static LiveSourceWithx264* createNew(UsageEnvironment& env , unsigned int id);
     static EventTriggerId eventTriggerId;
-protected:
+  protected:
     LiveSourceWithx264(UsageEnvironment& env , unsigned int id);
     virtual ~LiveSourceWithx264(void);
-private:
+  private:
     virtual void doGetNextFrame();
     static void deliverFrame0(void* clientData);
     void deliverFrame();

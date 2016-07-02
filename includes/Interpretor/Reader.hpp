@@ -8,28 +8,27 @@
 #include <iterator>
 #include <vector>
 
-class Reader
-{
-	public:
+class Reader {
+  public:
 
-	Reader();
-	~Reader();
+    Reader();
+    ~Reader();
 
-	// SPLIT A STRING IN A VECTOR OF STRING
+    // SPLIT A STRING IN A VECTOR OF STRING
 
-	std::vector<std::string> splitString();
-	
-	// COMBINE GETNEWLINE AND SPLITSTRING
+    std::vector<std::string> splitString();
 
-	std::vector<std::string> getTokens();
-	
-	// FETCH NEW LINE FROM STDIN
+    // COMBINE GETNEWLINE AND SPLITSTRING
 
-	std::string getNewLine();
-	
-	private:
+    std::vector<std::string> getTokens();
 
-	std::string _input;
+    // FETCH NEW LINE FROM STDIN
+
+    std::string getNewLine();
+
+  private:
+
+    std::string _input;
 };
 
 

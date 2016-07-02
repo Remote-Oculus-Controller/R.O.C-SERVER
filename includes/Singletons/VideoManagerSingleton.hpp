@@ -3,8 +3,7 @@
 
 #include "Manager/VideoManager.hpp"
 
-class VideoManagerSingleton
-{
+class VideoManagerSingleton {
   public:
     static VideoManager * getInstance();
 };

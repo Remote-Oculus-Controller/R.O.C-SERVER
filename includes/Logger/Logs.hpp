@@ -25,16 +25,19 @@
 #define INFO_TCP_PORT(var)    ((std::string)"ROC TCP Server started on port " + std::to_string(var))
 #define INFO_CONFIG(k , v)    ((std::string) k + "\t: " + std::to_string(v))
 #define INFO_WAIT_SYNC_JOB    "Waiting for ROC Sync job to finish"
+#define INFO_TCP_CONNECTION  "Waiting TCP connection..."
 
 #define WARNING_SYNC_USELESS  "Synchronizing only one camera"
 #define WARNING_SYNC_TIMEOUT  "Synchonization timed out"
 #define WARNING_EXIT_SIGNAL   "Exit command catched , performing cleanup"
 #define WARNING_EXIT_LOGGER   "Stopping logger : no more logs beyond this point"
 #define WARNING_MANUAL        "About to set manual exposure , things may break if your device doesn't support it"
+#define WARNING_TCP_DISCONNECTED "ROC Client disconnected"
 
 #define SUCCESS_MANAGER       "ROC Manager started"
 #define SUCCESS_VIDEOMANAGER  "ROC VideoManager started"
 #define SUCCESS_RTSP          "ROC RTSP Server(s) started"
+#define SUCCESS_TCP            "ROC TCP Server started"
 #define SUCCESS_INTERPRETOR   "ROC Interpretor started"
 #define SUCCESS_CONFIG        "ROC Configuration loaded"
 #define SUCCESS_CAMERAS       "ROC Cameras started"
@@ -42,7 +45,7 @@
 #define SUCCESS_WIDTH         "ROC Camera width successfully set"
 #define SUCCESS_HEIGHT        "ROC Camera height successfully set"
 #define SUCCESS_FPS           "ROC Camera fps successfully set"
-#define SUCCESS_TCP           "ROC Client connected"
+#define SUCCESS_TCP_CLIENT    "ROC Client connected"
 
 #define ERROR_ARGS            "Error while getting program arguments : ./Server [PORT]"
 #define ERROR_MANAGER         "Error while starting ROC Manager"

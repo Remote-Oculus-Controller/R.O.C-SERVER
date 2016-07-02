@@ -11,7 +11,7 @@
 #include <iostream>
 
 class RedCirclesDetect : public ImgProcessing {
-public:
+  public:
 
     RedCirclesDetect(int minDist = 100, int minRadius = 0, int maxRadius = 0);
 
@@ -21,7 +21,7 @@ public:
 
     virtual void displayType();
 
-private:
+  private:
 
     void detectAndDraw(cv::Mat &img);
 

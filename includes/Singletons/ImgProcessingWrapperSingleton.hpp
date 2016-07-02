@@ -3,8 +3,7 @@
 
 #include "Processing/ImgProcessingWrapper.hpp"
 
-class ImgProcessingWrapperSingleton
-{
+class ImgProcessingWrapperSingleton {
   public:
     static ImgProcessingWrapper * getInstance();
 };

@@ -10,8 +10,7 @@
 
 void cleanup(int signal);
 
-class Cleanup
-{
+class Cleanup {
   public:
     static volatile sig_atomic_t flag;
 };

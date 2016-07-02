@@ -11,29 +11,28 @@
 #include <queue>
 #include <stdint.h>
 
-extern "C" 
+extern "C"
 {
-    #include "x264_config.h"
-    #include "x264.h"
-    #include "libswscale/swscale.h"
-    #include "libavutil/avutil.h"
-    #include "libavutil/pixfmt.h"
+#include "x264_config.h"
+#include "x264.h"
+#include "libswscale/swscale.h"
+#include "libavutil/avutil.h"
+#include "libavutil/pixfmt.h"
 }
 
 
-class x264Encoder
-{
-public:
+class x264Encoder {
+  public:
     x264Encoder(int width, int height , int fps);
     ~x264Encoder(void);
 
-public:
+  public:
     void initilize();
     void unInitilize();
     void encodeFrame(cv::Mat& image);
     bool isNalsAvailableInOutputQueue();
     x264_nal_t getNalUnit();
-private:
+  private:
     // Use this context to convert your BGR Image to YUV image since x264 do not support RGB input
     SwsContext* convertContext;
     std::queue<x264_nal_t> outputQueue;

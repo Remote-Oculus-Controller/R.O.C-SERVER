@@ -1,7 +1,7 @@
 #ifndef  MANAGER_HPP
 #define 	MANAGER_HPP
 
-#include "RTSPFactory/RTSPFactory.hpp"
+#include "RTSPManager/RTSPManager.hpp"
 #include "Interpretor/Reader.hpp"
 #include "Singletons/VideoManagerSingleton.hpp"
 #include "Singletons/ImgProcessingWrapperSingleton.hpp"
@@ -11,33 +11,47 @@
 #include "Parser/ConfigParser.hpp"
 #include "Network/NetworkManager.hpp"
 #include "Manager/Cleanup.hpp"
+#include "proto.pb.h"
 
 class NetworkManager;
 
-class Manager
-{
-	public:
+class Manager {
+  public:
 
-	Manager();
-	~Manager();
+    Manager();
+    ~Manager();
 
-	bool startRTSP();
-	bool stopRTSP();
+    bool startRTSP();
+    bool stopRTSP();
 
-	bool startVideoManager();
-	bool stopVideoManager();
+    bool startVideoManager();
+    bool stopVideoManager();
 
-	bool startNetworkManager();
-	bool stopNetworkManager();
+    bool startNetworkManager();
+    bool stopNetworkManager();
 
-	void waitFlag();
+    bool isInputFlowEmpty();
+    bool isOutputFlowEmpty();
 
-	private:
+    protocol::Packet * inputFlowPop();
+    protocol::Packet * outputFlowPop();
 
-	Reader 						_reader;
-	RTSPFactory  *		_RTSPFactory;
-	VideoManager * 		_videoManager;
-	NetworkManager * 	_networkManager;
+    void inputFlowPush(protocol::Packet * toAdd);
+    void outputFlowPush(protocol::Packet * toAdd);
+
+    void waitFlag();
+
+  private:
+
+    RTSPManager  *		_RTSPManager;
+    VideoManager * 		_videoManager;
+    NetworkManager * 	_networkManager;
+
+    std::queue<protocol::Packet *> _inputFlow;
+    std::queue<protocol::Packet *> _outputFlow;
+
+    std::mutex 	_inputLock;
+    std::mutex 	_outputLock;
 
 };
 
