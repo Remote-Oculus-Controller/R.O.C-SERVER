@@ -43,7 +43,8 @@ void NetworkManager::runner() {
                 break;
             }
 
-            logger::log("Readed : " + std::to_string(read) , logger::logType::INFO);
+            this->_parent->inputFlowPush(NetworkInterface::get(this->_buffer , read));
+            std::cout << this->_parent->inputFlowPop()->magic() << std::endl;
         }
 
     }

@@ -47,13 +47,13 @@ bool TcpServer::initServer() {
     if (listen(this->_socket, 1) < 0)
         return (false);
     logger::log(INFO_TCP_PORT(this->_port) , logger::logType::PRIORITY);
+    logger::log(SUCCESS_TCP , logger::logType::SUCCESS);
     return (true);
 }
 
 bool TcpServer::runServer() {
     if (this->_isSocketOpen == false || this->_isServerRunning == true)
         return false;
-    logger::log(SUCCESS_TCP , logger::logType::SUCCESS);
     logger::log(INFO_TCP_CONNECTION , logger::logType::INFO);
     if ((this->_socketClient  = accept(this->_socket, (struct sockaddr *) NULL, NULL)) < 0) {
         logger::log(std::string("Error on accept : ") + std::string(strerror(errno)) , logger::logType::FAILURE);
