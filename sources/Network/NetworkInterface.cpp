@@ -16,8 +16,14 @@ protocol::Packet * NetworkInterface::get(char * buffer , size_t size)
 bool NetworkInterface::put(protocol::Packet * elem , char * buffer)
 {
   int size = elem->ByteSize();
+
+  std::cout << "ByteSize : " << size << std::endl;
+
   google::protobuf::io::ArrayOutputStream aos(elem,size);
+
   CodedOutputStream *coded_output = new CodedOutputStream(&aos);
+
+  std::cout << "Encoder : " << coded_output << std::endl;
   elem->SerializeToCodedStream(coded_output);
   return true;
 }
