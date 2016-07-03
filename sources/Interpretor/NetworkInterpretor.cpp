@@ -71,6 +71,7 @@ bool NetworkInterpretor::needRerouting(protocol::Packet * message)
 {
   unsigned int destination;
   destination = (this->createMask(0 , 3) & message->header());
+  std::cout << "Destination code : " << destination << std::endl;
   return destination != 2;
 
 }
