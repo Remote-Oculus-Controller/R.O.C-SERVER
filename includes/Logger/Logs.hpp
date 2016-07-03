@@ -51,6 +51,7 @@
 #define ERROR_MANAGER         "Error while starting ROC Manager"
 #define ERROR_VIDEOMANAGER    "Error while starting ROC VideoManager"
 #define ERROR_NETWORKMANAGER  "Error while starting ROC NetworkManager"
+#define ERROR_NETWORKINTEPRETOR "Error while starting ROC NetworkInterpretor"
 #define ERROR_RTSP            "Error while starting ROC RTSP Server(s)"
 #define ERROR_INTERPRETOR     "Error while starting ROC Interpretor"
 #define ERROR_CONFIG_OPEN     "Error while opening ROC configuration file"

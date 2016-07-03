@@ -6,6 +6,7 @@ Manager::Manager()
 	this->_videoManager = NULL;
 	this->_RTSPFactory = NULL;
 	this->_networkManager = NULL;
+	this->_networkInterpretor = NULL;
 	logger::log(SUCCESS_MANAGER , logger::SUCCESS);
 }
 
@@ -71,6 +72,20 @@ bool Manager::startNetworkManager()
 }
 
 bool Manager::stopNetworkManager()
+{
+
+}
+
+bool Manager::startNetworkInterpretor()
+{
+	this->_networkInterpretor = new NetworkInterpretor(this);
+	if (this->_networkInterpretor == NULL)
+		return false;
+	this->_networkInterpretor->run();
+	return true;
+}
+
+bool Manager::stopNetworkInterpretor()
 {
 
 }

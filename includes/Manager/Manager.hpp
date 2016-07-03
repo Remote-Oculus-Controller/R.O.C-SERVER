@@ -5,6 +5,7 @@
 
 #include "RTSPFactory/RTSPFactory.hpp"
 #include "Interpretor/Reader.hpp"
+#include "Interpretor/NetworkInterpretor.hpp"
 #include "Singletons/VideoManagerSingleton.hpp"
 #include "Singletons/ImgProcessingWrapperSingleton.hpp"
 #include "Processing/CannyEdge.hpp"
@@ -16,6 +17,7 @@
 #include "proto.pb.h"
 
 class NetworkManager;
+class NetworkInterpretor;
 
 class Manager
 {
@@ -33,6 +35,9 @@ class Manager
 	bool startNetworkManager();
 	bool stopNetworkManager();
 
+	bool startNetworkInterpretor();
+	bool stopNetworkInterpretor();
+
 	void waitFlag();
 
 	bool isInputAvailable();
@@ -44,6 +49,8 @@ class Manager
 	protocol::Packet * popInput();
 	protocol::Packet * popOutput();
 
+
+
 	private:
 
 	std::queue<protocol::Packet *> _input;
@@ -52,11 +59,11 @@ class Manager
 	std::mutex _inputLock;
 	std::mutex _outputLock;
 
-	Reader 						_reader;
-	RTSPFactory  *		_RTSPFactory;
-	VideoManager * 		_videoManager;
-	NetworkManager * 	_networkManager;
-
+//	Reader 								_reader;
+	RTSPFactory  *				_RTSPFactory;
+	VideoManager * 				_videoManager;
+	NetworkManager * 			_networkManager;
+	NetworkInterpretor * 	_networkInterpretor;
 };
 
 #endif // MANAGER_HPP

@@ -36,7 +36,12 @@ int main(int argc, char**argv)
 		logger::waitSync();
 		return 4;
 	}
-	
+
+	if (manager->startNetworkInterpretor() == false) {
+		logger::log(ERROR_NETWORKINTEPRETOR , logger::logType::FAILURE);
+		logger::waitSync();
+		return 5;
+	}
 	manager->waitFlag();
 
 	logger::log(STOP_SERVER , logger::logType::INFO);
