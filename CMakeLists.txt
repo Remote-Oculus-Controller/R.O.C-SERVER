@@ -57,13 +57,10 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 include_directories(${LiveMedia_INCLUDE_DIRS})
 include_directories(includes sources)
 
-# Generate .hpp and .cpp files from .proto file
-
-protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS ${ROC_PROTOCOL_FOLDER}/proto.proto)
-
 # Add source files
 
 file(GLOB MAIN sources/Main/*.cpp)
+file(GLOB PROTOCOL ${ROC_PROTOCOL_FOLDER}/*.proto)
 file(GLOB VIDEO sources/Video/*.cpp)
 file(GLOB ENCODER sources/Encoder/*.cpp)
 file(GLOB SYNC sources/Sync/*.cpp)
@@ -76,6 +73,10 @@ file(GLOB PARSER sources/Parser/*.cpp)
 file(GLOB PROCESSING sources/Processing/*.cpp)
 file(GLOB SINGLETONS sources/Singletons/*.cpp)
 file(GLOB INTERPRETOR sources/Interpretor/*.cpp)
+
+# Generate .hpp and .cpp files from .proto file
+
+protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS ${PROTOCOL})
 
 # Set compiler features
 
