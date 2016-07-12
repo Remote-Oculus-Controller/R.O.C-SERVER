@@ -7,6 +7,13 @@ message Processing {
   double param1 = 1;
   double param2 = 2;
 
+  enum Action {
+    ACTIVATE = 0;
+    DESACTIVATE = 1;
+  }
+
+  Action action = 3;
+
   enum Type {
     CANNY = 0;
     FACE = 1;
@@ -14,6 +21,8 @@ message Processing {
     LOWER_BODY = 4;
     FULL_BODY = 5;
   }
+
+  Type type = 4;
 }
 
 message Connection {

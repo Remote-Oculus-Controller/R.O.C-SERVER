@@ -105,14 +105,25 @@ void NetworkInterpretor::connectionQuery()
 
   if (response == NULL)
     return;
+
+
+
 }
 
 void NetworkInterpretor::cannyQuery(protocol::Packet * message)
 {
+  protocol::Processing payload;
+
+  message->payload().UnpackTo(&payload);
+
+  if (payload.action() == protocol::Processing_Action::Processing_Action_ACTIVATE)
+    std::cout << "Activate canny" << std::endl;
+  else if (payload.action() == protocol::Processing_Action::Processing_Action_DESACTIVATE)
+    std::cout << "Desactivate canny" << std::endl;
 
 }
 
 void NetworkInterpretor::faceQuery(protocol::Packet * message)
 {
-  
+
 }

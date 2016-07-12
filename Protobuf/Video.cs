@@ -23,15 +23,18 @@ namespace Protocol {
     static VideoReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Cgt2aWRlby5wcm90bxIIcHJvdG9jb2wieAoKUHJvY2Vzc2luZxIOCgZwYXJh",
-            "bTEYASABKAESDgoGcGFyYW0yGAIgASgBIkoKBFR5cGUSCQoFQ0FOTlkQABII",
-            "CgRGQUNFEAESDgoKVVBQRVJfQk9EWRACEg4KCkxPV0VSX0JPRFkQBBINCglG",
-            "VUxMX0JPRFkQBSIrCgpDb25uZWN0aW9uEgwKBHBvcnQYASABKA0SDwoHY2Ft",
-            "ZXJhcxgCIAEoDWIGcHJvdG8z"));
+            "Cgt2aWRlby5wcm90bxIIcHJvdG9jb2wi9wEKClByb2Nlc3NpbmcSDgoGcGFy",
+            "YW0xGAEgASgBEg4KBnBhcmFtMhgCIAEoARIrCgZhY3Rpb24YAyABKA4yGy5w",
+            "cm90b2NvbC5Qcm9jZXNzaW5nLkFjdGlvbhInCgR0eXBlGAQgASgOMhkucHJv",
+            "dG9jb2wuUHJvY2Vzc2luZy5UeXBlIicKBkFjdGlvbhIMCghBQ1RJVkFURRAA",
+            "Eg8KC0RFU0FDVElWQVRFEAEiSgoEVHlwZRIJCgVDQU5OWRAAEggKBEZBQ0UQ",
+            "ARIOCgpVUFBFUl9CT0RZEAISDgoKTE9XRVJfQk9EWRAEEg0KCUZVTExfQk9E",
+            "WRAFIisKCkNvbm5lY3Rpb24SDAoEcG9ydBgBIAEoDRIPCgdjYW1lcmFzGAIg",
+            "ASgNYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.Processing), global::Protocol.Processing.Parser, new[]{ "Param1", "Param2" }, null, new[]{ typeof(global::Protocol.Processing.Types.Type) }, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.Processing), global::Protocol.Processing.Parser, new[]{ "Param1", "Param2", "Action", "Type" }, null, new[]{ typeof(global::Protocol.Processing.Types.Action), typeof(global::Protocol.Processing.Types.Type) }, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protocol.Connection), global::Protocol.Connection.Parser, new[]{ "Port", "Cameras" }, null, null, null)
           }));
     }
@@ -61,6 +64,8 @@ namespace Protocol {
     public Processing(Processing other) : this() {
       param1_ = other.param1_;
       param2_ = other.param2_;
+      action_ = other.action_;
+      type_ = other.type_;
     }
 
     public Processing Clone() {
@@ -87,6 +92,26 @@ namespace Protocol {
       }
     }
 
+    /// <summary>Field number for the "action" field.</summary>
+    public const int ActionFieldNumber = 3;
+    private global::Protocol.Processing.Types.Action action_ = 0;
+    public global::Protocol.Processing.Types.Action Action {
+      get { return action_; }
+      set {
+        action_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "type" field.</summary>
+    public const int TypeFieldNumber = 4;
+    private global::Protocol.Processing.Types.Type type_ = 0;
+    public global::Protocol.Processing.Types.Type Type {
+      get { return type_; }
+      set {
+        type_ = value;
+      }
+    }
+
     public override bool Equals(object other) {
       return Equals(other as Processing);
     }
@@ -100,6 +125,8 @@ namespace Protocol {
       }
       if (Param1 != other.Param1) return false;
       if (Param2 != other.Param2) return false;
+      if (Action != other.Action) return false;
+      if (Type != other.Type) return false;
       return true;
     }
 
@@ -107,6 +134,8 @@ namespace Protocol {
       int hash = 1;
       if (Param1 != 0D) hash ^= Param1.GetHashCode();
       if (Param2 != 0D) hash ^= Param2.GetHashCode();
+      if (Action != 0) hash ^= Action.GetHashCode();
+      if (Type != 0) hash ^= Type.GetHashCode();
       return hash;
     }
 
@@ -123,6 +152,14 @@ namespace Protocol {
         output.WriteRawTag(17);
         output.WriteDouble(Param2);
       }
+      if (Action != 0) {
+        output.WriteRawTag(24);
+        output.WriteEnum((int) Action);
+      }
+      if (Type != 0) {
+        output.WriteRawTag(32);
+        output.WriteEnum((int) Type);
+      }
     }
 
     public int CalculateSize() {
@@ -132,6 +169,12 @@ namespace Protocol {
       }
       if (Param2 != 0D) {
         size += 1 + 8;
+      }
+      if (Action != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Action);
+      }
+      if (Type != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Type);
       }
       return size;
     }
@@ -145,6 +188,12 @@ namespace Protocol {
       }
       if (other.Param2 != 0D) {
         Param2 = other.Param2;
+      }
+      if (other.Action != 0) {
+        Action = other.Action;
+      }
+      if (other.Type != 0) {
+        Type = other.Type;
       }
     }
 
@@ -163,6 +212,14 @@ namespace Protocol {
             Param2 = input.ReadDouble();
             break;
           }
+          case 24: {
+            action_ = (global::Protocol.Processing.Types.Action) input.ReadEnum();
+            break;
+          }
+          case 32: {
+            type_ = (global::Protocol.Processing.Types.Type) input.ReadEnum();
+            break;
+          }
         }
       }
     }
@@ -171,6 +228,11 @@ namespace Protocol {
     /// <summary>Container for nested types declared in the Processing message type.</summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     public static partial class Types {
+      public enum Action {
+        [pbr::OriginalName("ACTIVATE")] Activate = 0,
+        [pbr::OriginalName("DESACTIVATE")] Desactivate = 1,
+      }
+
       public enum Type {
         [pbr::OriginalName("CANNY")] Canny = 0,
         [pbr::OriginalName("FACE")] Face = 1,

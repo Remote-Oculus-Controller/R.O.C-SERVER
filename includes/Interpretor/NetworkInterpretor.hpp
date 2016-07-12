@@ -5,7 +5,9 @@
 #include <mutex>
 
 #include "Manager/Manager.hpp"
+
 #include "proto.pb.h"
+#include "video.pb.h"
 
 class Manager;
 
