@@ -38,6 +38,11 @@ class Manager
 	bool startNetworkInterpretor();
 	bool stopNetworkInterpretor();
 
+	VideoManager * getVideoManager();
+	NetworkManager * getNetworkManager();
+	NetworkInterpretor * getNetworkInterpretor();
+	RTSPFactory * getRTSPFactory();
+
 	void waitFlag();
 
 	bool isInputAvailable();

@@ -5,15 +5,17 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include <vector>
-#include "Manager/Manager.hpp"
+#include <mutex>
+#include <condition_variable>
+
 
 void cleanup(int signal);
 
 class Cleanup
 {
   public:
-    static volatile sig_atomic_t flag;
+    static std::condition_variable condition;
+    static std::mutex lock;
 };
 
 #define ROC_DEFER_CLEANUP signal(SIGINT , cleanup);

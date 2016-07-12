@@ -29,7 +29,7 @@ bool Manager::startRTSP()
 
 	for (unsigned int i = 0 ; i < configuration::camera_count ; i++)
 	{
-		if (this->_RTSPFactory->createServer(i, configuration::port + i)) {
+		if (this->_RTSPFactory->createServer(i, configuration::port + i , this->_videoManager)) {
 			return (false);
 		}
 	}
@@ -92,8 +92,8 @@ bool Manager::stopNetworkInterpretor()
 
 void Manager::waitFlag()
 {
-	while (Cleanup::flag == 0)
-		std::this_thread::sleep_for(std::chrono::milliseconds(100));
+		std::unique_lock<std::mutex> lock(Cleanup::lock);
+	  Cleanup::condition.wait(lock);
 }
 
 
@@ -138,4 +138,24 @@ protocol::Packet * Manager::popOutput()
 	elem =  this->_output.back();
 	this->_output.pop();
 	return elem;
+}
+
+VideoManager * Manager::getVideoManager()
+{
+	return this->_videoManager;
+}
+
+NetworkManager * Manager::getNetworkManager()
+{
+	return this->_networkManager;
+}
+
+NetworkInterpretor * Manager::getNetworkInterpretor()
+{
+	return this->_networkInterpretor;
+}
+
+RTSPFactory * Manager::getRTSPFactory()
+{
+	return this->_RTSPFactory;
 }

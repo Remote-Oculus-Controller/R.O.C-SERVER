@@ -163,6 +163,11 @@ int VideoManager::getFpsById(unsigned int id)
   return -1;
 }
 
+ImgProcessingWrapper & VideoManager::getProcessingWrapper()
+{
+  return this->_processingWrapper;
+}
+
 void VideoManager::grabAll()
 {
   for(std::vector<Camera *>::iterator it = this->_cameras.begin(); it != this->_cameras.end(); ++it) {

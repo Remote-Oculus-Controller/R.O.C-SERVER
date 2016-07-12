@@ -14,12 +14,12 @@ RTSPFactory::~RTSPFactory()
 }
 
 
-int RTSPFactory::createServer(int id, int port)
-{	
+int RTSPFactory::createServer(int id, int port , VideoManager * manager)
+{
 	std::unique_lock<std::mutex> lock(_lock);
 	this->_done = false;
 
-	std::thread * thread = new std::thread(&RTSPFactory::createRTSPServer , this , id , port , this->watcher);
+	std::thread * thread = new std::thread(&RTSPFactory::createRTSPServer , this , manager , id , port , this->watcher);
 	thread->detach();
 
 	while (this->_done == false)
@@ -42,12 +42,12 @@ bool RTSPFactory::deleteServer()
 		return (false);
 }
 
-void  RTSPFactory::createRTSPServer(unsigned int id , unsigned int port , volatile char * watcher)
+void  RTSPFactory::createRTSPServer(VideoManager * manager , unsigned int id , unsigned int port , volatile char * watcher)
 {
 	std::unique_lock<std::mutex> lock(_lock);
 	TaskScheduler* taskSchedular = BasicTaskScheduler::createNew();
 	BasicUsageEnvironment* usageEnvironment = BasicUsageEnvironment::createNew(*taskSchedular);
-	RTSPServer* rtspServer = RTSPServer::createNew(*usageEnvironment, port, NULL);
+	RTSPServer* rtspServer = RTSPServer::createNew(*usageEnvironment , port, NULL);
 
 	if(rtspServer == NULL)
 	{
@@ -58,7 +58,7 @@ void  RTSPFactory::createRTSPServer(unsigned int id , unsigned int port , volati
 		return;
 	}
 
-		H264LiveServerMediaSession *liveSubSession = H264LiveServerMediaSession::createNew(*usageEnvironment, true , id);
+		H264LiveServerMediaSession *liveSubSession = H264LiveServerMediaSession::createNew(*usageEnvironment, manager , true , id);
 		std::string streamName = "camera_" + std::to_string(id);
 		ServerMediaSession* sms = ServerMediaSession::createNew(*usageEnvironment, streamName.c_str(), streamName.c_str(), "Live H264 Stream");
 		sms->addSubsession(liveSubSession);

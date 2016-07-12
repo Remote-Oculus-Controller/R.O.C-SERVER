@@ -44,15 +44,9 @@ void NetworkInterpretor::runner()
         if (this->isValid(message))
         {
           if (this->needRerouting(message))
-          {
-            std::cout << "Rerouting !" << std::endl;
             this->_parent->pushOutput(message);
-          }
           else
-          {
-            /* PROCESS MESSAGE */
-            std::cout << "Message OK !" << std::endl;
-          }
+            this->handlePacket(message);
         }
       }
       std::this_thread::sleep_for(std::chrono::milliseconds(50));
@@ -71,7 +65,6 @@ bool NetworkInterpretor::needRerouting(protocol::Packet * message)
 {
   unsigned int destination;
   destination = (this->createMask(0 , 3) & message->header());
-  std::cout << "Destination code : " << destination << std::endl;
   return destination != 2;
 
 }
@@ -84,4 +77,42 @@ unsigned NetworkInterpretor::createMask(unsigned a, unsigned b)
        r |= 1 << i;
 
    return r;
+}
+
+void NetworkInterpretor::handlePacket(protocol::Packet * message)
+{
+
+  switch (message->id()) {
+    case 0x10:
+        logger::log("Connection data query" , logger::logType::INFO);
+        this->connectionQuery();
+      break;
+    case 0x11:
+        logger::log("Canny query" , logger::logType::INFO);
+        this->cannyQuery(message);
+    break;
+    case 0x12:
+      logger::log("Face query" , logger::logType::INFO);
+      this->faceQuery(message);
+    break;
+  }
+  delete message;
+}
+
+void NetworkInterpretor::connectionQuery()
+{
+  protocol::Packet * response = new protocol::Packet();
+
+  if (response == NULL)
+    return;
+}
+
+void NetworkInterpretor::cannyQuery(protocol::Packet * message)
+{
+
+}
+
+void NetworkInterpretor::faceQuery(protocol::Packet * message)
+{
+  
 }

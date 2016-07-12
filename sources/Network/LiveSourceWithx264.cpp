@@ -1,25 +1,24 @@
 #include "Network/LiveSourceWithx264.hpp"
 
-LiveSourceWithx264 *LiveSourceWithx264::createNew(UsageEnvironment &env , unsigned int id) {
-    return new LiveSourceWithx264(env, id);
+LiveSourceWithx264 *LiveSourceWithx264::createNew(UsageEnvironment &env , VideoManager * manager , unsigned int id) {
+    return new LiveSourceWithx264(env, manager , id);
 }
 
 EventTriggerId LiveSourceWithx264::eventTriggerId = 0;
 
 unsigned LiveSourceWithx264::referenceCount = 0;
 
-LiveSourceWithx264::LiveSourceWithx264(UsageEnvironment &env , unsigned int id) : FramedSource(env) {
+LiveSourceWithx264::LiveSourceWithx264(UsageEnvironment &env , VideoManager * manager , unsigned int id) : FramedSource(env) {
     if (referenceCount == 0) {
 
     }
 
+    this->_manager = manager;
     this->_id = id;
-    this->_videoHandler = VideoManagerSingleton::getInstance();
-    this->_imgProcessingWrapperHandler = ImgProcessingWrapperSingleton::getInstance();
     ++referenceCount;
-    encoder = new x264Encoder(this->_videoHandler->getWidthById(this->_id),
-                              this->_videoHandler->getHeightById(this->_id),
-                              this->_videoHandler->getFpsById(this->_id));
+    encoder = new x264Encoder(this->_manager->getWidthById(this->_id),
+                              this->_manager->getHeightById(this->_id),
+                              this->_manager->getFpsById(this->_id));
     encoder->initilize();
     if (eventTriggerId == 0) {
         eventTriggerId = envir().taskScheduler().createEventTrigger(deliverFrame0);
@@ -37,17 +36,17 @@ LiveSourceWithx264::~LiveSourceWithx264(void) {
 
 void LiveSourceWithx264::fetchNewFrame()
 {
-  this->_videoHandler->waitSync();
+  this->_manager->waitSync();
 }
 
 void LiveSourceWithx264::processNewFrame()
 {
-  this->_imgProcessingWrapperHandler->apply(this->_videoHandler->getFrame(this->_id));
+
 }
 
 void LiveSourceWithx264::encodeNewFrame()
 {
-        encoder->encodeFrame(this->_videoHandler->getFrame(this->_id));
+        encoder->encodeFrame(this->_manager->getFrame(this->_id));
         while(encoder->isNalsAvailableInOutputQueue() == true)
         {
             x264_nal_t nal = encoder->getNalUnit();

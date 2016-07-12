@@ -26,6 +26,12 @@ class NetworkInterpretor
     bool isValid(protocol::Packet * message);
     bool needRerouting(protocol::Packet * message);
 
+    void handlePacket(protocol::Packet * message);
+
+    void connectionQuery();
+    void cannyQuery(protocol::Packet * message);
+    void faceQuery(protocol::Packet * message);
+
     void runner();
     void waitRunner();
 

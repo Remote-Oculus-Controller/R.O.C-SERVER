@@ -4,15 +4,16 @@
 #include "liveMedia.hh"
 #include "OnDemandServerMediaSubsession.hh"
 #include "LiveSourceWithx264.hpp"
+#include "Manager/VideoManager.hpp"
 
 class H264LiveServerMediaSession :public OnDemandServerMediaSubsession
 {
 public:
-    static H264LiveServerMediaSession* createNew(UsageEnvironment& env, bool reuseFirstSource, unsigned int id);
+    static H264LiveServerMediaSession* createNew(UsageEnvironment& env, VideoManager * manager , bool reuseFirstSource, unsigned int id);
     void checkForAuxSDPLine1();
     void afterPlayingDummy1();
 protected:
-    H264LiveServerMediaSession(UsageEnvironment& env, bool reuseFirstSource, unsigned int id);
+    H264LiveServerMediaSession(UsageEnvironment& env, VideoManager * manager , bool reuseFirstSource, unsigned int id);
     virtual ~H264LiveServerMediaSession(void);
     void setDoneFlag() { fDoneFlag = ~0; }
 protected:
@@ -24,6 +25,7 @@ private:
     char fDoneFlag;
     RTPSink* fDummySink;
     unsigned int _id;
+    VideoManager * _manager;
 };
 
 #endif // H264LIVE_SERVER_MEDIA_SESSION_HPP

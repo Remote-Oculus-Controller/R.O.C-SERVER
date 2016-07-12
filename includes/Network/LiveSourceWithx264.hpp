@@ -5,23 +5,21 @@
 #include "FramedSource.hh"
 #include "Encoder/x264Encoder.hpp"
 
-#include "Singletons/VideoManagerSingleton.hpp"
-#include "Singletons/ImgProcessingWrapperSingleton.hpp"
-
 #include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/videoio.hpp"
 #include "opencv2/imgcodecs.hpp"
 
 #include "Video/Camera.hpp"
+#include "Manager/VideoManager.hpp"
 
 class LiveSourceWithx264 : public FramedSource
 {
 public:
-    static LiveSourceWithx264* createNew(UsageEnvironment& env , unsigned int id);
+    static LiveSourceWithx264* createNew(UsageEnvironment& env , VideoManager * manager , unsigned int id);
     static EventTriggerId eventTriggerId;
 protected:
-    LiveSourceWithx264(UsageEnvironment& env , unsigned int id);
+    LiveSourceWithx264(UsageEnvironment& env , VideoManager * manager , unsigned int id);
     virtual ~LiveSourceWithx264(void);
 private:
     virtual void doGetNextFrame();
@@ -33,8 +31,7 @@ private:
     static unsigned referenceCount;
     std::queue<x264_nal_t> nalQueue;
     timeval currentTime;
-    VideoManager * _videoHandler;
-    ImgProcessingWrapper * _imgProcessingWrapperHandler;
+    VideoManager * _manager;
     x264Encoder *encoder;
     unsigned int _id;
 };

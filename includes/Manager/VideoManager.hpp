@@ -10,6 +10,7 @@
 #include "Sync/LockList.hpp"
 #include "Logger/Logger.hpp"
 #include "Parser/ConfigParser.hpp"
+#include "Processing/ImgProcessingWrapper.hpp"
 
 class VideoManager {
 
@@ -33,6 +34,8 @@ class VideoManager {
 
         bool run();
         bool loop();
+
+        ImgProcessingWrapper & getProcessingWrapper();
 
     private:
 
@@ -60,6 +63,7 @@ class VideoManager {
         time_t                  _lastGrab;
         std::vector<Camera *>   _cameras;
         LockList *              _lockList;
+        ImgProcessingWrapper    _processingWrapper;
 
         std::mutex              _lock;
         std::condition_variable _condition;

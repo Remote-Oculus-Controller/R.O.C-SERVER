@@ -1,8 +1,10 @@
 #include "Manager/Cleanup.hpp"
 
-volatile sig_atomic_t Cleanup::flag = 0;
+std::condition_variable Cleanup::condition;
+std::mutex Cleanup::lock;
 
 void cleanup(int signal)
 {
-    Cleanup::flag = 1;
+    std::unique_lock<std::mutex> lock(Cleanup::lock);
+    Cleanup::condition.notify_all();
 }

@@ -23,12 +23,12 @@ class RTSPFactory
 		RTSPFactory();
 		~RTSPFactory();
 
-		int createServer(int cameraId, int port);
+		int createServer(int cameraId, int port , VideoManager * manager);
 		bool deleteServer();
 
 	private:
 
-		void createRTSPServer(unsigned int id , unsigned int port , volatile char * watcher);
+		void createRTSPServer(VideoManager * manager , unsigned int id , unsigned int port , volatile char * watcher);
 		char volatile * watcher;
 		bool volatile _done;
 		std::mutex _lock;
