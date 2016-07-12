@@ -83,15 +83,15 @@ void NetworkInterpretor::handlePacket(protocol::Packet * message)
 {
 
   switch (message->id()) {
-    case 0x10:
+    case 0x30:
         logger::log("Connection data query" , logger::logType::INFO);
         this->connectionQuery();
       break;
-    case 0x11:
+    case 0x31:
         logger::log("Canny query" , logger::logType::INFO);
         this->cannyQuery(message);
     break;
-    case 0x12:
+    case 0x32:
       logger::log("Face query" , logger::logType::INFO);
       this->faceQuery(message);
     break;
