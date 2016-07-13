@@ -46,7 +46,6 @@ void NetworkManager::runner() {
             }
 
             this->_parent->pushInput(NetworkInterface::get(this->_buffer , read));
-            logger::log("Added a message !" , logger::logType::SUCCESS);
             while (this->_parent->isOutputAvailable())
             {
               protocol::Packet * elem = this->_parent->popOutput();
