@@ -24,17 +24,25 @@ unsigned int ImgProcessingWrapper::getProcessingCount()
   return this->_imgProcessings.size();
 }
 
-bool ImgProcessingWrapper::addProcessing(ImgProcessing * toAdd , unsigned int index)
+//
+
+bool ImgProcessingWrapper::addProcessing(ImgProcessing * toAdd)
 {
   this->lockProcessings();
-  this->_imgProcessings.insert(this->_imgProcessings.begin() + index , toAdd);
+  this->_imgProcessings.push_back(toAdd);
   this->unlockProcessings();
 }
 
-bool ImgProcessingWrapper::removeProcessing(unsigned int index)
+bool ImgProcessingWrapper::removeProcessing(processingType toRemove)
 {
   this->lockProcessings();
-  this->_imgProcessings.erase(this->_imgProcessings.begin() + index);
+  for(std::vector<ImgProcessing *>::iterator it = this->_imgProcessings.begin(); it != this->_imgProcessings.end() ;)
+  {
+    if ((*it)->getID() == toRemove)
+      it = this->_imgProcessings.erase(it);
+    else
+      ++it;
+  }
   this->unlockProcessings();
 }
 
@@ -44,6 +52,8 @@ bool ImgProcessingWrapper::clearProcessing()
   this->_imgProcessings.erase(this->_imgProcessings.begin() , this->_imgProcessings.end());
   this->unlockProcessings();
 }
+
+//
 void ImgProcessingWrapper::lockProcessings()
 
 {

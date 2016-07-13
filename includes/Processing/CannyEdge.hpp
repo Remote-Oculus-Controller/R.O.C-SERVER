@@ -10,7 +10,7 @@ class CannyEdge : public ImgProcessing
 	CannyEdge(double treshold1 = 50 , double treshold2 = 150 , int matrixNum = 3);
 	~CannyEdge();
 
-	virtual processingType getID();
+	virtual processingType getID() const;
 	virtual void displayType();
 
 	private:

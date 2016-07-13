@@ -5,9 +5,22 @@
 #include <mutex>
 
 #include "Manager/Manager.hpp"
+#include "Parser/ConfigParser.hpp"
+#include "Processing/ImgProcessing.hpp"
 
 #include "proto.pb.h"
 #include "video.pb.h"
+
+
+#define COMMAND 0x1
+#define DATA    0x2
+#define ERROR   0x3
+
+#define NONE    0x0
+#define VCLIENT 0x1
+#define VSERVER 0x2
+#define VCTRL   0x4
+#define ALL     0x7
 
 class Manager;
 
@@ -30,7 +43,8 @@ class NetworkInterpretor
 
     void handlePacket(protocol::Packet * message);
 
-    void connectionQuery();
+    void connectionQuery(protocol::Packet * message);
+    void clearQuery();
     void cannyQuery(protocol::Packet * message);
     void faceQuery(protocol::Packet * message);
 
@@ -38,6 +52,7 @@ class NetworkInterpretor
     void waitRunner();
 
     unsigned createMask(unsigned , unsigned);
+    unsigned createHeader(unsigned type , unsigned from , unsigned to);
 
   private:
 

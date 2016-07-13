@@ -52,6 +52,7 @@ void NetworkManager::runner() {
               protocol::Packet * elem = this->_parent->popOutput();
               NetworkInterface::put(elem , this->_buffer);
               this->_server->Send(this->_buffer  , elem->ByteSize());
+              delete elem;
             }
 
             }

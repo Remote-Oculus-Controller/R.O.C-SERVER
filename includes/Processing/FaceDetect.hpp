@@ -12,24 +12,19 @@ class FaceDetect : public ImgProcessing {
 public:
 
     FaceDetect(int scale = 1);
-
     ~FaceDetect();
 
-    virtual processingType getID();
-
+    virtual processingType getID() const;
     virtual void displayType();
 
 private:
 
     void detectAndDraw(cv::Mat &img);
-
     virtual void applyCpu(cv::Mat &image);
-
     virtual void applyGpu(cv::Mat &image);
 
 
     int _scale;
-
     cv::CascadeClassifier _cascade;
 
     #ifdef ROC_WITH_CUDA

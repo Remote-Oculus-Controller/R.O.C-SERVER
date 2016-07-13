@@ -58,7 +58,7 @@
 			// FONCTION D'IDENTIFICATION DE LA CLASSE
 			//====================================================
 
-			virtual processingType getID() = 0;
+			virtual processingType getID() const = 0;
 
 			//====================================================
 			// FONCTION D'IDENTIFICATION DE LA CLASSE (PRINT)

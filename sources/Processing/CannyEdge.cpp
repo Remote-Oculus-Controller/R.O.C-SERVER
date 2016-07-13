@@ -26,7 +26,7 @@ void CannyEdge::applyGpu(cv::Mat & image)
 }
 
 
-processingType CannyEdge::getID()
+processingType CannyEdge::getID() const
 {
 	return (processingType::CANNY);
 }

@@ -73,7 +73,7 @@ void FaceDetect::applyGpu(cv::Mat &image) {
 }
 
 
-processingType FaceDetect::getID() {
+processingType FaceDetect::getID() const {
     return (processingType::FACEDETECT);
 }
 

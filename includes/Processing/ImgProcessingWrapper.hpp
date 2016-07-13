@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <mutex>
+#include <algorithm>
 
 #include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
@@ -23,8 +24,8 @@ class ImgProcessingWrapper
       void apply(cv::Mat & frame);
 
       unsigned int getProcessingCount();
-      bool addProcessing(ImgProcessing * toAdd , unsigned int index);
-      bool removeProcessing(unsigned int index);
+      bool addProcessing(ImgProcessing * toAdd);
+      bool removeProcessing(processingType toRemove);
       bool clearProcessing();
 
   private:
