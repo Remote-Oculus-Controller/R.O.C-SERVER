@@ -41,7 +41,7 @@ void LiveSourceWithx264::fetchNewFrame()
 
 void LiveSourceWithx264::processNewFrame()
 {
-
+  this->_manager->getProcessingWrapper().apply(this->_manager->getFrame(this->_id));
 }
 
 void LiveSourceWithx264::encodeNewFrame()
