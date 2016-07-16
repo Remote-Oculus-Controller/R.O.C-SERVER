@@ -99,6 +99,9 @@ void NetworkInterpretor::handlePacket(protocol::Packet * message)
     case 0x33:
       this->faceQuery(message);
     break;
+    case 0x34:
+      this->zoomQuery(message);
+    break;
   }
   delete message;
 }
@@ -146,4 +149,12 @@ void NetworkInterpretor::faceQuery(protocol::Packet * message)
     this->_parent->getVideoManager()->getProcessingWrapper().addProcessing(new FaceDetect());
   else if (payload.action() == protocol::Processing_Action::Processing_Action_DESACTIVATE)
     this->_parent->getVideoManager()->getProcessingWrapper().removeProcessing(processingType::FACEDETECT);
+}
+
+void NetworkInterpretor::zoomQuery(protocol::Packet * message)
+{
+  protocol::Processing payload;
+  message->payload().UnpackTo(&payload);
+
+  this->_parent->getVideoManager()->setAll(27 , payload.param1());
 }

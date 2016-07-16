@@ -47,6 +47,7 @@ class NetworkInterpretor
     void clearQuery();
     void cannyQuery(protocol::Packet * message);
     void faceQuery(protocol::Packet * message);
+    void zoomQuery(protocol::Packet * message);
 
     void runner();
     void waitRunner();

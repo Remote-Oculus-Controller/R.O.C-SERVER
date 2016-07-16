@@ -17,7 +17,6 @@ protocol::Packet * NetworkInterface::get(char * buffer , size_t size)
 bool NetworkInterface::put(protocol::Packet * elem , char * buffer)
 {
   int size = elem->ByteSize();
-  std::cout << "ByteSize : " << size << std::endl;
   elem->SerializeToArray(buffer, size);
   return true;
 }
