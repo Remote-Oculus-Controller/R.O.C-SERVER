@@ -11,6 +11,7 @@ VideoManager::VideoManager()
   init();
   this->_isAlive = true;
   this->_isAsyncRunning = false;
+  gettimeofday(&(this->_presentationTime), NULL);
 }
 
 VideoManager::~VideoManager()
@@ -219,6 +220,7 @@ bool VideoManager::loop()
   logger::log(SUCCESS_SYNC_JOB , logger::logType::SUCCESS);
   while (true && this->_isAlive)
   {
+    gettimeofday(&(this->_presentationTime), NULL);
     lock.lock();
     this->grabAll();
     this->retrieveAll();
@@ -237,4 +239,9 @@ bool VideoManager::loop()
 void VideoManager::waitSync()
 {
   this->_lockList->lock();
+}
+
+timeval VideoManager::getPresentationTime()
+{
+  return this->_presentationTime;
 }

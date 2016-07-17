@@ -2,6 +2,7 @@
 #define VIDEO_MANAGER_HPP
 
 #include <iostream>
+#include <sys/time.h>
 #include <ctime>
 #include <vector>
 #include <thread>
@@ -24,6 +25,7 @@ class VideoManager {
         cv::Mat & getFrame(unsigned int id);
 
         void waitSync();
+        timeval getPresentationTime();
 
         int getWidthById(unsigned int id);
         int getHeightById(unsigned int id);
@@ -60,13 +62,15 @@ class VideoManager {
         bool                    _ready;
         bool                    _isAlive;
         bool                    _isAsyncRunning;
-        time_t                  _lastGrab;
+        timeval                 _presentationTime;
+
         std::vector<Camera *>   _cameras;
         LockList *              _lockList;
         ImgProcessingWrapper    _processingWrapper;
 
         std::mutex              _lock;
         std::condition_variable _condition;
+
 };
 
 #endif

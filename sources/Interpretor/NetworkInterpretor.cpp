@@ -66,14 +66,13 @@ bool NetworkInterpretor::needRerouting(protocol::Packet * message)
   unsigned int destination;
   destination = (this->createMask(0 , 3) & message->header());
   return destination != 2;
-
 }
 
 
 unsigned NetworkInterpretor::createMask(unsigned a, unsigned b)
 {
    unsigned r = 0;
-   for (unsigned i=a; i<=b; i++)
+   for (unsigned i=a; i<b; i++)
        r |= 1 << i;
 
    return r;
@@ -81,12 +80,11 @@ unsigned NetworkInterpretor::createMask(unsigned a, unsigned b)
 
 unsigned NetworkInterpretor::createHeader(unsigned type , unsigned from , unsigned to)
 {
-  return (type << 6) | (from << 3) | to ;
+  return (type << 6) | (from << 3) | to;
 }
 
 void NetworkInterpretor::handlePacket(protocol::Packet * message)
 {
-  logger::log("Message ID : " + std::to_string(message->id()) , logger::logType::WARNING);
   switch (message->id()) {
     case 0x30:
       this->connectionQuery(message);
@@ -133,7 +131,9 @@ void NetworkInterpretor::clearQuery()
 void NetworkInterpretor::cannyQuery(protocol::Packet * message)
 {
   protocol::Processing payload;
-  message->payload().UnpackTo(&payload);
+
+  if (message->payload().UnpackTo(&payload) == false)
+    return;
 
   if (payload.action() == protocol::Processing_Action::Processing_Action_ACTIVATE)
     this->_parent->getVideoManager()->getProcessingWrapper().addProcessing(new CannyEdge(payload.param1(), payload.param2()));
@@ -144,7 +144,9 @@ void NetworkInterpretor::cannyQuery(protocol::Packet * message)
 void NetworkInterpretor::faceQuery(protocol::Packet * message)
 {
   protocol::Processing payload;
-  message->payload().UnpackTo(&payload);
+
+  if (message->payload().UnpackTo(&payload) == false)
+    return;
 
   if (payload.action() == protocol::Processing_Action::Processing_Action_ACTIVATE)
     this->_parent->getVideoManager()->getProcessingWrapper().addProcessing(new FaceDetect());
@@ -155,7 +157,9 @@ void NetworkInterpretor::faceQuery(protocol::Packet * message)
 void NetworkInterpretor::zoomQuery(protocol::Packet * message)
 {
   protocol::Processing payload;
-  message->payload().UnpackTo(&payload);
+
+  if (message->payload().UnpackTo(&payload) == false)
+    return;
 
   this->_parent->getVideoManager()->setAll(27 , payload.param1());
 }

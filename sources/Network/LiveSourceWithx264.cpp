@@ -63,7 +63,7 @@ void LiveSourceWithx264::doGetNextFrame() {
         fetchNewFrame();
         processNewFrame();
         encodeNewFrame();
-        gettimeofday(&currentTime, NULL);
+        this->currentTime = this->_manager->getPresentationTime();
         deliverFrame();
     }
     else {
