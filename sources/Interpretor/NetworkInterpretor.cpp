@@ -85,6 +85,7 @@ unsigned NetworkInterpretor::createHeader(unsigned type , unsigned from , unsign
 
 void NetworkInterpretor::handlePacket(protocol::Packet * message)
 {
+ logger::log("id : " + std::to_string(message->id()) , logger::logType::WARNING);
   switch (message->id()) {
     case 0x30:
       this->connectionQuery(message);
