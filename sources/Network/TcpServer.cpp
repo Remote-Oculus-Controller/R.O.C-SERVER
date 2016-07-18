@@ -1,6 +1,5 @@
 #include <Network/TcpServer.hpp>
 
-
 //====================================================
 // CONSTRUCTEUR / DESTRUCTEUR
 //====================================================
@@ -55,7 +54,7 @@ bool TcpServer::runServer()
 		logger::log("Error on accept !" , logger::logType::FAILURE);
 		return false;
 	}
-    fcntl(_socketClient, F_SETFL, fcntl(_socketClient, F_GETFL) | O_NONBLOCK);
+ //   fcntl(_socketClient, F_SETFL, fcntl(_socketClient, F_GETFL) | O_NONBLOCK);
 	this->_isServerRunning = true;
 	return true;
 }
