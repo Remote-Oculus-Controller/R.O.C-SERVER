@@ -77,7 +77,7 @@ size_t TcpServer::Read(char *buffer, size_t bufferLenght)
     FD_SET(_socketClient, &readfds);
 
     if (select(_socketClient+1, &readfds, NULL, NULL, &tv) <= 0)
-        return 0;
+        return -1;
 
     if (FD_ISSET(_socketClient, &readfds))
         return (recv(this->_socketClient, buffer, bufferLenght, 0));
