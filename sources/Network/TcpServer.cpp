@@ -55,6 +55,7 @@ bool TcpServer::runServer()
 		logger::log("Error on accept !" , logger::logType::FAILURE);
 		return false;
 	}
+    fcntl(_socketClient, F_SETFL, fcntl(_socketClient, F_GETFL) | O_NONBLOCK);
 	this->_isServerRunning = true;
 	return true;
 }
@@ -65,15 +66,10 @@ bool TcpServer::runServer()
 
 size_t TcpServer::Read(char *buffer, size_t bufferLenght)
 {
-    fd_set fds;
-    FD_ZERO(&fds);
-    FD_SET(_socketClient , &fds);
-    if (select(this->_socketClient+1, &fds, NULL , NULL , NULL)==1) {
+    std::cout << "read !" << std::endl;
 	if (this->_isServerRunning == false)
-		return (-1);
-	return (recv(this->_socketClient, buffer, bufferLenght, 0));
-    }
-    return 0;
+        return (-1);
+    return (recv(this->_socketClient, buffer, bufferLenght, 0));
 }
 
 size_t TcpServer::Send(char *buffer, size_t bufferLenght)

@@ -1,6 +1,8 @@
 #ifndef TCP_SERVER_HPP
 #define TCP_SERVER_HPP
 
+#include <sys/time.h>
+#include <fcntl.h>
 #include "Network/Server.hpp"
 #include "Network/TcpPacket.hpp"
 #include "Logger/Logger.hpp"
