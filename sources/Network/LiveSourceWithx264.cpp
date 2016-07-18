@@ -72,7 +72,7 @@ void LiveSourceWithx264::doGetNextFrame() {
 }
 
 void LiveSourceWithx264::deliverFrame() {
-    if (!isCurrentlyAwaitingData()) return;
+    if (!islyAwaitingData()) return;
     x264_nal_t nal = nalQueue.front();
     nalQueue.pop();
     assert(nal.p_payload != NULL);
