@@ -54,7 +54,6 @@ bool TcpServer::runServer()
 		logger::log("Error on accept !" , logger::logType::FAILURE);
 		return false;
 	}
- //   fcntl(_socketClient, F_SETFL, fcntl(_socketClient, F_GETFL) | O_NONBLOCK);
 	this->_isServerRunning = true;
 	return true;
 }
@@ -67,7 +66,23 @@ size_t TcpServer::Read(char *buffer, size_t bufferLenght)
 {
 	if (this->_isServerRunning == false)
         return (-1);
-    return (recv(this->_socketClient, buffer, bufferLenght, 0));
+
+	struct timeval tv;
+    fd_set readfds;
+
+    tv.tv_sec = 0;
+    tv.tv_usec = 5000;
+
+    FD_ZERO(&readfds);
+    FD_SET(_socketClient, &readfds);
+
+    if (select(_socketClient+1, &readfds, NULL, NULL, &tv) <= 0)
+        return 0;
+
+    if (FD_ISSET(_socketClient, &readfds))
+        return (recv(this->_socketClient, buffer, bufferLenght, 0));
+    else
+        return 0;
 }
 
 size_t TcpServer::Send(char *buffer, size_t bufferLenght)
