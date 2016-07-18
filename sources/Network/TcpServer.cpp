@@ -66,7 +66,6 @@ bool TcpServer::runServer()
 
 size_t TcpServer::Read(char *buffer, size_t bufferLenght)
 {
-    std::cout << "read !" << std::endl;
 	if (this->_isServerRunning == false)
         return (-1);
     return (recv(this->_socketClient, buffer, bufferLenght, 0));

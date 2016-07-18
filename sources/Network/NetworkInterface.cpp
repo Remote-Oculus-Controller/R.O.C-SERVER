@@ -12,7 +12,6 @@ protocol::Packet * NetworkInterface::get(char * buffer , size_t size)
   CodedInputStream coded_input(&ais);
   google::protobuf::io::CodedInputStream::Limit msgLimit = coded_input.PushLimit(size);
   elem->ParseFromCodedStream(&coded_input);
-  std::cout << "header = " << std::bitset<sizeof(elem->header())>(elem->header())  << std::endl;
   return elem;
 }
 
