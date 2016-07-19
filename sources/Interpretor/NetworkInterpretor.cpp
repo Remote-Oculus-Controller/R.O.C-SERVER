@@ -226,7 +226,7 @@ void NetworkInterpretor::lowerBodyQuery(protocol::Packet * message)
 
 void NetworkInterpretor::fullBodyQuery(protocol::Packet * message)
 {
-  logger::log("fullbody query", logger::logtype::info);
+  logger::log("fullbody query", logger::logType::info);
   protocol::Processing payload;
 
   if (message->payload().UnpackTo(&payload) == false)
