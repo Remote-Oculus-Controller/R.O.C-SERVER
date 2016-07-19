@@ -148,7 +148,7 @@ void NetworkInterpretor::cannyQuery(protocol::Packet * message)
   logger::log("CANNY QUERY", logger::logType::INFO);
   protocol::Processing payload;
 
-  if (message->hasPayload() == false)
+  if (message->has_payload() == false)
       return;
   google::protobuf::Any any = message->payload();
 
@@ -166,7 +166,7 @@ void NetworkInterpretor::faceQuery(protocol::Packet * message)
   logger::log("FACE QUERY", logger::logType::INFO);
   protocol::Processing payload;
 
-  if (message->hasPayload() == false)
+  if (message->has_payload() == false)
       return;
   google::protobuf::Any any = message->payload();
 
@@ -184,7 +184,7 @@ void NetworkInterpretor::zoomQuery(protocol::Packet * message)
   logger::log("ZOOM QUERY", logger::logType::INFO);
   protocol::Processing payload;
 
-  if (message->hasPayload() == false)
+  if (message->has_payload() == false)
       return;
   google::protobuf::Any any = message->payload();
 
@@ -199,7 +199,7 @@ void NetworkInterpretor::eyeQuery(protocol::Packet * message)
   logger::log("EYE QUERY", logger::logType::INFO);
   protocol::Processing payload;
 
-  if (message->hasPayload() == false)
+  if (message->has_payload() == false)
       return;
   google::protobuf::Any any = message->payload();
 
@@ -217,7 +217,7 @@ void NetworkInterpretor::upperBodyQuery(protocol::Packet * message)
   logger::log("UPPERBODY QUERY", logger::logType::INFO);
   protocol::Processing payload;
 
-  if (message->hasPayload() == false)
+  if (message->has_payload() == false)
       return;
   google::protobuf::Any any = message->payload();
 
@@ -235,7 +235,7 @@ void NetworkInterpretor::lowerBodyQuery(protocol::Packet * message)
   logger::log("LOWERBODY QUERY", logger::logType::INFO);
   protocol::Processing payload;
 
-  if (message->hasPayload() == false)
+  if (message->has_payload() == false)
       return;
   google::protobuf::Any any = message->payload();
 
@@ -253,7 +253,7 @@ void NetworkInterpretor::fullBodyQuery(protocol::Packet * message)
   logger::log("fullbody query", logger::logType::INFO);
   protocol::Processing payload;
 
-  if (message->hasPayload() == false)
+  if (message->has_payload() == false)
       return;
   google::protobuf::Any any = message->payload();
 
