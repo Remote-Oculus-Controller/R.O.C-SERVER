@@ -11,8 +11,9 @@ protocol::Packet * NetworkInterface::get(char * buffer , size_t size)
   google::protobuf::io::ArrayInputStream ais(buffer,size);
   CodedInputStream coded_input(&ais);
   google::protobuf::io::CodedInputStream::Limit msgLimit = coded_input.PushLimit(size);
-  elem->ParseFromCodedStream(&coded_input);
-  return elem;
+  if (elem->ParseFromCodedStream(&coded_input))
+      return elem;
+  return NULL;
 }
 
 bool NetworkInterface::put(protocol::Packet * elem , char * buffer)

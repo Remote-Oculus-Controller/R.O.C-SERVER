@@ -27,6 +27,7 @@ void NetworkManager::run() {
 void NetworkManager::runner() {
   this->_isAsyncRunning = true;
     int read;
+    protocol::Packet * message;
 
     while (this->_run) {
         if (this->_server->runServer() == false) {
@@ -47,6 +48,7 @@ void NetworkManager::runner() {
             }
             if (read > 0) {
                 logger::log("TCP readed : " + std::to_string(read) + " bytes" , logger::logType::WARNING);
+                if ((message = NetworkInterface::get(this->_buffer , read)) != NULL)
                 this->_parent->pushInput(NetworkInterface::get(this->_buffer , read));
             }
             while (this->_parent->isOutputAvailable())
