@@ -46,6 +46,7 @@ void NetworkManager::runner() {
             }
             if (read > 0)
                 this->_parent->pushInput(NetworkInterface::get(this->_buffer , read));
+            CLEAR(this->_buffer);
             while (this->_parent->isOutputAvailable())
             {
               protocol::Packet * elem = this->_parent->popOutput();
