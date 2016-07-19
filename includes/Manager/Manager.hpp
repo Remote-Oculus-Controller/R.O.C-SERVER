@@ -64,7 +64,6 @@ class Manager
 	std::mutex _inputLock;
 	std::mutex _outputLock;
 
-//	Reader 								_reader;
 	RTSPFactory  *				_RTSPFactory;
 	VideoManager * 				_videoManager;
 	NetworkManager * 			_networkManager;

@@ -4,7 +4,6 @@ RTSPFactory::RTSPFactory()
 {
 	this->watcher = new char;
 	*(this->watcher) = 0;
-	OutPacketBuffer::maxSize = 300000;
 }
 
 
