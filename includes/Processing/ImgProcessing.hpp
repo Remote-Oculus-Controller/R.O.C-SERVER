@@ -21,7 +21,7 @@
 		ARROW,
         EYEDETECT,
         UPPERBODY,
-        LOWERBODDY,
+        LOWERBODY,
         FULLBODY,
 	};
 

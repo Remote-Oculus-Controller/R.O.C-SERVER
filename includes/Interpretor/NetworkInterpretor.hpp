@@ -8,6 +8,9 @@
 #include "Parser/ConfigParser.hpp"
 #include "Processing/ImgProcessing.hpp"
 #include "Processing/EyeDetect.hpp"
+#include "Processing/UpperBodyDetect.hpp"
+#include "Processing/LowerBodyDetect.hpp"
+#include "Processing/FullBodyDetect.hpp"
 #include "proto.pb.h"
 #include "video.pb.h"
 
@@ -49,6 +52,9 @@ class NetworkInterpretor
     void faceQuery(protocol::Packet * message);
     void zoomQuery(protocol::Packet * message);
     void eyeQuery(protocol::Packet * message);
+    void upperBodyQuery(protocol::Packet * message);
+    void lowerBodyQuery(protocol::Packet * message);
+    void fullBodyQuery(protocol::Packet * message);
 
     void runner();
     void waitRunner();

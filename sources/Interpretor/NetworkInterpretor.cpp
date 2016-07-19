@@ -106,13 +106,13 @@ void NetworkInterpretor::handlePacket(protocol::Packet * message)
       this->eyeQuery(message);
     break;
     case 0x36:
-      // UPPERBODY
+      this->upperBodyQuery(message);
     break;
     case 0x37:
-     // LOWERBODDY
+      this->lowerBodyQuery(message);
     break;
     case 0x38:
-     // FULLBODY
+      this->fullBodyQuery(message);
     break;
   }
   delete message;
@@ -190,4 +190,43 @@ void NetworkInterpretor::eyeQuery(protocol::Packet * message)
     this->_parent->getVideoManager()->getProcessingWrapper().addProcessing(new EyeDetect());
   else if (payload.action() == protocol::Processing_Action::Processing_Action_DESACTIVATE)
     this->_parent->getVideoManager()->getProcessingWrapper().removeProcessing(processingType::EYEDETECT);
+}
+
+void NetworkInterpretor::upperBodyQuery(protocol::Packet * message)
+{
+  protocol::Processing payload;
+
+  if (message->payload().UnpackTo(&payload) == false)
+    return;
+
+  if (payload.action() == protocol::Processing_Action::Processing_Action_ACTIVATE)
+    this->_parent->getVideoManager()->getProcessingWrapper().addProcessing(new UpperBodyDetect());
+  else if (payload.action() == protocol::Processing_Action::Processing_Action_DESACTIVATE)
+    this->_parent->getVideoManager()->getProcessingWrapper().removeProcessing(processingType::UPPERBODY);
+}
+
+void NetworkInterpretor::lowerBodyQuery(protocol::Packet * message)
+{
+  protocol::Processing payload;
+
+  if (message->payload().UnpackTo(&payload) == false)
+    return;
+
+  if (payload.action() == protocol::Processing_Action::Processing_Action_ACTIVATE)
+    this->_parent->getVideoManager()->getProcessingWrapper().addProcessing(new LowerBodyDetect());
+  else if (payload.action() == protocol::Processing_Action::Processing_Action_DESACTIVATE)
+    this->_parent->getVideoManager()->getProcessingWrapper().removeProcessing(processingType::LOWERBODY);
+}
+
+void NetworkInterpretor::fullBodyQuery(protocol::Packet * message)
+{
+  protocol::Processing payload;
+
+  if (message->payload().UnpackTo(&payload) == false)
+    return;
+
+  if (payload.action() == protocol::Processing_Action::Processing_Action_ACTIVATE)
+    this->_parent->getVideoManager()->getProcessingWrapper().addProcessing(new FullBodyDetect());
+  else if (payload.action() == protocol::Processing_Action::Processing_Action_DESACTIVATE)
+    this->_parent->getVideoManager()->getProcessingWrapper().removeProcessing(processingType::FULLBODY);
 }
