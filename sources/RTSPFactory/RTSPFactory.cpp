@@ -36,6 +36,7 @@ bool RTSPFactory::deleteServer()
 	{
 		*(this->watcher) = 1;
 		return (true);
+//	OutPacketBuffer::maxSize = 300000;
 	}
 	else
 		return (false);

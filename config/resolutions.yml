@@ -11,7 +11,7 @@ cameras_id: [0]
 
 # MAXIMUM TIME IN ms BETWEEN 2 FRAMES
 
-timeout: 40
+timeout: 10000
 
 # WIDTH OF THE FRAMES
 

@@ -24,8 +24,6 @@ unsigned int ImgProcessingWrapper::getProcessingCount()
   return this->_imgProcessings.size();
 }
 
-//
-
 bool ImgProcessingWrapper::addProcessing(ImgProcessing * toAdd)
 {
   this->lockProcessings();
@@ -55,7 +53,6 @@ bool ImgProcessingWrapper::clearProcessing()
 
 //
 void ImgProcessingWrapper::lockProcessings()
-
 {
     this->_semaphore->wait(true);
 }
