@@ -100,11 +100,9 @@ bool VideoManager::uninit()
 
 cv::Mat & VideoManager::queryFrame(unsigned int id)
 {
-  this->_lockList->lock();
   this->_cameras[id]->grabFrame();
   this->_cameras[id]->retrieveFrame();
   this->_cameras[id]->flipFrame();
-  this->_lockList->unlock();
   return this->_cameras[id]->getFrame();
 }
 
