@@ -26,7 +26,7 @@ void NetworkManager::run() {
 
 void NetworkManager::runner() {
   this->_isAsyncRunning = true;
-    size_t read;
+    int read;
 
     while (this->_run) {
         if (this->_server->runServer() == false) {
@@ -38,8 +38,7 @@ void NetworkManager::runner() {
         while (this->_run)
         {
             read = this->_server->Read(this->_buffer , TCP_BUFFER_SIZE);
-            std::cout << read << std::endl;
-            if (read < 0)
+            if (read == 0)
             {
                 logger::log(WARNING_TCP_DISCONNECTED , logger::logType::WARNING);
                 this->_server->discardClient();

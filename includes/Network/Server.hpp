@@ -48,7 +48,7 @@ class Server
 	virtual bool runServer() = 0;
 	virtual bool stopServer();
 
-	virtual size_t Read(char *buffer, size_t bufferLenght) = 0;
+	virtual int Read(char *buffer, size_t bufferLenght) = 0;
 	virtual size_t Send(char *buffer, size_t bufferLenght) = 0;
 
 	//====================================================

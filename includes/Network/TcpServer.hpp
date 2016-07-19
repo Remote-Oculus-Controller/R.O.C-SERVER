@@ -30,7 +30,7 @@ class TcpServer : public Server
 	// FONCTIONS SURCHARGEES D'ENVOI ET DE RECEPTION
 	//====================================================
 
-	virtual size_t Read(char *buffer, size_t bufferLenght);
+	virtual int Read(char *buffer, size_t bufferLenght);
     virtual size_t Send(char *buffer, size_t bufferLenght);
 
 

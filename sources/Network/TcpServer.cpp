@@ -62,7 +62,7 @@ bool TcpServer::runServer()
 // FONCTIONS SURCHARGEES D'ENVOI ET DE RECEPTION
 //====================================================
 
-size_t TcpServer::Read(char *buffer, size_t bufferLenght)
+int TcpServer::Read(char *buffer, size_t bufferLenght)
 {
 	if (this->_isServerRunning == false)
         return (-1);
@@ -76,13 +76,13 @@ size_t TcpServer::Read(char *buffer, size_t bufferLenght)
     FD_ZERO(&readfds);
     FD_SET(_socketClient, &readfds);
 
-    if (select(_socketClient+1, &readfds, NULL, NULL, &tv) <= 0)
+    if (select(_socketClient+1, &readfds, NULL, NULL, &tv) < 0)
         return -1;
 
     if (FD_ISSET(_socketClient, &readfds))
         return (recv(this->_socketClient, buffer, bufferLenght, 0));
-    else
-        return 0;
+
+    return -1;
 }
 
 size_t TcpServer::Send(char *buffer, size_t bufferLenght)
