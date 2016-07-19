@@ -120,6 +120,7 @@ void NetworkInterpretor::handlePacket(protocol::Packet * message)
 
 void NetworkInterpretor::connectionQuery(protocol::Packet * message)
 {
+  logger::log("CONNECTION QUERY", logger::logType::INFO);
   protocol::Packet * response = new protocol::Packet();
   protocol::Connection payload;
   char header;
@@ -138,11 +139,13 @@ void NetworkInterpretor::connectionQuery(protocol::Packet * message)
 
 void NetworkInterpretor::clearQuery()
 {
+  logger::log("CLEAR QUERY", logger::logType::INFO);
   this->_parent->getVideoManager()->getProcessingWrapper().clearProcessing();
 }
 
 void NetworkInterpretor::cannyQuery(protocol::Packet * message)
 {
+  logger::log("CANNY QUERY", logger::logType::INFO);
   protocol::Processing payload;
 
   if (message->payload().UnpackTo(&payload) == false)
@@ -156,6 +159,7 @@ void NetworkInterpretor::cannyQuery(protocol::Packet * message)
 
 void NetworkInterpretor::faceQuery(protocol::Packet * message)
 {
+  logger::log("FACE QUERY", logger::logType::INFO);
   protocol::Processing payload;
 
   if (message->payload().UnpackTo(&payload) == false)
@@ -169,6 +173,7 @@ void NetworkInterpretor::faceQuery(protocol::Packet * message)
 
 void NetworkInterpretor::zoomQuery(protocol::Packet * message)
 {
+  logger::log("ZOOM QUERY", logger::logType::INFO);
   protocol::Processing payload;
 
   if (message->payload().UnpackTo(&payload) == false)
@@ -179,6 +184,7 @@ void NetworkInterpretor::zoomQuery(protocol::Packet * message)
 
 void NetworkInterpretor::eyeQuery(protocol::Packet * message)
 {
+  logger::log("EYE QUERY", logger::logType::INFO);
   protocol::Processing payload;
 
   if (message->payload().UnpackTo(&payload) == false)
@@ -192,6 +198,7 @@ void NetworkInterpretor::eyeQuery(protocol::Packet * message)
 
 void NetworkInterpretor::upperBodyQuery(protocol::Packet * message)
 {
+  logger::log("UPPERBODY QUERY", logger::logType::INFO);
   protocol::Processing payload;
 
   if (message->payload().UnpackTo(&payload) == false)
@@ -205,6 +212,7 @@ void NetworkInterpretor::upperBodyQuery(protocol::Packet * message)
 
 void NetworkInterpretor::lowerBodyQuery(protocol::Packet * message)
 {
+  logger::log("LOWERBODY QUERY", logger::logType::INFO);
   protocol::Processing payload;
 
   if (message->payload().UnpackTo(&payload) == false)
@@ -218,6 +226,7 @@ void NetworkInterpretor::lowerBodyQuery(protocol::Packet * message)
 
 void NetworkInterpretor::fullBodyQuery(protocol::Packet * message)
 {
+  logger::log("fullbody query", logger::logtype::info);
   protocol::Processing payload;
 
   if (message->payload().UnpackTo(&payload) == false)

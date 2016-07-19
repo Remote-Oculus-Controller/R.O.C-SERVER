@@ -36,8 +36,10 @@ bool ImgProcessingWrapper::removeProcessing(processingType toRemove)
   this->lockProcessings();
   for(std::vector<ImgProcessing *>::iterator it = this->_imgProcessings.begin(); it != this->_imgProcessings.end() ;)
   {
-    if ((*it)->getID() == toRemove)
+      if ((*it)->getID() == toRemove){
+          delete *it;
       it = this->_imgProcessings.erase(it);
+      }
     else
       ++it;
   }

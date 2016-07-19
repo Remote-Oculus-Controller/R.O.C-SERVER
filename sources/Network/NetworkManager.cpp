@@ -45,7 +45,9 @@ void NetworkManager::runner() {
                 this->_server->discardClient();
                 break;
             }
-            if (read > 0)
+            if (read > 0) {
+                logger::log("TCP readed : " + std::to_string(read) + " bytes" , logger::logType::WARNING);
+            }
                 this->_parent->pushInput(NetworkInterface::get(this->_buffer , read));
             while (this->_parent->isOutputAvailable())
             {
