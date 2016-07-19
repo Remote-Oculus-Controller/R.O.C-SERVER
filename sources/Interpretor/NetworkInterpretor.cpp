@@ -147,6 +147,9 @@ void NetworkInterpretor::cannyQuery(protocol::Packet * message)
 {
   logger::log("CANNY QUERY", logger::logType::INFO);
   protocol::Processing payload;
+
+  if (message->hasPayload() == false)
+      return;
   google::protobuf::Any any = message->payload();
 
   if (any.Is<protocol::Processing>() == true , message->payload().UnpackTo(&payload) == false)
@@ -162,6 +165,9 @@ void NetworkInterpretor::faceQuery(protocol::Packet * message)
 {
   logger::log("FACE QUERY", logger::logType::INFO);
   protocol::Processing payload;
+
+  if (message->hasPayload() == false)
+      return;
   google::protobuf::Any any = message->payload();
 
   if (any.Is<protocol::Processing>() == true , message->payload().UnpackTo(&payload) == false)
@@ -177,6 +183,9 @@ void NetworkInterpretor::zoomQuery(protocol::Packet * message)
 {
   logger::log("ZOOM QUERY", logger::logType::INFO);
   protocol::Processing payload;
+
+  if (message->hasPayload() == false)
+      return;
   google::protobuf::Any any = message->payload();
 
   if (any.Is<protocol::Processing>() == true , message->payload().UnpackTo(&payload) == false)
@@ -189,6 +198,9 @@ void NetworkInterpretor::eyeQuery(protocol::Packet * message)
 {
   logger::log("EYE QUERY", logger::logType::INFO);
   protocol::Processing payload;
+
+  if (message->hasPayload() == false)
+      return;
   google::protobuf::Any any = message->payload();
 
   if (any.Is<protocol::Processing>() == true , message->payload().UnpackTo(&payload) == false)
@@ -204,6 +216,9 @@ void NetworkInterpretor::upperBodyQuery(protocol::Packet * message)
 {
   logger::log("UPPERBODY QUERY", logger::logType::INFO);
   protocol::Processing payload;
+
+  if (message->hasPayload() == false)
+      return;
   google::protobuf::Any any = message->payload();
 
   if (any.Is<protocol::Processing>() == true , message->payload().UnpackTo(&payload) == false)
@@ -219,6 +234,9 @@ void NetworkInterpretor::lowerBodyQuery(protocol::Packet * message)
 {
   logger::log("LOWERBODY QUERY", logger::logType::INFO);
   protocol::Processing payload;
+
+  if (message->hasPayload() == false)
+      return;
   google::protobuf::Any any = message->payload();
 
   if (any.Is<protocol::Processing>() == true , message->payload().UnpackTo(&payload) == false)
@@ -234,6 +252,9 @@ void NetworkInterpretor::fullBodyQuery(protocol::Packet * message)
 {
   logger::log("fullbody query", logger::logType::INFO);
   protocol::Processing payload;
+
+  if (message->hasPayload() == false)
+      return;
   google::protobuf::Any any = message->payload();
 
   if (any.Is<protocol::Processing>() == true , message->payload().UnpackTo(&payload) == false)
