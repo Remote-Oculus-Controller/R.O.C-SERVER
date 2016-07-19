@@ -52,7 +52,6 @@ void NetworkManager::runner() {
               NetworkInterface::put(elem , this->_buffer);
               this->_server->Send(this->_buffer  , elem->ByteSize());
               delete elem;
-              std::cout << "Sended message !" << std::endl;
             }
         }
     }

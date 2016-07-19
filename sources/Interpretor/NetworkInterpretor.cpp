@@ -120,7 +120,6 @@ void NetworkInterpretor::handlePacket(protocol::Packet * message)
 
 void NetworkInterpretor::connectionQuery(protocol::Packet * message)
 {
-    std::cout << "Connection query !" << std::endl;
   protocol::Packet * response = new protocol::Packet();
   protocol::Connection payload;
   char header;
@@ -128,7 +127,6 @@ void NetworkInterpretor::connectionQuery(protocol::Packet * message)
   if (response == NULL)
     return;
 
-  std::cout << "Building connection answer !" << std::endl;
   payload.set_port(configuration::port);
   payload.set_cameras(configuration::camera_count);
   response->mutable_payload()->PackFrom(payload);

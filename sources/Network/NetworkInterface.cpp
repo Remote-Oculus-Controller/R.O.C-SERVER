@@ -19,6 +19,5 @@ bool NetworkInterface::put(protocol::Packet * elem , char * buffer)
 {
     int size = elem->ByteSize();
     elem->SerializeToArray(buffer, size);
-    std::cout << "Added message ! " << std::endl;
     return true;
 }
