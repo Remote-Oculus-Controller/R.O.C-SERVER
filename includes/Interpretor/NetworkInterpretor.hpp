@@ -7,7 +7,7 @@
 #include "Manager/Manager.hpp"
 #include "Parser/ConfigParser.hpp"
 #include "Processing/ImgProcessing.hpp"
-
+#include "Processing/EyeDetect.hpp"
 #include "proto.pb.h"
 #include "video.pb.h"
 
@@ -48,6 +48,7 @@ class NetworkInterpretor
     void cannyQuery(protocol::Packet * message);
     void faceQuery(protocol::Packet * message);
     void zoomQuery(protocol::Packet * message);
+    void eyeQuery(protocol::Packet * message);
 
     void runner();
     void waitRunner();

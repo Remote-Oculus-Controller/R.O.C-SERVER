@@ -19,6 +19,7 @@
 		FACEDETECT,
 		REDCIRCLESDETECT,
 		ARROW,
+        EYEDETECT,
 	};
 
 	class ImgProcessing

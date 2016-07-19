@@ -102,6 +102,8 @@ void NetworkInterpretor::handlePacket(protocol::Packet * message)
     case 0x34:
       this->zoomQuery(message);
     break;
+    case 0x35:
+      this->eyeQuery(message);
   }
   delete message;
 }
@@ -165,4 +167,17 @@ void NetworkInterpretor::zoomQuery(protocol::Packet * message)
     return;
 
   this->_parent->getVideoManager()->setAll(27 , payload.param1());
+}
+
+void NetworkInterpretor::eyeQuery(protocol::Packet * message)
+{
+  protocol::Processing payload;
+
+  if (message->payload().UnpackTo(&payload) == false)
+    return;
+
+  if (payload.action() == protocol::Processing_Action::Processing_Action_ACTIVATE)
+    this->_parent->getVideoManager()->getProcessingWrapper().addProcessing(new EyeDetect());
+  else if (payload.action() == protocol::Processing_Action::Processing_Action_DESACTIVATE)
+    this->_parent->getVideoManager()->getProcessingWrapper().removeProcessing(processingType::EYEDETECT);
 }
