@@ -147,8 +147,9 @@ void NetworkInterpretor::cannyQuery(protocol::Packet * message)
 {
   logger::log("CANNY QUERY", logger::logType::INFO);
   protocol::Processing payload;
+  google::protobuf::Any any = message->payload();
 
-  if (message->payload().UnpackTo(&payload) == false)
+  if (any.Is<protocol::Processing>() == true , message->payload().UnpackTo(&payload) == false)
     return;
 
   if (payload.action() == protocol::Processing_Action::Processing_Action_ACTIVATE)
@@ -161,8 +162,9 @@ void NetworkInterpretor::faceQuery(protocol::Packet * message)
 {
   logger::log("FACE QUERY", logger::logType::INFO);
   protocol::Processing payload;
+  google::protobuf::Any any = message->payload();
 
-  if (message->payload().UnpackTo(&payload) == false)
+  if (any.Is<protocol::Processing>() == true , message->payload().UnpackTo(&payload) == false)
     return;
 
   if (payload.action() == protocol::Processing_Action::Processing_Action_ACTIVATE)
@@ -175,8 +177,9 @@ void NetworkInterpretor::zoomQuery(protocol::Packet * message)
 {
   logger::log("ZOOM QUERY", logger::logType::INFO);
   protocol::Processing payload;
+  google::protobuf::Any any = message->payload();
 
-  if (message->payload().UnpackTo(&payload) == false)
+  if (any.Is<protocol::Processing>() == true , message->payload().UnpackTo(&payload) == false)
     return;
 
   this->_parent->getVideoManager()->setAll(27 , payload.param1());
@@ -186,8 +189,9 @@ void NetworkInterpretor::eyeQuery(protocol::Packet * message)
 {
   logger::log("EYE QUERY", logger::logType::INFO);
   protocol::Processing payload;
+  google::protobuf::Any any = message->payload();
 
-  if (message->payload().UnpackTo(&payload) == false)
+  if (any.Is<protocol::Processing>() == true , message->payload().UnpackTo(&payload) == false)
     return;
 
   if (payload.action() == protocol::Processing_Action::Processing_Action_ACTIVATE)
@@ -200,8 +204,9 @@ void NetworkInterpretor::upperBodyQuery(protocol::Packet * message)
 {
   logger::log("UPPERBODY QUERY", logger::logType::INFO);
   protocol::Processing payload;
+  google::protobuf::Any any = message->payload();
 
-  if (message->payload().UnpackTo(&payload) == false)
+  if (any.Is<protocol::Processing>() == true , message->payload().UnpackTo(&payload) == false)
     return;
 
   if (payload.action() == protocol::Processing_Action::Processing_Action_ACTIVATE)
@@ -214,8 +219,9 @@ void NetworkInterpretor::lowerBodyQuery(protocol::Packet * message)
 {
   logger::log("LOWERBODY QUERY", logger::logType::INFO);
   protocol::Processing payload;
+  google::protobuf::Any any = message->payload();
 
-  if (message->payload().UnpackTo(&payload) == false)
+  if (any.Is<protocol::Processing>() == true , message->payload().UnpackTo(&payload) == false)
     return;
 
   if (payload.action() == protocol::Processing_Action::Processing_Action_ACTIVATE)
@@ -228,8 +234,9 @@ void NetworkInterpretor::fullBodyQuery(protocol::Packet * message)
 {
   logger::log("fullbody query", logger::logType::INFO);
   protocol::Processing payload;
+  google::protobuf::Any any = message->payload();
 
-  if (message->payload().UnpackTo(&payload) == false)
+  if (any.Is<protocol::Processing>() == true , message->payload().UnpackTo(&payload) == false)
     return;
 
   if (payload.action() == protocol::Processing_Action::Processing_Action_ACTIVATE)
