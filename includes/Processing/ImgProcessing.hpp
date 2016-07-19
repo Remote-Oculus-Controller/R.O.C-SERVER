@@ -20,6 +20,9 @@
 		REDCIRCLESDETECT,
 		ARROW,
         EYEDETECT,
+        UPPERBODY,
+        LOWERBODDY,
+        FULLBODY,
 	};
 
 	class ImgProcessing

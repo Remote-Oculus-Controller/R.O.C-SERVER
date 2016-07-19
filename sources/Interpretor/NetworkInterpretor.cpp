@@ -104,6 +104,16 @@ void NetworkInterpretor::handlePacket(protocol::Packet * message)
     break;
     case 0x35:
       this->eyeQuery(message);
+    break;
+    case 0x36:
+      // UPPERBODY
+    break;
+    case 0x37:
+     // LOWERBODDY
+    break;
+    case 0x38:
+     // FULLBODY
+    break;
   }
   delete message;
 }
