@@ -47,8 +47,8 @@ void NetworkManager::runner() {
             }
             if (read > 0) {
                 logger::log("TCP readed : " + std::to_string(read) + " bytes" , logger::logType::WARNING);
-            }
                 this->_parent->pushInput(NetworkInterface::get(this->_buffer , read));
+            }
             while (this->_parent->isOutputAvailable())
             {
               protocol::Packet * elem = this->_parent->popOutput();
