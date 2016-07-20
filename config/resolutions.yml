@@ -9,9 +9,9 @@ camera_count: 1
 
 cameras_id: [0]
 
-# MAXIMUM TIME IN ms BETWEEN 2 FRAMES
+# MAXIMUM TIME IN ms BETWEEN 2 CONSECUTIVES FRAMES
 
-timeout: 1000
+timeout: 3000
 
 # WIDTH OF THE FRAMES
 
