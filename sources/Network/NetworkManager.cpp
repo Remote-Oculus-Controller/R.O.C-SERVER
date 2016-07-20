@@ -67,7 +67,6 @@ void NetworkManager::runner() {
                     this->_server->discardClient();
                     break;
                 }
-                logger::log("TCP readed : " + std::to_string(read) + " bytes" , logger::logType::WARNING);
                 if ((message = NetworkInterface::get(this->_buffer , read)) != NULL)
                     this->_parent->pushInput(message);
             }
