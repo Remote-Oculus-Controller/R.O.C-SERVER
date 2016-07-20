@@ -8,9 +8,9 @@ protocol::Packet * NetworkInterface::get(char * buffer , size_t size)
 {
   protocol::Packet * elem = new protocol::Packet();
   int bytecount;
-  google::protobuf::io::ArrayInputStream ais(buffer,size);
+  ArrayInputStream ais(buffer,size);
   CodedInputStream coded_input(&ais);
-  google::protobuf::io::CodedInputStream::Limit msgLimit = coded_input.PushLimit(size);
+  CodedInputStream::Limit msgLimit = coded_input.PushLimit(size);
   if (elem->ParseFromCodedStream(&coded_input))
       return elem;
   return NULL;

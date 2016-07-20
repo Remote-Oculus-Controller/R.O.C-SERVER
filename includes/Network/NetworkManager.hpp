@@ -33,6 +33,7 @@ class NetworkManager
 
       void runner();
       void waitRunner();
+      bool waitClient();
 
   protected:
 

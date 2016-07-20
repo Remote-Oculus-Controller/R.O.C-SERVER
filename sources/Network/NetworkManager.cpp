@@ -15,7 +15,9 @@ NetworkManager::~NetworkManager() {
 }
 
 bool NetworkManager::init() {
-  return (this->_server != NULL && this->_parent != NULL && this->_server->initServer() == true);
+  if ((this->_server != NULL && this->_parent != NULL && this->_server->initServer() == true) == true)
+      return true;
+  logger::log(std::strerror(errno) , logger::logType::FAILURE);
 }
 
 void NetworkManager::run() {
@@ -24,32 +26,50 @@ void NetworkManager::run() {
 	thread->detach();
 }
 
+bool NetworkManager::waitClient()
+{
+    bool status;
+    while (this->_run)
+    {
+         status = this->_server->runServer();
+        if (status == false && errno != EWOULDBLOCK)
+        {
+            logger::log(ERROR_TCP , logger::logType::FAILURE);
+            return false;
+        }
+        else if (status == false && errno == EWOULDBLOCK)
+          std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        else if (status == true)
+            return true;
+    }
+    return true;
+}
 void NetworkManager::runner() {
-  this->_isAsyncRunning = true;
+    this->_isAsyncRunning = true;
     int read;
     protocol::Packet * message;
 
-    while (this->_run) {
-        if (this->_server->runServer() == false) {
-            logger::log(ERROR_TCP , logger::logType::FAILURE);
-            return;
-        }
-
+    while (this->_run)
+    {
+    logger::log("Waiting TCP connection..." , logger::logType::INFO);
+        if (this->waitClient() == -1)
+            break;
         logger::log(SUCCESS_TCP_CLIENT , logger::logType::SUCCESS);
         while (this->_run)
         {
             CLEAR(this->_buffer);
-            read = this->_server->Read(this->_buffer , TCP_BUFFER_SIZE);
-            if (read == 0)
+            if (this->_server->isDataAvailable())
             {
-                logger::log(WARNING_TCP_DISCONNECTED , logger::logType::WARNING);
-                this->_server->discardClient();
-                break;
-            }
-            if (read > 0) {
+                read = this->_server->Read(this->_buffer , TCP_BUFFER_SIZE);
+                if (read <= 0)
+                {
+                    logger::log(WARNING_TCP_DISCONNECTED , logger::logType::WARNING);
+                    this->_server->discardClient();
+                    break;
+                }
                 logger::log("TCP readed : " + std::to_string(read) + " bytes" , logger::logType::WARNING);
                 if ((message = NetworkInterface::get(this->_buffer , read)) != NULL)
-                this->_parent->pushInput(NetworkInterface::get(this->_buffer , read));
+                this->_parent->pushInput(message);
             }
             while (this->_parent->isOutputAvailable())
             {
@@ -61,18 +81,18 @@ void NetworkManager::runner() {
         }
     }
     this->_isAsyncRunning = false;
+    this->_condition.notify_all();
   }
 
 void NetworkManager::waitRunner() {
 
   std::unique_lock<std::mutex> lock(this->_lock);
 
-  if (this->_run)
+  if (this->_run == false)
     return;
 
   this->_run = false;
 
   while (this->_isAsyncRunning)
     this->_condition.wait(lock);
-
 }

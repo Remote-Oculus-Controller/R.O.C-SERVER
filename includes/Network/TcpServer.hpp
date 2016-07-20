@@ -32,8 +32,7 @@ class TcpServer : public Server
 
 	virtual int Read(char *buffer, size_t bufferLenght);
     virtual size_t Send(char *buffer, size_t bufferLenght);
-
-
+    bool isDataAvailable();
 
 	protected:
 
