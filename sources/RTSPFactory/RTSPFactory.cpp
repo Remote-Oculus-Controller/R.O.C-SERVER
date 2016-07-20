@@ -4,6 +4,7 @@ RTSPFactory::RTSPFactory()
 {
 	this->watcher = new char;
 	*(this->watcher) = 0;
+    OutPacketBuffer::maxSize = 300000;
 }
 
 
@@ -36,7 +37,6 @@ bool RTSPFactory::deleteServer()
 	{
 		*(this->watcher) = 1;
 		return (true);
-//	OutPacketBuffer::maxSize = 300000;
 	}
 	else
 		return (false);
