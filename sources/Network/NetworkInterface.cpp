@@ -6,6 +6,8 @@ using namespace google::protobuf::io;
 
 protocol::Packet * NetworkInterface::get(char * buffer , size_t size)
 {
+  char * copy = new char[size];
+  memcpy( copy , buffer , size);
   protocol::Packet * elem = new protocol::Packet();
   int bytecount;
   ArrayInputStream ais(buffer,size);
