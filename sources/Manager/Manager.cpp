@@ -113,7 +113,6 @@ void Manager::pushInput(protocol::Packet * elem)
 {
 	std::unique_lock<std::mutex> _lock(_inputLock);
 	this->_input.push(elem);
-
 }
 
 void Manager::pushOutput(protocol::Packet * elem)
@@ -126,7 +125,7 @@ protocol::Packet * Manager::popInput()
 {
 	protocol::Packet * elem;
 	std::unique_lock<std::mutex> _lock(_inputLock);
-	elem =  this->_input.back();
+	elem =  this->_input.front();
 	this->_input.pop();
 	return elem;
 }
@@ -135,7 +134,7 @@ protocol::Packet * Manager::popOutput()
 {
 	protocol::Packet * elem;
 	std::unique_lock<std::mutex> _lock(_outputLock);
-	elem =  this->_output.back();
+	elem =  this->_output.front();
 	this->_output.pop();
 	return elem;
 }
