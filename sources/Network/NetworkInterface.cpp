@@ -6,14 +6,16 @@ using namespace google::protobuf::io;
 
 protocol::Packet * NetworkInterface::get(char * buffer , size_t size)
 {
+  char * copy = new char[size];
+  memcpy(copy , buffer , size);
   protocol::Packet * elem = new protocol::Packet();
-  ArrayInputStream ais(buffer,size);
+  ArrayInputStream ais(copy  ,size);
   CodedInputStream coded_input(&ais);
   CodedInputStream::Limit msgLimit = coded_input.PushLimit(size);
   if (elem->ParseFromCodedStream(&coded_input))
   {
      coded_input.PopLimit(msgLimit);
-      return elem;
+     return elem;
   }
   coded_input.PopLimit(msgLimit);
   return NULL;
