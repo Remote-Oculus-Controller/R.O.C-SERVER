@@ -10,7 +10,7 @@ protocol::Packet * NetworkInterface::get(char * buffer , size_t size)
   memcpy( copy , buffer , size);
   protocol::Packet * elem = new protocol::Packet();
   int bytecount;
-  ArrayInputStream ais(buffer,size);
+  ArrayInputStream ais(copy,size);
   CodedInputStream coded_input(&ais);
   CodedInputStream::Limit msgLimit = coded_input.PushLimit(size);
   if (elem->ParseFromCodedStream(&coded_input))
