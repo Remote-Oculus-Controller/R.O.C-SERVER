@@ -41,6 +41,8 @@ void NetworkInterpretor::runner()
       while (this->_parent->isInputAvailable())
       {
         message = this->_parent->popInput();
+        if (message == NULL)
+            continue;
         if (this->isValid(message))
         {
           if (this->needRerouting(message))
