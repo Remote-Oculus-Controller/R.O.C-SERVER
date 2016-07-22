@@ -27,19 +27,19 @@ Install all the dependencies before building R.O.C-SERVER
 
 Then create a directory for the build :
 
-``` mkdir build
+``` mkdir build ```
 
 cd into this directory :
 
-``` cd build
+``` cd build ```
 
 start cmake
 
-``` cmake ..
+``` cmake .. ```
 
 If everything went good , you can now run make :
 
-``` make
+``` make ```
 
 ## Usage
 
