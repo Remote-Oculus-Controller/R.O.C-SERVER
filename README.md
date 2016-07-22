@@ -16,13 +16,41 @@ You can control it with the built in interpretor and / or by a TCP connection.
 
 ## Installation
 
-TODO
+Install all the dependencies before building R.O.C-SERVER
+
+- CUDA
+- V4l / V4l2
+- protobuf 3.X
+- ffmpeg (swscale - avformat)
+- x264
+- opencv 3.X
+
+Then create a directory for the build :
+
+``` mkdir build
+
+cd into this directory :
+
+``` cd build
+
+start cmake
+
+``` cmake ..
+
+If everything went good , you can now run make :
+
+``` make
 
 ## Usage
 
 simply start the server : ./ROC
-
 if you encouter any error , please make sure that your configuration file is correct.
+
+The server has to be currently started from the directory containing the config folder
+Some known problems :
+
+- Adress Already in use : Tcp or RTSP server adress already in use , just wait a few minutes and try again
+- Index V4l2 X incorrect : The camera driver might have crashed , try reseting the cameras (check /dev/videoX)
 
 ## Contributing
 
