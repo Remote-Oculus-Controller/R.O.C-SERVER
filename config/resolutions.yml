@@ -5,7 +5,6 @@
 camera_count: 1
 
 # PHYSICAL IDs OF THE CAMERAS
-# The Server WILL segfault if only one of the ID's is incorrect
 
 cameras_id: [0]
 

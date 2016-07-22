@@ -22,7 +22,7 @@ void LockList::waitLockee()
   std::unique_lock<std::mutex> lck(_mutexLocker);
   while (this->_lockedCount < this->_count) {
     if (this->_conditionLocker.wait_for(lck , std::chrono::milliseconds(this->_timeout)) == std::cv_status::timeout) {
-      logger::log(WARNING_SYNC_TIMEOUT , logger::logType::WARNING);
+      //logger::log(WARNING_SYNC_TIMEOUT , logger::logType::WARNING);
       break;
     }
   }
