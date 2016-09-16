@@ -20,7 +20,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules")
 
 # Protocol directory
 
-set(ROC_PROTOCOL_FOLDER "${CMAKE_SOURCE_DIR}/Protobuf")
+set(ROC_PROTOCOL_FOLDER "${CMAKE_SOURCE_DIR}/proto")
 
 # ROC GPU option
 

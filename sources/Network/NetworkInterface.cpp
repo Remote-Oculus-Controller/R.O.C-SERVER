@@ -4,9 +4,9 @@
 
 using namespace google::protobuf::io;
 
-protocol::Packet * NetworkInterface::get(char * buffer , size_t size)
+rocproto::Packet * NetworkInterface::get(char * buffer , size_t size)
 {
-  protocol::Packet * elem = new protocol::Packet();
+  rocproto::Packet * elem = new rocproto::Packet();
   ArrayInputStream ais(buffer ,size);
   CodedInputStream coded_input(&ais);
   CodedInputStream::Limit msgLimit = coded_input.PushLimit(size);
@@ -19,7 +19,7 @@ protocol::Packet * NetworkInterface::get(char * buffer , size_t size)
   return NULL;
 }
 
-bool NetworkInterface::put(protocol::Packet * elem , char * buffer)
+bool NetworkInterface::put(rocproto::Packet * elem , char * buffer)
 {
     int size = elem->ByteSize();
     elem->SerializeToArray(buffer, size);

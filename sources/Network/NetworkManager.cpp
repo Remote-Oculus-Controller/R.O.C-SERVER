@@ -47,7 +47,7 @@ bool NetworkManager::waitClient()
 void NetworkManager::runner() {
     this->_isAsyncRunning = true;
     int read;
-    protocol::Packet * message;
+    rocproto::Packet * message;
 
     while (this->_run)
     {
@@ -72,7 +72,7 @@ void NetworkManager::runner() {
             }
             while (this->_parent->isOutputAvailable())
             {
-              protocol::Packet * elem = this->_parent->popOutput();
+              rocproto::Packet * elem = this->_parent->popOutput();
               NetworkInterface::put(elem , this->_buffer);
               this->_server->Send(this->_buffer  , elem->ByteSize());
               delete elem;

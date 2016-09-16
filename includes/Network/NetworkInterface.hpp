@@ -11,8 +11,8 @@
 class NetworkInterface {
 public:
 
-  static protocol::Packet * get(char * buffer , size_t size);
-  static bool put(protocol::Packet * elem , char * buffer);
+  static rocproto::Packet * get(char * buffer , size_t size);
+  static bool put(rocproto::Packet * elem , char * buffer);
 
 };
 

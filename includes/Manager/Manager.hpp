@@ -48,18 +48,18 @@ class Manager
 	bool isInputAvailable();
 	bool isOutputAvailable();
 
-	void pushInput(protocol::Packet *);
-	void pushOutput(protocol::Packet *);
+	void pushInput(rocproto::Packet *);
+	void pushOutput(rocproto::Packet *);
 
-	protocol::Packet * popInput();
-	protocol::Packet * popOutput();
+	rocproto::Packet * popInput();
+	rocproto::Packet * popOutput();
 
 
 
 	private:
 
-	std::queue<protocol::Packet *> _input;
-	std::queue<protocol::Packet *> _output;
+	std::queue<rocproto::Packet *> _input;
+	std::queue<rocproto::Packet *> _output;
 
 	std::mutex _inputLock;
 	std::mutex _outputLock;

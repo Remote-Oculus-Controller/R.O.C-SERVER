@@ -38,23 +38,23 @@ class NetworkInterpretor
 
   private:
 
-    protocol::Packet * getMessage();
-    void putMessage(protocol::Packet * message);
+    rocproto::Packet * getMessage();
+    void putMessage(rocproto::Packet * message);
 
-    bool isValid(protocol::Packet * message);
-    bool needRerouting(protocol::Packet * message);
+    bool isValid(rocproto::Packet * message);
+    bool needRerouting(rocproto::Packet * message);
 
-    void handlePacket(protocol::Packet * message);
+    void handlePacket(rocproto::Packet * message);
 
-    void connectionQuery(protocol::Packet * message);
+    void connectionQuery(rocproto::Packet * message);
     void clearQuery();
-    void cannyQuery(protocol::Packet * message);
-    void faceQuery(protocol::Packet * message);
-    void zoomQuery(protocol::Packet * message);
-    void eyeQuery(protocol::Packet * message);
-    void upperBodyQuery(protocol::Packet * message);
-    void lowerBodyQuery(protocol::Packet * message);
-    void fullBodyQuery(protocol::Packet * message);
+    void cannyQuery(rocproto::Packet * message);
+    void faceQuery(rocproto::Packet * message);
+    void zoomQuery(rocproto::Packet * message);
+    void eyeQuery(rocproto::Packet * message);
+    void upperBodyQuery(rocproto::Packet * message);
+    void lowerBodyQuery(rocproto::Packet * message);
+    void fullBodyQuery(rocproto::Packet * message);
 
     void runner();
     void waitRunner();

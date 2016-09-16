@@ -34,7 +34,7 @@ void NetworkInterpretor::waitRunner()
 void NetworkInterpretor::runner()
 {
   this->_isAsyncRunning = true;
-  protocol::Packet * message;
+  rocproto::Packet * message;
 
   while (this->_keepAlive == true)
   {
@@ -58,12 +58,12 @@ void NetworkInterpretor::runner()
 }
 
 
-bool NetworkInterpretor::isValid(protocol::Packet * message)
+bool NetworkInterpretor::isValid(rocproto::Packet * message)
 {
     return message->magic() == 0xAF;
 }
 
-bool NetworkInterpretor::needRerouting(protocol::Packet * message)
+bool NetworkInterpretor::needRerouting(rocproto::Packet * message)
 {
   unsigned int destination;
   destination = (this->createMask(0 , 3) & message->header());
@@ -85,7 +85,7 @@ unsigned NetworkInterpretor::createHeader(unsigned type , unsigned from , unsign
   return (type << 6) | (from << 3) | to;
 }
 
-void NetworkInterpretor::handlePacket(protocol::Packet * message)
+void NetworkInterpretor::handlePacket(rocproto::Packet * message)
 {
  logger::log("id : " + std::to_string(message->id()) , logger::logType::WARNING);
   switch (message->id()) {
@@ -120,19 +120,19 @@ void NetworkInterpretor::handlePacket(protocol::Packet * message)
   delete message;
 }
 
-void NetworkInterpretor::connectionQuery(protocol::Packet * message)
+void NetworkInterpretor::connectionQuery(rocproto::Packet * message)
 {
   logger::log("CONNECTION QUERY", logger::logType::INFO);
-  protocol::Packet * response = new protocol::Packet();
-  protocol::Connection payload;
+  rocproto::Packet * response = new rocproto::Packet();
+  rocproto::Connection  * payload = new rocproto::Connection();
   char header;
 
   if (response == NULL)
     return;
 
-  payload.set_port(configuration::port);
-  payload.set_cameras(configuration::camera_count);
-  response->mutable_payload()->PackFrom(payload);
+  payload->set_port(configuration::port);
+  payload->set_cameras(configuration::camera_count);
+  response->set_allocated_conn(payload);
   response->set_magic(0xAF);
   response->set_id(0x30);
   response->set_header(this->createHeader(DATA , VSERVER , VCLIENT));
@@ -145,125 +145,90 @@ void NetworkInterpretor::clearQuery()
   this->_parent->getVideoManager()->getProcessingWrapper().clearProcessing();
 }
 
-void NetworkInterpretor::cannyQuery(protocol::Packet * message)
+void NetworkInterpretor::cannyQuery(rocproto::Packet * message)
 {
   logger::log("CANNY QUERY", logger::logType::INFO);
-  protocol::Processing payload;
 
-  if (message->has_payload() == false)
+  if (message->has_procs() == false)
       return;
-  google::protobuf::Any any = message->payload();
 
-  if (any.Is<protocol::Processing>() == true , message->payload().UnpackTo(&payload) == false)
-    return;
-
-  if (payload.action() == protocol::Processing_Action::Processing_Action_ACTIVATE)
-    this->_parent->getVideoManager()->getProcessingWrapper().addProcessing(new CannyEdge(payload.param1(), payload.param2()));
-  else if (payload.action() == protocol::Processing_Action::Processing_Action_DESACTIVATE)
+  if (message->procs().action() == rocproto::Processing_Action::Processing_Action_ACTIVATE)
+    this->_parent->getVideoManager()->getProcessingWrapper().addProcessing(new CannyEdge(message->procs().param1(), message->procs().param2()));
+  else if (message->procs().action() == rocproto::Processing_Action::Processing_Action_DESACTIVATE)
     this->_parent->getVideoManager()->getProcessingWrapper().removeProcessing(processingType::CANNY);
 }
 
-void NetworkInterpretor::faceQuery(protocol::Packet * message)
+void NetworkInterpretor::faceQuery(rocproto::Packet * message)
 {
   logger::log("FACE QUERY", logger::logType::INFO);
-  protocol::Processing payload;
 
-  if (message->has_payload() == false)
+  if (message->has_procs() == false)
       return;
-  google::protobuf::Any any = message->payload();
 
-  if (any.Is<protocol::Processing>() == true , message->payload().UnpackTo(&payload) == false)
-    return;
-
-  if (payload.action() == protocol::Processing_Action::Processing_Action_ACTIVATE)
+  if (message->procs().action() == rocproto::Processing_Action::Processing_Action_ACTIVATE)
     this->_parent->getVideoManager()->getProcessingWrapper().addProcessing(new FaceDetect());
-  else if (payload.action() == protocol::Processing_Action::Processing_Action_DESACTIVATE)
+  else if (message->procs().action() == rocproto::Processing_Action::Processing_Action_DESACTIVATE)
     this->_parent->getVideoManager()->getProcessingWrapper().removeProcessing(processingType::FACEDETECT);
 }
 
-void NetworkInterpretor::zoomQuery(protocol::Packet * message)
+void NetworkInterpretor::zoomQuery(rocproto::Packet * message)
 {
   logger::log("ZOOM QUERY", logger::logType::INFO);
-  protocol::Processing payload;
 
-  if (message->has_payload() == false)
+  if (message->has_procs() == false)
       return;
-  google::protobuf::Any any = message->payload();
 
-  if (any.Is<protocol::Processing>() == true , message->payload().UnpackTo(&payload) == false)
-    return;
-
-  this->_parent->getVideoManager()->setAll(27 , payload.param1());
+  this->_parent->getVideoManager()->setAll(27 , message->procs().param1());
 }
 
-void NetworkInterpretor::eyeQuery(protocol::Packet * message)
+void NetworkInterpretor::eyeQuery(rocproto::Packet * message)
 {
   logger::log("EYE QUERY", logger::logType::INFO);
-  protocol::Processing payload;
 
-  if (message->has_payload() == false)
+  if (message->has_procs() == false)
       return;
-  google::protobuf::Any any = message->payload();
 
-  if (any.Is<protocol::Processing>() == true , message->payload().UnpackTo(&payload) == false)
-    return;
-
-  if (payload.action() == protocol::Processing_Action::Processing_Action_ACTIVATE)
+  if (message->procs().action() == rocproto::Processing_Action::Processing_Action_ACTIVATE)
     this->_parent->getVideoManager()->getProcessingWrapper().addProcessing(new EyeDetect());
-  else if (payload.action() == protocol::Processing_Action::Processing_Action_DESACTIVATE)
+  else if (message->procs().action() == rocproto::Processing_Action::Processing_Action_DESACTIVATE)
     this->_parent->getVideoManager()->getProcessingWrapper().removeProcessing(processingType::EYEDETECT);
 }
 
-void NetworkInterpretor::upperBodyQuery(protocol::Packet * message)
+void NetworkInterpretor::upperBodyQuery(rocproto::Packet * message)
 {
   logger::log("UPPERBODY QUERY", logger::logType::INFO);
-  protocol::Processing payload;
 
-  if (message->has_payload() == false)
+  if (message->has_procs() == false)
       return;
-  google::protobuf::Any any = message->payload();
 
-  if (any.Is<protocol::Processing>() == true , message->payload().UnpackTo(&payload) == false)
-    return;
-
-  if (payload.action() == protocol::Processing_Action::Processing_Action_ACTIVATE)
+  if (message->procs().action() == rocproto::Processing_Action::Processing_Action_ACTIVATE)
     this->_parent->getVideoManager()->getProcessingWrapper().addProcessing(new UpperBodyDetect());
-  else if (payload.action() == protocol::Processing_Action::Processing_Action_DESACTIVATE)
+  else if (message->procs().action() == rocproto::Processing_Action::Processing_Action_DESACTIVATE)
     this->_parent->getVideoManager()->getProcessingWrapper().removeProcessing(processingType::UPPERBODY);
 }
 
-void NetworkInterpretor::lowerBodyQuery(protocol::Packet * message)
+void NetworkInterpretor::lowerBodyQuery(rocproto::Packet * message)
 {
   logger::log("LOWERBODY QUERY", logger::logType::INFO);
-  protocol::Processing payload;
 
-  if (message->has_payload() == false)
+  if (message->has_procs() == false)
       return;
-  google::protobuf::Any any = message->payload();
 
-  if (any.Is<protocol::Processing>() == true , message->payload().UnpackTo(&payload) == false)
-    return;
-
-  if (payload.action() == protocol::Processing_Action::Processing_Action_ACTIVATE)
+  if (message->procs().action() == rocproto::Processing_Action::Processing_Action_ACTIVATE)
     this->_parent->getVideoManager()->getProcessingWrapper().addProcessing(new LowerBodyDetect());
-  else if (payload.action() == protocol::Processing_Action::Processing_Action_DESACTIVATE)
+  else if (message->procs().action() == rocproto::Processing_Action::Processing_Action_DESACTIVATE)
     this->_parent->getVideoManager()->getProcessingWrapper().removeProcessing(processingType::LOWERBODY);
 }
 
-void NetworkInterpretor::fullBodyQuery(protocol::Packet * message)
+void NetworkInterpretor::fullBodyQuery(rocproto::Packet * message)
 {
   logger::log("fullbody query", logger::logType::INFO);
-  protocol::Processing payload;
 
-  if (message->has_payload() == false)
+  if (message->has_procs() == false)
       return;
-  google::protobuf::Any any = message->payload();
 
-  if (any.Is<protocol::Processing>() == true , message->payload().UnpackTo(&payload) == false)
-    return;
-
-  if (payload.action() == protocol::Processing_Action::Processing_Action_ACTIVATE)
+  if (message->procs().action() == rocproto::Processing_Action::Processing_Action_ACTIVATE)
     this->_parent->getVideoManager()->getProcessingWrapper().addProcessing(new FullBodyDetect());
-  else if (payload.action() == protocol::Processing_Action::Processing_Action_DESACTIVATE)
+  else if (message->procs().action() == rocproto::Processing_Action::Processing_Action_DESACTIVATE)
     this->_parent->getVideoManager()->getProcessingWrapper().removeProcessing(processingType::FULLBODY);
 }

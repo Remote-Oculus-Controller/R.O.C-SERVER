@@ -109,30 +109,30 @@ bool Manager::isOutputAvailable()
  	return !this->_output.empty();
  }
 
-void Manager::pushInput(protocol::Packet * elem)
+void Manager::pushInput(rocproto::Packet * elem)
 {
 	std::unique_lock<std::mutex> _lock(_inputLock);
 	this->_input.push(elem);
 }
 
-void Manager::pushOutput(protocol::Packet * elem)
+void Manager::pushOutput(rocproto::Packet * elem)
 {
 	std::unique_lock<std::mutex> _lock(_outputLock);
 	this->_output.push(elem);
 }
 
-protocol::Packet * Manager::popInput()
+rocproto::Packet * Manager::popInput()
 {
-	protocol::Packet * elem;
+	rocproto::Packet * elem;
 	std::unique_lock<std::mutex> _lock(_inputLock);
 	elem =  this->_input.front();
 	this->_input.pop();
 	return elem;
 }
 
-protocol::Packet * Manager::popOutput()
+rocproto::Packet * Manager::popOutput()
 {
-	protocol::Packet * elem;
+	rocproto::Packet * elem;
 	std::unique_lock<std::mutex> _lock(_outputLock);
 	elem =  this->_output.front();
 	this->_output.pop();
