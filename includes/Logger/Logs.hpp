@@ -71,4 +71,5 @@
 #define ERROR_CAMERA_FPS      "Error while setting ROC Camera fps"
 #define ERROR_TCP             "Error while establishing TCP connection"
 
+#define ERROR_265(param) (std::string("could not set param : ") + param)
 #endif

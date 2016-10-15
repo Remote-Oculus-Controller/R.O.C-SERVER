@@ -4,12 +4,16 @@
 #include "Manager/Manager.hpp"
 #include "Manager/Cleanup.hpp"
 #include "Parser/ConfigParser.hpp"
+#include "Encoder/x265Encoder.hpp"
 
 int main(int argc, char**argv)
 {
 	logger::log(START_SERVER 	, logger::logType::INFO);
 
 	ROC_DEFER_CLEANUP;
+
+  x265Encoder * test = new x265Encoder(640 , 480 , 30);
+  test->initialize();
 
 	Manager * manager = new Manager();
 

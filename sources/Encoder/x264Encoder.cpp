@@ -16,7 +16,7 @@ x264Encoder::~x264Encoder(void)
 
 void x264Encoder::initilize()
 {
-    x264_param_default_preset(&parameters, "veryfast", "zerolatency");
+    x264_param_default_preset(&parameters, "ultrafast", "zerolatency");
 
     parameters.i_log_level = X264_LOG_INFO;
     parameters.i_threads = 1;

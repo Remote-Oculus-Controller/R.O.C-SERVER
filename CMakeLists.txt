@@ -28,13 +28,14 @@ option(ROC_WITH_CUDA "GPU acceleration" OFF)
 
 # Dependencies
 
-find_package (Threads   REQUIRED)
-find_package(libv4l2    REQUIRED)
-find_package(libx264    REQUIRED)
-find_package(FFmpeg     REQUIRED COMPONENTS avutil swscale)
-find_package(OpenCV     REQUIRED)
-find_package(LiveMedia  REQUIRED)
-find_package(Protobuf   REQUIRED)
+find_package(Threads  REQUIRED)
+find_package(libv4l2  REQUIRED)
+find_package(libx264  REQUIRED)
+find_package(libx265 REQUIRED)
+find_package(FFmpeg   REQUIRED COMPONENTS avutil swscale)
+find_package(OpenCV REQUIRED)
+find_package(LiveMedia REQUIRED)
+find_package(Protobuf REQUIRED)
 
 # If OpenCV CUDA support found , set ROC_WITH_CUDA to ON
 
@@ -97,4 +98,4 @@ add_executable(ROC ${MAIN} ${VIDEO} ${SYNC} ${NETWORK} ${RTSPMANAGER} ${ENCODER}
 
 # link libraries
 
-target_link_libraries(ROC ${CMAKE_THREAD_LIBS_INIT} ${OpenCV_LIBS} ${LIBX264_LIBRARIES} ${FFMPEG_LIBRARIES} ${PROTOBUF_LIBRARIES} ${LiveMedia_LIBRARIES})
+target_link_libraries(ROC ${CMAKE_THREAD_LIBS_INIT} ${OpenCV_LIBS} ${LIBX264_LIBRARIES} ${LIBX265_LIBRARIES} ${FFMPEG_LIBRARIES} ${PROTOBUF_LIBRARIES} ${LiveMedia_LIBRARIES})
